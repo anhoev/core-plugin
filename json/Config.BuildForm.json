@@ -1,0 +1,131 @@
+{
+  "_id": "5c40af7da875ee06569245ca",
+  "__v": 0,
+  "type": "Collection",
+  "alwaysLoad": true,
+  "class": null,
+  "name": "Config",
+  "id": "5c40af7da875ee06569245ca",
+  "tabs": [
+    {
+      "fields": [
+        "menu"
+      ],
+      "_id": "5c40bc3e09c4190c6514f2f1",
+      "name": "Menu"
+    }
+  ],
+  "fields": [
+    {
+      "_id": "5c40afbea875ee06569245cc",
+      "schemaType": "string",
+      "key": "type",
+      "default": null,
+      "type": "input@select",
+      "label": null,
+      "flex": "md6",
+      "optionsType": "code",
+      "options": "function getOptions() {\n  return Object.keys(cms.Types);\n}"
+    },
+    {
+      "_id": "5c40bbcca875ee0656924616",
+      "schemaType": "array",
+      "key": "dynamicQuery",
+      "default": null,
+      "fields": [
+        {
+          "schemaType": "string",
+          "type": "input@select",
+          "label": null,
+          "flex": null,
+          "optionsType": "code",
+          "options": "function getOptions({rootModel}) {\n  const _type = rootModel.type;\n  return cms.Types[_type].path.map(p => p.path);\n}"
+        }
+      ],
+      "type": "input@multiSelect",
+      "label": null,
+      "flex": "md6",
+      "optionsType": "code",
+      "options": "function getOptions({rootModel}) {\n  const _type = rootModel.type;\n  if (!_type) return [];\n  return cms.Types[_type].paths.map(p => p.path);\n}"
+    },
+    {
+      "_id": "5c40bbcca875ee0656924615",
+      "schemaType": "array",
+      "fields": [
+        {
+          "schemaType": "string"
+        }
+      ],
+      "type": "input@multiSelect",
+      "label": null,
+      "flex": "md6",
+      "optionsType": "code",
+      "options": "function getOptions({rootModel}) {\n  const _type = rootModel.type;\n  if (!_type) return [];\n  return cms.Types[_type].columns;\n}",
+      "key": "showFields"
+    },
+    {
+      "_id": "5c40bbcca875ee0656924614",
+      "schemaType": "string",
+      "type": "input@select",
+      "label": null,
+      "flex": "md6",
+      "optionsType": "onlyValue",
+      "options": [
+        "table",
+        "list",
+        "element"
+      ],
+      "key": "showAs"
+    },
+    {
+      "_id": "5c40bbcca875ee0656924613",
+      "schemaType": "string",
+      "type": "input@select",
+      "label": null,
+      "flex": "md6",
+      "optionsType": "code",
+      "options": "function getOptions() {\n  return cms.pluginComponents;\n}",
+      "key": "renderComponent",
+      "default": null
+    },
+    {
+      "_id": "5c40bbcca875ee0656924612",
+      "schemaType": "array",
+      "key": "menu",
+      "type": "tableArray",
+      "label": null,
+      "flex": null,
+      "fields": [
+        {
+          "schemaType": "string",
+          "key": "position",
+          "type": "input@select",
+          "label": null,
+          "flex": null,
+          "optionsType": "code",
+          "options": "function getOptions({rootModel}) {\n  const _type = rootModel.type;\n  if (!_type) return [];\n  return cms.Types[_type].paths.map(p => p.path);\n}"
+        },
+        {
+          "schemaType": "string",
+          "key": "value",
+          "type": "input",
+          "label": null,
+          "flex": null
+        },
+        {
+          "schemaType": "string",
+          "key": "unit",
+          "type": "input@select",
+          "label": null,
+          "flex": null,
+          "optionsType": "onlyValue",
+          "options": [
+            "px",
+            "%"
+          ]
+        }
+      ],
+      "default": null
+    }
+  ]
+}
