@@ -5,9 +5,19 @@
   "alwaysLoad": true,
   "class": null,
   "name": "PluginFile",
-  "id": "5c3d90e839e5f23b9d7fe97a",
   "tabs": [],
   "fields": [
+    {
+      "_id": "5c4974534d5ad80da91e03b5",
+      "schemaType": "string",
+      "key": "plugin",
+      "default": null,
+      "type": "input@select",
+      "label": null,
+      "flex": "md4",
+      "optionsType": "code",
+      "options": "function getOptions() {\n  return cms.plugins;\n}"
+    },
     {
       "_id": "5c3d922e39e5f23b9d7fe985",
       "schemaType": "string",
@@ -15,7 +25,7 @@
       "default": null,
       "type": "input",
       "label": null,
-      "flex": "md6"
+      "flex": "md4"
     },
     {
       "_id": "5c3d922e39e5f23b9d7fe984",
@@ -23,7 +33,7 @@
       "key": "type",
       "type": "input@select",
       "label": null,
-      "flex": "md6",
+      "flex": "md4",
       "optionsType": "onlyValue",
       "options": [
         "backend",
@@ -38,7 +48,7 @@
       "schemaType": "array",
       "type": "input@multiSelect",
       "label": null,
-      "flex": null,
+      "flex": "md12",
       "key": "slots",
       "fields": [
         {
@@ -146,5 +156,6 @@
       "label": null,
       "height": "200px"
     }
-  ]
+  ],
+  "id": "5c3d90e839e5f23b9d7fe97a"
 }
