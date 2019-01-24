@@ -39,14 +39,15 @@
       "type": "input@multiSelect",
       "label": null,
       "flex": null,
-      "key": "slot",
+      "key": "slots",
       "fields": [
         {
           "schemaType": "string",
           "type": "input",
           "label": null,
           "flex": null,
-          "key": ""
+          "key": "",
+          "default": null
         }
       ],
       "default": null
@@ -58,7 +59,7 @@
       "type": "choice",
       "label": null,
       "flex": null,
-      "choiceKey": null,
+      "choiceKey": "type",
       "choiceKeyOutside": null,
       "fields": [
         {
