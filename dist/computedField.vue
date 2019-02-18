@@ -1,8 +1,8 @@
 <template>
 
   <div>
-    <v-btn @click="compute">compute</v-btn>
-    {{hello}}
+    <v-btn small="" depressed="" @click="compute">compute</v-btn>
+    {{result}}
   </div>
 
 </template>
