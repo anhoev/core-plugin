@@ -1,12 +1,10 @@
 <template>
-
   <div>
     <v-btn small="" depressed="" @click="compute">compute</v-btn>
     {{result}}
   </div>
-
 </template>
-    <script>
+<script>
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -48,7 +46,5 @@ var _default = {
 exports.default = _default;
 </script> 
 <style scoped>
-
-
 
 </style>

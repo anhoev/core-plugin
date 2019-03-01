@@ -1,5 +1,4 @@
 <template>
-
   <v-flex :class="flex" class="px-2">
     <v-layout row="" style="padding: 0">
       <label class="v-label theme--light middle">{{field.label || field.key}}</label>
@@ -7,9 +6,8 @@
       <v-slider v-model="model[field.key]" thumb-label="always" :min="field.min" :max="field.max"></v-slider>
     </v-layout>
   </v-flex>
-
 </template>
-    <script>
+<script>
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -43,9 +41,7 @@ var _default = {
 exports.default = _default;
 </script> 
 <style>
-
   .middle {
     padding-top: 25px !important;
   }
-
 </style>
