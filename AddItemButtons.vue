@@ -22,21 +22,21 @@
         createModel: {},
         configTabs: {},
         mode: 'form',
-        selectedDrawerItems: {}
+        collection: ''
       };
     },
-    injectService: ['AppDrawer:selectedDrawerItems'],
+    injectService: ['DataHolder:collection'],
     computed: {
       getFields() {
-        return cms.Types[this.selectedDrawerItems.type] && cms.Types[this.selectedDrawerItems.type].form;
+        return cms.Types[this.collection] && cms.Types[this.collection].form;
       },
       type() {
-        return this.selectedDrawerItems.type;
+        return this.collection;
       }
     },
     methods: {
       async openDialog() {
-        const type = this.selectedDrawerItems.type;
+        const type = this.collection;
         if (type) {
           const Model = cms.getModel(type);
           this.createModel = await Model.new();

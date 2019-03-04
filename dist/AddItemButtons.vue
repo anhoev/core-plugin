@@ -28,24 +28,24 @@ var _default = {
       createModel: {},
       configTabs: {},
       mode: 'form',
-      selectedDrawerItems: {}
+      collection: ''
     };
   },
 
-  injectService: ['AppDrawer:selectedDrawerItems'],
+  injectService: ['DataHolder:collection'],
   computed: {
     getFields() {
-      return _cms.default.Types[this.selectedDrawerItems.type] && _cms.default.Types[this.selectedDrawerItems.type].form;
+      return _cms.default.Types[this.collection] && _cms.default.Types[this.collection].form;
     },
 
     type() {
-      return this.selectedDrawerItems.type;
+      return this.collection;
     }
 
   },
   methods: {
     async openDialog() {
-      const type = this.selectedDrawerItems.type;
+      const type = this.collection;
 
       if (type) {
         const Model = _cms.default.getModel(type);

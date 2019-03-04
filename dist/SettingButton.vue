@@ -31,11 +31,12 @@ var _default = {
       configTabs: {},
       mode: 'form',
       selectedDrawerItems: {},
-      type: ''
+      type: '',
+      collection: ''
     };
   },
 
-  injectService: ['AppDrawer:selectedDrawerItems'],
+  injectService: ['DataHolder:collection'],
   computed: {
     configField() {
       return cms.getForm('Config');
@@ -46,14 +47,14 @@ var _default = {
     async openSettings() {
       const Model = cms.models.Config;
       const config = await Model.findOne({
-        type: this.selectedDrawerItems.type
+        type: this.collection
       });
       this.configTabs = cms.Types.Config.tabs;
       this.type = 'Config';
 
       if (!config) {
         this.dialogConfigModel = await Model.new({
-          type: this.selectedDrawerItems.type
+          type: this.collection
         });
         this.configDialog = true;
       } else {

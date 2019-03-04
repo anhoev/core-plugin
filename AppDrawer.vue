@@ -21,7 +21,7 @@
       this.getListDrawerItem();
     },
     domain: 'AppDrawer',
-    injectService: ['AppContent:getListCollection'],
+    injectService: ['DataHolder:execQuery', 'DataHolder:addQueryCondition', 'DataHolder:setCollection', 'DataHolder:clearQueryCondition'],
     methods: {
       getListDrawerItem() {
         this.drawerItems = cms.getAdminList();
@@ -32,14 +32,20 @@
       onSelect(item) {
         this.select(item);
       },
-      select(item) {
-        this.selectedDrawerItems = item;
-        this.getListCollection(item.type, item.query);
+      async select(item) {
+        this.setCollection(item.type);
+        this.clearQueryCondition();
+        this.addQueryCondition('Drawer', [{ fn: 'find', agrs: [item.query] }]);
+        this.addQueryCondition('Pagination', [{ fn: 'limit', agrs: [10] }]);
+        this.$emit('fetchConfig', item.type);
+        await this.execQuery();
+        // this.getListCollection(item.type, item.query);
       }
     },
     provide() {
       return {
-        selectedDrawerItems: this.selectedDrawerItems
+        selectedDrawerItems: this.selectedDrawerItems,
+        columns: this.selectedDrawerItems.columns
       };
     }
   };

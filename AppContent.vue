@@ -3,17 +3,17 @@
         <table class="v-datatable v-table theme--light">
             <thead>
             <tr>
-                <th v-for="column in selectedDrawerItems.columns">{{column.label}}</th>
+                <th v-for="column in getColumn">{{column.label}}</th>
                 <th>&nbsp;&nbsp;&nbsp;X</th>
             </tr>
             </thead>
             <tbody>
             <tr class="text-md-left"
-                v-for="(document, index) in collectionItems"
+                v-for="(document, index) in documents"
                 :key="index"
             >
-                <td v-for="column in selectedDrawerItems.columns" class="input-group-sm">
-                    {{document[column.value]}}
+                <td v-for="column in getColumn" class="input-group-sm">
+                    {{document[column.key]}}
                 </td>
                 <td>
                     <v-menu bottom open-on-hover left>
@@ -52,7 +52,7 @@
                 :dialog="dialog"
                 :fields="getFields"
                 :tabs="getTabs"
-                :type="getCollection"
+                :type="collection"
                 :toggle-dialog="toggleDialog"
                 @save="refresh"
         >
@@ -61,6 +61,8 @@
 </template>
 
 <script>
+  import AppDataHolder from './AppDataHolder';
+
   export default {
     name: 'AppContent',
     props: ['model'],
@@ -68,29 +70,33 @@
       return {
         editingItem: null,
         dialog: false,
-        collectionItems: [],
-        selectedDrawerItems: {}
+        documents: [],
+        selectedDrawerItems: {},
+        collection: ''
       };
     },
     domain: 'AppContent',
-    injectService: ['AppDrawer:selectedDrawerItems'],
+    injectService: ['AppDrawer:selectedDrawerItems', 'DataHolder:documents', 'DataHolder:collection'],
     computed: {
       getFields() {
-        const type = cms.Types[this.getCollection];
+        const type = cms.Types[this.collection];
         return type && type.form;
       },
       getTabs() {
-        const type = cms.Types[this.getCollection];
+        const type = cms.Types[this.collection];
         return type && type.tabs;
       },
-      getCollection() {
-        return this.selectedDrawerItems.type || (this.model && this.model.collection);
+      // getCollection() {
+      //   return this.selectedDrawerItems.type || (this.model && this.model.collection);
+      // },
+      getColumn() {
+        return cms.getColumns(this.collection);
       }
     },
     mounted() {
-      if (this.model) {
-        this.getListCollection(this.model.collection);
-      }
+      // if (this.model) {
+      //   // this.getListCollection(this.model.collection);
+      // }
     },
     methods: {
       openEditDialog(document) {
@@ -103,7 +109,7 @@
         this.dialog = value;
       },
       async copyItem(document) {
-        const Model = cms.getModel(this.getCollection);
+        const Model = cms.getModel(this.collection);
         const _item = _.cloneDeep(document);
         delete _item._id;
         delete _item.id;
@@ -111,23 +117,24 @@
         this.refresh();
       },
       async removeItem(document) {
-        const Model = cms.getModel(this.getCollection);
+        const Model = cms.getModel(this.collection);
         await Model.remove({ _id: document._id });
         this.refresh();
       },
-      getListCollection(collection, query = {}) {
-        cms.getModel(collection).find(query)
-          .then(res => {
-            this.collectionItems = res;
-          });
-      },
+
+      // getListCollection(collection, query = {}) {
+      //   cms.getModel(collection).find(query)
+      //     .then(res => {
+      //       this.collectionItems = res;
+      //     });
+      // },
       refresh() {
-        this.getListCollection(this.getCollection, this.selectedDrawerItems.query);
+        // this.getListCollection(this.getCollection, this.selectedDrawerItems.query);
       }
     },
     provide() {
       return {
-        getListCollection: this.getListCollection.bind(this)
+        // getListCollection: this.getListCollection.bind(this)
       };
     }
   };

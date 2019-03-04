@@ -3,14 +3,14 @@
         <table class="v-datatable v-table theme--light">
             <thead>
             <tr>
-                <th v-for="column in selectedDrawerItems.columns">{{column.label}}</th>
+                <th v-for="column in getColumn">{{column.label}}</th>
                 <th>&nbsp;&nbsp;&nbsp;X</th>
             </tr>
             </thead>
             <tbody>
-            <tr class="text-md-left" v-for="(document, index) in collectionItems" :key="index">
-                <td v-for="column in selectedDrawerItems.columns" class="input-group-sm">
-                    {{document[column.value]}}
+            <tr class="text-md-left" v-for="(document, index) in documents" :key="index">
+                <td v-for="column in getColumn" class="input-group-sm">
+                    {{document[column.key]}}
                 </td>
                 <td>
                     <v-menu bottom="" open-on-hover="" left="">
@@ -44,7 +44,7 @@
             <!--</table-editor-row>-->
             </tbody>
         </table>
-        <app-form-dialog :config-model="editingItem" :dialog="dialog" :fields="getFields" :tabs="getTabs" :type="getCollection" :toggle-dialog="toggleDialog" @save="refresh">
+        <app-form-dialog :config-model="editingItem" :dialog="dialog" :fields="getFields" :tabs="getTabs" :type="collection" :toggle-dialog="toggleDialog" @save="refresh">
         </app-form-dialog>
     </v-flex>
 </template>
@@ -55,6 +55,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
+
+var _AppDataHolder = _interopRequireDefault(require("./AppDataHolder"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 var _default = {
   name: 'AppContent',
   props: ['model'],
@@ -63,34 +68,37 @@ var _default = {
     return {
       editingItem: null,
       dialog: false,
-      collectionItems: [],
-      selectedDrawerItems: {}
+      documents: [],
+      selectedDrawerItems: {},
+      collection: ''
     };
   },
 
   domain: 'AppContent',
-  injectService: ['AppDrawer:selectedDrawerItems'],
+  injectService: ['AppDrawer:selectedDrawerItems', 'DataHolder:documents', 'DataHolder:collection'],
   computed: {
     getFields() {
-      const type = cms.Types[this.getCollection];
+      const type = cms.Types[this.collection];
       return type && type.form;
     },
 
     getTabs() {
-      const type = cms.Types[this.getCollection];
+      const type = cms.Types[this.collection];
       return type && type.tabs;
     },
 
-    getCollection() {
-      return this.selectedDrawerItems.type || this.model && this.model.collection;
+    // getCollection() {
+    //   return this.selectedDrawerItems.type || (this.model && this.model.collection);
+    // },
+    getColumn() {
+      return cms.getColumns(this.collection);
     }
 
   },
 
-  mounted() {
-    if (this.model) {
-      this.getListCollection(this.model.collection);
-    }
+  mounted() {// if (this.model) {
+    //   // this.getListCollection(this.model.collection);
+    // }
   },
 
   methods: {
@@ -106,7 +114,7 @@ var _default = {
     },
 
     async copyItem(document) {
-      const Model = cms.getModel(this.getCollection);
+      const Model = cms.getModel(this.collection);
 
       const _item = _.cloneDeep(document);
 
@@ -117,28 +125,26 @@ var _default = {
     },
 
     async removeItem(document) {
-      const Model = cms.getModel(this.getCollection);
+      const Model = cms.getModel(this.collection);
       await Model.remove({
         _id: document._id
       });
       this.refresh();
     },
 
-    getListCollection(collection, query = {}) {
-      cms.getModel(collection).find(query).then(res => {
-        this.collectionItems = res;
-      });
-    },
-
-    refresh() {
-      this.getListCollection(this.getCollection, this.selectedDrawerItems.query);
+    // getListCollection(collection, query = {}) {
+    //   cms.getModel(collection).find(query)
+    //     .then(res => {
+    //       this.collectionItems = res;
+    //     });
+    // },
+    refresh() {// this.getListCollection(this.getCollection, this.selectedDrawerItems.query);
     }
 
   },
 
   provide() {
-    return {
-      getListCollection: this.getListCollection.bind(this)
+    return {// getListCollection: this.getListCollection.bind(this)
     };
   }
 
