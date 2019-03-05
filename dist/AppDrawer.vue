@@ -30,7 +30,7 @@ var _default = {
   },
 
   domain: 'AppDrawer',
-  injectService: ['DataHolder:execQuery', 'DataHolder:addQueryCondition', 'DataHolder:setCollection', 'DataHolder:clearQueryCondition'],
+  injectService: ['DataHolder:execQuery', 'DataHolder:addQueryCondition', 'DataHolder:setCollection', 'DataHolder:clearQueryCondition', 'DataHolder/AppPagination:resetPageToOne'],
   methods: {
     getListDrawerItem() {
       this.drawerItems = _cms.default.getAdminList();
@@ -47,6 +47,8 @@ var _default = {
     async select(item) {
       this.setCollection(item.type);
       this.clearQueryCondition();
+      console.log(this);
+      this.resetPageToOne();
       this.addQueryCondition('Drawer', [{
         fn: 'find',
         agrs: [item.query]

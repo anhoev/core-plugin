@@ -46,8 +46,6 @@ var _default = {
 
       let queryBuilder = _cms.default.getModel(this.collection);
 
-      debugger;
-
       for (const key of Object.keys(queryConditions)) {
         const chainQuery = queryConditions[key];
 
@@ -64,7 +62,7 @@ var _default = {
         }
       }
 
-      this.totalDocument = await queryBuilder.count();
+      this.totalDocument = await queryBuilder.estimatedDocumentCount();
     }.bind(this);
 
     return {

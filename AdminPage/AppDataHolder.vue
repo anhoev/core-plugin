@@ -30,9 +30,6 @@
           return;
         }
         let queryBuilder = cms.getModel(this.collection);
-
-        debugger;
-
         for (const key of Object.keys(queryConditions)) {
           const chainQuery = queryConditions[key];
           for (let { fn, agrs } of chainQuery) {
@@ -43,7 +40,7 @@
             queryBuilder = queryBuilder[fn](...agrs);
           }
         }
-        this.totalDocument = await queryBuilder.count();
+        this.totalDocument = await queryBuilder.estimatedDocumentCount();
       }.bind(this);
 
       return {

@@ -22,8 +22,7 @@
 
 <script>
   export default {
-    name: 'App',
-    domain: 'PaginationVue',
+    name: 'Paginate',
     props: {
       configModel: {}
     },
@@ -33,9 +32,10 @@
       currentPage: 1,
       computedRowsPerPageItems: [10, 15, 20, 25, 50]
     }),
+    domain: 'AppPagination',
     provide() {
       return {
-        resetPageToOne: this.resetPageToOne
+        resetPageToOne: this.resetPageToOne.bind(this)
       };
     },
     computed: {
@@ -70,11 +70,10 @@
         this.execQuery();
       },
       resetPageToOne() {
-        if (this.currentPage == 1) {
+        if (this.currentPage === 1) {
           return;
         }
         this.currentPage = 1;
-        this.execQueryByPage();
       },
       nextPage() {
         this.currentPage = this.currentPage + 1;

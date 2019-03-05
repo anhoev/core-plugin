@@ -22,8 +22,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 var _default = {
-  name: 'App',
-  domain: 'PaginationVue',
+  name: 'Paginate',
   props: {
     configModel: {}
   },
@@ -33,10 +32,11 @@ var _default = {
     currentPage: 1,
     computedRowsPerPageItems: [10, 15, 20, 25, 50]
   }),
+  domain: 'AppPagination',
 
   provide() {
     return {
-      resetPageToOne: this.resetPageToOne
+      resetPageToOne: this.resetPageToOne.bind(this)
     };
   },
 
@@ -83,12 +83,11 @@ var _default = {
     },
 
     resetPageToOne() {
-      if (this.currentPage == 1) {
+      if (this.currentPage === 1) {
         return;
       }
 
       this.currentPage = 1;
-      this.execQueryByPage();
     },
 
     nextPage() {
