@@ -1,13 +1,11 @@
 <template>
-
   <v-flex :class="flex" class="px-2">
     <v-combobox v-model="value" :items="options" :label="field.tableCell ? '': field.label || field.key" clearable="" deletable-chips="" chips="" small-chips="" @change="onChange" multiple="" hide-selected="" :menu-props="{'z-index': 1000, 'closeOnContentClick': true}">
       <v-icon slot="append" v-if="inArray" @click.stop="$emit('remove-field')">delete_outline</v-icon>
     </v-combobox>
   </v-flex>
-
 </template>
-    <script>
+<script>
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -84,9 +82,7 @@ var _default = {
 exports.default = _default;
 </script> 
 <style>
-
   .middle {
     padding-top: 5px !important;
   }
-
 </style>

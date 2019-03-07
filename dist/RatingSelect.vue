@@ -1,5 +1,4 @@
 <template>
-
   <v-flex :class="flex" class="px-2">
     <v-layout row="" style="padding-top: 20px">
       <label class="v-label theme--light middle">{{field.label || field.key}}</label>
@@ -10,9 +9,8 @@
       <v-rating v-model="model[field.key]" :length="field.length" dense="" hover="" empty-icon="fiber_manual_record" full-icon="fiber_manual_record" background-color="grey lighten-1"></v-rating>
     </v-layout>
   </v-flex>
-
 </template>
-    <script>
+<script>
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -51,9 +49,7 @@ var _default = {
 exports.default = _default;
 </script> 
 <style>
-
   .middle {
     padding-top: 5px !important;
   }
-
 </style>
