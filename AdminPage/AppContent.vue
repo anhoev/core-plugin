@@ -93,6 +93,9 @@
         return cms.getColumns(this.collection);
       }
     },
+    created() {
+      console.log('created content');
+    },
     mounted() {
       // if (this.model) {
       //   // this.getListCollection(this.model.collection);
@@ -131,6 +134,9 @@
       refresh() {
         // this.getListCollection(this.getCollection, this.selectedDrawerItems.query);
       }
+    },
+    beforeDestroy() {
+      console.log('destroy content');
     },
     provide() {
       return {
