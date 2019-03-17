@@ -96,6 +96,10 @@ var _default = {
 
   },
 
+  created() {
+    console.log('created content');
+  },
+
   mounted() {// if (this.model) {
     //   // this.getListCollection(this.model.collection);
     // }
@@ -141,6 +145,10 @@ var _default = {
     refresh() {// this.getListCollection(this.getCollection, this.selectedDrawerItems.query);
     }
 
+  },
+
+  beforeDestroy() {
+    console.log('destroy content');
   },
 
   provide() {
