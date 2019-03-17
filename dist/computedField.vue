@@ -1,8 +1,7 @@
 <template>
-  <div>
-    <v-btn small="" depressed="" @click="compute">compute</v-btn>
-    {{result}}
-  </div>
+  <flex :class="flex">
+    <v-subheader>{{field.label || field.key}}:  {{result}}</v-subheader>
+  </flex>
 </template>
 <script>
 "use strict";
@@ -19,6 +18,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var _default = {
   name: '',
   props: ['model', 'field'],
+  computed: {
+    flex() {
+      return this.noLayout ? 'xs-12' : this.field.flex;
+    }
+
+  },
 
   data() {
     return {
@@ -32,6 +37,14 @@ var _default = {
     },
     path: {
       default: null
+    }
+  },
+  watch: {
+    rootModel: {
+      handler: function () {
+        this.compute();
+      },
+      deep: true
     }
   },
   methods: {
