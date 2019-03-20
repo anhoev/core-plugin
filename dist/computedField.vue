@@ -1,7 +1,7 @@
 <template>
-  <flex :class="flex">
+  <v-flex :class="flex">
     <v-subheader>{{field.label || field.key}}:  {{result}}</v-subheader>
-  </flex>
+  </v-flex>
 </template>
 <script>
 "use strict";
