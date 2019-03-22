@@ -1,0 +1,93 @@
+{
+    "_id": "5c3c8760bf8bf735a35ff29d",
+    "__v": 0,
+    "type": "Collection",
+    "class": null,
+    "name": "ComponentBuilder",
+    "tabs": [
+        {
+            "fields": [
+                "isProduction",
+                "renderToRoute"
+            ],
+            "_id": "5c74b84321f0cd1602fb441a",
+            "name": "Settings"
+        }
+    ],
+    "fields": [
+        {
+            "_id": "5c3c8805bf8bf735a35ff29f",
+            "schemaType": "mixed",
+            "key": "items",
+            "default": null,
+            "type": "tree",
+            "flex": null,
+            "fields": [
+                {
+                    "schemaType": "object",
+                    "type": "object",
+                    "key": "view",
+                    "fields": [
+                        {
+                            "schemaType": "string",
+                            "key": "slot",
+                            "type": "input",
+                            "addable": true,
+                            "flex": "md4"
+                        },
+                        {
+                            "schemaType": "string",
+                            "key": "component",
+                            "type": "input@select",
+                            "flex": "md4",
+                            "optionsType": "code",
+                            "options": {
+                                "_code_type_": "commonJs",
+                                "_code_": "module.exports = function ({ model }) {\n  return cms.pluginComponents;\n}"
+                            }
+                        },
+                        {
+                            "schemaType": "object",
+                            "key": "content",
+                            "type": "object@dynamic",
+                            "flex": "md12",
+                            "addable": false,
+                            "dynamicFieldsType": "code",
+                            "dynamicFields": {
+                                "_code_type_": "commonJs",
+                                "_code_": "module.exports = function getDynamicFields({ model }) {\n  const pluginFiles = cms.getList('PluginFile');\n  const pluginFile = pluginFiles.find(p => {\n    if (!p.loader) return false;\n    if (p.loader.type !== \"vue-component-loader\") return false;\n    if (p.loader.name === model.component) return true;\n    return false;\n  })\n  if (!pluginFile.loader.form) return [];\n  return cms.dynamicFormResolver(pluginFile.loader.form);\n}"
+                            },
+                            "noPanel": true
+                        }
+                    ],
+                    "default": null,
+                    "mixed": null,
+                    "dynamicFieldsType": "queryString"
+                }
+            ],
+            "children": "items",
+            "getText": {
+                "_code_type_": "commonJs",
+                "_code_": "module.exports = function getText(item) {\n   let str = ''; \n   if (item.slot) str += item.slot + ':'; \n   return `${str}${item.component}`; \n}"
+            }
+        },
+        {
+            "_id": "5c74b84321f0cd1602fb441b",
+            "schemaType": "boolean",
+            "key": "isProduction",
+            "type": "input@checkbox",
+            "label": "Production",
+            "flex": "md12"
+        },
+        {
+            "_id": "5c764724dc6711141fb5b88c",
+            "schemaType": "string",
+            "key": "renderToRoute",
+            "type": "input",
+            "label": "Render To Route",
+            "flex": "md12"
+        }
+    ],
+    "alwaysLoad": null,
+    "id": "5c3c8760bf8bf735a35ff29d"
+}
