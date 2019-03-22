@@ -44,7 +44,8 @@ var _default = {
       handler: function () {
         this.compute();
       },
-      deep: true
+      deep: true,
+      immediate: true
     }
   },
   methods: {
