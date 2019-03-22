@@ -57,7 +57,7 @@ var _default = {
   }
 };
 exports.default = _default;
-</script> 
+</script>
 <style scoped>
 
 </style>
