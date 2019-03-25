@@ -50,15 +50,16 @@ var _default = {
   },
   methods: {
     compute() {
-      const fn = _jsonFn.default.clone(this.field.fn, true, true).bind(this.rootModel);
+      const fn = _jsonFn.default.clone(this.field.fn, true, true);
 
-      this.result = fn();
+      console.log(this.rootModel);
+      this.result = fn(this.rootModel);
     }
 
   }
 };
 exports.default = _default;
-</script>
+</script> 
 <style scoped>
 
 </style>
