@@ -1,0 +1,57 @@
+{
+  "_id": "5c5ed7b339b0401e3f1246fc",
+  "__v": 0,
+  "class": "string",
+  "id": "5c5ed7b339b0401e3f1246fc",
+  "tabs": [],
+  "fields": [
+    {
+      "_id": "5c5ed80239b0401e3f124704",
+      "schemaType": "string",
+      "key": "label",
+      "type": "input",
+      "flex": "md6"
+    },
+    {
+      "_id": "5c5ed80239b0401e3f124703",
+      "schemaType": "string",
+      "key": "flex",
+      "type": "input@select",
+      "flex": "md6",
+      "optionsType": "onlyValue",
+      "options": [
+        "md2",
+        "md3",
+        "md4",
+        "md5",
+        "md6",
+        "md12"
+      ]
+    },
+    {
+      "_id": "5c5ed80239b0401e3f124702",
+      "schemaType": "string",
+      "key": "ref",
+      "type": "input",
+      "flex": "md6"
+    },
+    {
+      "_id": "5c5ed80239b0401e3f124701",
+      "schemaType": "string",
+      "key": "labelProp",
+      "type": "input",
+      "flex": "md6"
+    },
+    {
+      "_id": "5c5ed90d39b0401e3f124718",
+      "schemaType": "mixed",
+      "key": "onChange",
+      "type": "editor",
+      "codeType": "commonJs",
+      "height": "200px",
+      "addable": true
+    }
+  ],
+  "name": "ref-select-static",
+  "extensions": []
+}
