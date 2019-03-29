@@ -67,7 +67,7 @@
       "optionsType": "code",
       "options": {
         "_code_type_": "commonJs",
-        "_code_": "module.exports = function getOptions({rootModel}) {\n   const _type = rootModel.type; \n   if (!_type) return []; \n   return cms.Types[_type].columns; \n}"
+        "_code_": "module.exports = function getOptions({rootModel}) {\n   const _type = rootModel.type; \n   if (!_type) return []; \n   return cms.getColumns('ComponentBuilder').map(c => ({text: c.label, value: c.key})) \n}"
       }
     },
     {
