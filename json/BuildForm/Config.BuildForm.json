@@ -5,7 +5,6 @@
   "alwaysLoad": true,
   "class": null,
   "name": "Config",
-  "id": "5c40af7da875ee06569245ca",
   "tabs": [
     {
       "fields": [
@@ -31,8 +30,8 @@
       "flex": "md6",
       "optionsType": "code",
       "options": {
-        "_code_type_": "commonJs",
-        "_code_": "module.exports = function getOptions() { \n  return Object.keys(cms.Types); \n}"
+        "_code_": "module.exports = function getOptions() { \n  return Object.keys(cms.Types); \n}",
+        "_code_type_": "commonJs"
       }
     },
     {
@@ -42,8 +41,8 @@
       "flex": "md6",
       "optionsType": "code",
       "options": {
-        "_code_type_": "commonJs",
-        "_code_": "module.exports = function getOptions({rootModel}) {\n   const _type = rootModel.type; \n   if (!_type) return [];\n   return cms.Types[_type].paths.map(p => p.path); \n}"
+        "_code_": "module.exports = function getOptions({rootModel}) {\n   const _type = rootModel.type; \n   if (!_type) return [];\n   return cms.Types[_type].paths.map(p => p.path); \n}",
+        "_code_type_": "commonJs"
       },
       "key": "dynamicQuery",
       "fields": [
@@ -66,8 +65,8 @@
       "flex": "md6",
       "optionsType": "code",
       "options": {
-        "_code_type_": "commonJs",
-        "_code_": "module.exports = function getOptions({rootModel}) {\n   const _type = rootModel.type; \n   if (!_type) return []; \n   return cms.getColumns(_type).map(c => ({text: c.label, value: c.key})) \n}"
+        "_code_": "module.exports = function getOptions({rootModel}) {\n   const _type = rootModel.type; \n   if (!_type) return []; \n   return cms.getColumns(_type).map(c => ({text: c.label, value: c.key})) \n}",
+        "_code_type_": "commonJs"
       }
     },
     {
@@ -92,8 +91,8 @@
       "flex": "md6",
       "optionsType": "code",
       "options": {
-        "_code_type_": "commonJs",
-        "_code_": "module.exports = function getOptions() {\n   return cms.pluginComponents; \n}"
+        "_code_": "module.exports = function getOptions() {\n   return cms.pluginComponents; \n}",
+        "_code_type_": "commonJs"
       }
     },
     {
@@ -154,8 +153,8 @@
       "flex": "md6",
       "optionsType": "code",
       "options": {
-        "_code_type_": "commonJs",
-        "_code_": "\nmodule.exports = function getOptions({ rootModel }) {\n  const acceptSchemaTypes = ['number', 'string', 'objectId'];\n  const _type = rootModel.type;\n  if (!_type) return [];\n  const acceptPath = cms.Types[_type].form.map(item => acceptSchemaTypes.indexOf(item.schemaType) >= 0 ? true : false)  \n  return cms.Types[_type].paths.filter(item => acceptPath[item.pathInForm.split('.')[0]]).map(p => p.path);\n}"
+        "_code_": "\nmodule.exports = function getOptions({ rootModel }) {\n  const acceptSchemaTypes = ['number', 'string', 'objectId'];\n  const _type = rootModel.type;\n  if (!_type) return [];\n  const acceptPath = cms.Types[_type].form.map(item => acceptSchemaTypes.indexOf(item.schemaType) >= 0 ? true : false)  \n  return cms.Types[_type].paths.filter(item => acceptPath[item.pathInForm.split('.')[0]]).map(p => p.path);\n}",
+        "_code_type_": "commonJs"
       }
     },
     {
@@ -206,8 +205,8 @@
                 "mixed"
               ],
               "isVisible": {
-                "_code_type_": "commonJs",
-                "_code_": "module.exports = function({model}) {\n  return model.preview;\n}"
+                "_code_": "module.exports = function({model}) {\n  return model.preview;\n}",
+                "_code_type_": "commonJs"
               }
             },
             {
@@ -217,8 +216,8 @@
               "flex": "md3",
               "addable": true,
               "isVisible": {
-                "_code_type_": "commonJs",
-                "_code_": "module.exports = function({model}) {\n  return model.orientation === 'vertical' || model.orientation === 'mixed';\n}"
+                "_code_": "module.exports = function({model}) {\n  return model.orientation === 'vertical' || model.orientation === 'mixed';\n}",
+                "_code_type_": "commonJs"
               }
             },
             {
@@ -228,8 +227,8 @@
               "flex": "md3",
               "addable": true,
               "isVisible": {
-                "_code_type_": "commonJs",
-                "_code_": "module.exports = function({model}) {\n  return model.orientation === 'horizontal' || model.orientation === 'mixed';\n}"
+                "_code_": "module.exports = function({model}) {\n  return model.orientation === 'horizontal' || model.orientation === 'mixed';\n}",
+                "_code_type_": "commonJs"
               }
             }
           ]
@@ -261,12 +260,19 @@
           "schemaType": "string",
           "key": "field",
           "type": "input@select",
-          "flex": "md12",
+          "flex": "md6",
           "optionsType": "code",
           "options": {
-            "_code_type_": "commonJs",
-            "_code_": "module.exports = function getOptions({rootModel}) {\n   const _type = rootModel.type; \n   if (!_type) return []; \n   return cms.getColumns(_type).map(c => ({text: c.label, value: c.key})) \n}"
+            "_code_": "module.exports = function getOptions({rootModel}) {\n   const _type = rootModel.type; \n   if (!_type) return []; \n   return cms.getColumns(_type).map(c => ({text: c.key, value: c.key}))\n}",
+            "_code_type_": "commonJs"
           }
+        },
+        {
+          "schemaType": "boolean",
+          "key": "multiLine",
+          "default": "",
+          "type": "input@checkbox",
+          "flex": "md6"
         },
         {
           "schemaType": "mixed",
@@ -278,5 +284,6 @@
       "flex": "md12"
     }
   ],
+  "id": "5c40af7da875ee06569245ca",
   "extensions": []
 }
