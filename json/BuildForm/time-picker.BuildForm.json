@@ -1,0 +1,34 @@
+{
+  "_id": "5ca33f3cf8150e04e8a66e56",
+  "__v": 0,
+  "class": "string",
+  "extensions": [],
+  "fields": [
+    {
+      "_id": "5ca33f66f8150e04e8a66e58",
+      "schemaType": "string",
+      "key": "label",
+      "type": "input",
+      "flex": "md6"
+    },
+    {
+      "_id": "5ca33f66f8150e04e8a66e57",
+      "schemaType": "string",
+      "key": "flex",
+      "type": "input@select",
+      "optionsType": "onlyValue",
+      "options": [
+        "md2",
+        "md3",
+        "md4",
+        "md5",
+        "md6",
+        "md12"
+      ],
+      "flex": "md6"
+    }
+  ],
+  "id": "5ca33f3cf8150e04e8a66e56",
+  "name": "time-picker",
+  "tabs": []
+}
