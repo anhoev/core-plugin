@@ -52,8 +52,7 @@ var _default = {
     compute() {
       const fn = _jsonFn.default.clone(this.field.fn, true, true);
 
-      console.log(this.rootModel);
-      this.result = fn(this.rootModel);
+      this.result = fn.bind(this.rootModel)();
     }
 
   }
