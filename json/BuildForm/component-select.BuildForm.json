@@ -1,0 +1,34 @@
+{
+  "_id": "5c99f55149ee8b4788d30e7a",
+  "__v": 0,
+  "class": "string",
+  "extensions": [],
+  "fields": [
+    {
+      "_id": "5c5ed80239b0401e3f124704",
+      "schemaType": "string",
+      "key": "label",
+      "type": "input",
+      "flex": "md6"
+    },
+    {
+      "_id": "5c5ed80239b0401e3f124703",
+      "schemaType": "string",
+      "key": "flex",
+      "type": "input@select",
+      "flex": "md6",
+      "optionsType": "onlyValue",
+      "options": [
+        "md2",
+        "md3",
+        "md4",
+        "md5",
+        "md6",
+        "md12"
+      ]
+    }
+  ],
+  "name": "component-select",
+  "tabs": [],
+  "id": "5c99f55149ee8b4788d30e7a"
+}
