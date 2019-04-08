@@ -88,6 +88,9 @@
       }
     },
     methods: {
+      onChange(e) {
+        if (this.field.onChange) this.field.onChange(e.value, this.rootModel, this.model);
+      },
       getPlugin(items) {
         for (let i = 0; i < items.length; i++) {
           if (items[i].name !== 'dist') {
