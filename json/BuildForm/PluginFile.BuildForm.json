@@ -22,7 +22,11 @@
       "key": "plugin",
       "default": null,
       "type": "input@select",
-      "optionsType": "code"
+      "optionsType": "code",
+      "options": {
+        "_code_": "module.exports = function () {\n  return cms.plugins;\n}",
+        "_code_type_": "commonJs"
+      }
     },
     {
       "_id": "5c3d922e39e5f23b9d7fe985",
@@ -80,6 +84,10 @@
               "key": "form",
               "type": "object@dynamic",
               "dynamicFieldsType": "code",
+              "dynamicFields": {
+                "_code_": "module.exports = function getDynamicFields({ model }) {\n  return [cms.Types.BuildForm.form.find(f => f.key === 'fields')];\n}",
+                "_code_type_": "commonJs"
+              },
               "noPanel": true
             }
           ],

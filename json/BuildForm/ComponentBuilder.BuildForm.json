@@ -46,7 +46,11 @@
               "key": "component",
               "type": "input@select",
               "flex": "md4",
-              "optionsType": "code"
+              "optionsType": "code",
+              "options": {
+                "_code_": "module.exports = function ({ model }) {\n  return cms.pluginComponents;\n}",
+                "_code_type_": "commonJs"
+              }
             },
             {
               "schemaType": "object",
@@ -55,6 +59,10 @@
               "flex": "md12",
               "addable": false,
               "dynamicFieldsType": "code",
+              "dynamicFields": {
+                "_code_": "module.exports = function getDynamicFields({ model }) {\n  const pluginFiles = cms.getList('PluginFile');\n  const pluginFile = pluginFiles.find(p => {\n    if (!p.loader) return false;\n    if (p.loader.type !== \"vue-component-loader\") return false;\n    if (p.loader.name === model.component) return true;\n    return false;\n  })\n  if (!pluginFile.loader.form) return [];\n  console.log(pluginFile.loader.form.fields);\n  return pluginFile.loader.form.fields;\n}",
+                "_code_type_": "commonJs"
+              },
               "noPanel": true
             }
           ],
@@ -63,7 +71,11 @@
           "dynamicFieldsType": "queryString"
         }
       ],
-      "children": "items"
+      "children": "items",
+      "getText": {
+        "_code_": "module.exports = function getText(item) {\n   let str = ''; \n   if (item.slot) str += item.slot + ':'; \n   return `${str}${item.component}`; \n}",
+        "_code_type_": "commonJs"
+      }
     },
     {
       "_id": "5c945bc87a578a5d2b27ab2d",
