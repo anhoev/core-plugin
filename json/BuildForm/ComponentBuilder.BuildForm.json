@@ -12,7 +12,9 @@
         "renderToRoute",
         "name",
         "renderInAdminPage",
-        "renderInIframe"
+        "renderInIframe",
+        "registerAsVueComponent",
+        "props"
       ],
       "_id": "5c74b84321f0cd1602fb441a",
       "name": "Settings"
@@ -44,11 +46,7 @@
               "key": "component",
               "type": "input@select",
               "flex": "md4",
-              "optionsType": "code",
-              "options": {
-                "_code_": "module.exports = function ({ model }) {\n  return cms.pluginComponents;\n}",
-                "_code_type_": "commonJs"
-              }
+              "optionsType": "code"
             },
             {
               "schemaType": "object",
@@ -57,10 +55,6 @@
               "flex": "md12",
               "addable": false,
               "dynamicFieldsType": "code",
-              "dynamicFields": {
-                "_code_": "module.exports = function getDynamicFields({ model }) {\n  const pluginFiles = cms.getList('PluginFile');\n  const pluginFile = pluginFiles.find(p => {\n    if (!p.loader) return false;\n    if (p.loader.type !== \"vue-component-loader\") return false;\n    if (p.loader.name === model.component) return true;\n    return false;\n  })\n  if (!pluginFile.loader.form) return [];\n  return cms.dynamicFormResolver(pluginFile.loader.form);\n}",
-                "_code_type_": "commonJs"
-              },
               "noPanel": true
             }
           ],
@@ -69,11 +63,7 @@
           "dynamicFieldsType": "queryString"
         }
       ],
-      "children": "items",
-      "getText": {
-        "_code_": "module.exports = function getText(item) {\n   let str = ''; \n   if (item.slot) str += item.slot + ':'; \n   return `${str}${item.component}`; \n}",
-        "_code_type_": "commonJs"
-      }
+      "children": "items"
     },
     {
       "_id": "5c945bc87a578a5d2b27ab2d",
@@ -110,6 +100,24 @@
       "schemaType": "boolean",
       "key": "renderInIframe",
       "type": "input@checkbox"
+    },
+    {
+      "_id": "5cac081678e22f41dfb9d33f",
+      "schemaType": "boolean",
+      "key": "registerAsVueComponent",
+      "type": "input@checkbox"
+    },
+    {
+      "_id": "5cac239278e22f41dfb9d349",
+      "schemaType": "array",
+      "key": "props",
+      "fields": [
+        {
+          "schemaType": "string"
+        }
+      ],
+      "type": "input@multiSelect",
+      "optionsType": null
     }
   ],
   "alwaysLoad": true,

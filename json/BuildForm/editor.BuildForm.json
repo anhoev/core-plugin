@@ -5,6 +5,7 @@
   "alwaysLoad": null,
   "class": "mixed",
   "name": "editor",
+  "id": "5c3dab7730f9c33c9c3a3a26",
   "tabs": [],
   "fields": [
     {
@@ -49,8 +50,13 @@
       "type": "input",
       "label": null,
       "flex": "md6"
+    },
+    {
+      "_id": "5c5ede2a6bd11f1ee9a46dd6",
+      "schemaType": "boolean",
+      "key": "addable",
+      "type": "input@checkbox"
     }
   ],
-  "id": "5c3dab7730f9c33c9c3a3a26",
   "extensions": []
 }

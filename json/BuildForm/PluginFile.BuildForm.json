@@ -5,6 +5,7 @@
   "alwaysLoad": true,
   "class": null,
   "name": "PluginFile",
+  "id": "5c3d90e839e5f23b9d7fe97a",
   "tabs": [
     {
       "fields": [
@@ -21,11 +22,7 @@
       "key": "plugin",
       "default": null,
       "type": "input@select",
-      "optionsType": "code",
-      "options": {
-        "_code_type_": "commonJs",
-        "_code_": "module.exports = function () {\n  return cms.plugins;\n}"
-      }
+      "optionsType": "code"
     },
     {
       "_id": "5c3d922e39e5f23b9d7fe985",
@@ -79,14 +76,11 @@
               "flex": null
             },
             {
-              "schemaType": "string",
+              "schemaType": "object",
               "key": "form",
-              "type": "input@select",
-              "optionsType": "code",
-              "options": {
-                "_code_type_": "commonJs",
-                "_code_": "module.exports = function ({ model }) {\n  return cms.Types.BuildForm.list.map(f => f.name);\n}"
-              }
+              "type": "object@dynamic",
+              "dynamicFieldsType": "code",
+              "noPanel": true
             }
           ],
           "default": null,
@@ -234,6 +228,5 @@
       "mixed": null
     }
   ],
-  "id": "5c3d90e839e5f23b9d7fe97a",
   "extensions": []
 }
