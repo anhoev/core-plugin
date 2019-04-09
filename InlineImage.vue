@@ -1,23 +1,28 @@
 <template>
   <v-flex :class="flex" class="px-2">
-    <v-layout style="display: block;">
-      <v-text-field
-          :label="field.label || field.key"
-          @click.stop="selectFile"
-          v-model="imageName"
-          prepend-icon="image"
-          readonly
-      >
-        <v-icon slot="append" @click="clearFile">clear</v-icon>
-      </v-text-field>
-      <v-img :src="imageUrl" v-if="imageUrl" height="300" contain ref="image">
-        <v-btn fab small dark
-               @click="showDialog = true"
-               color="blue darken-1"
-               style="position: absolute; top: 3px; right: 3px;">
+    <v-layout row wrap>
+      <v-flex xs12 sm12>
+        <v-text-field
+            :label="field.label || field.key"
+            @click.stop="selectFile"
+            v-model="imageName"
+            prepend-icon="image"
+            readonly
+        >
+          <v-icon slot="append" @click="clearFile">clear</v-icon>
+        </v-text-field>
+      </v-flex>
+      <v-flex xs6 align-self-start v-if="imageUrl">
+        <v-img :src="imageUrl" contain ref="image"></v-img>
+      </v-flex>
+      <v-flex xs6 d-block style="text-align: right;" v-if="imageUrl">
+        <v-btn flat icon
+               @click="openDialog"
+        >
           <v-icon>edit</v-icon>
         </v-btn>
-      </v-img>
+        <div> Resolution: {{ imageWidth }} x {{ imageHeight }}</div>
+      </v-flex>
       <input
           type="file"
           v-show="false"
@@ -26,7 +31,7 @@
           @change="onFileSelected"
       />
     </v-layout>
-    <v-dialog v-model="showDialog" v-if="imageUrl" max-width="600">
+    <v-dialog v-model="showDialog" v-if="imageUrl" max-width="600" lazy>
       <v-card>
         <v-card-title
             class="headline"
@@ -74,7 +79,7 @@
               ></v-text-field>
             </v-flex>
             <v-flex xs12>
-              <v-img :src="dialogImageUrl" :width="dialogImageWidth" max-width="550"></v-img>
+              <v-img :src="dialogImageUrl" :width="dialogImageWidth" max-width="568"></v-img>
             </v-flex>
           </v-layout>
         </v-card-text>
@@ -88,7 +93,6 @@
 </template>
 
 <script>
-
   function formatBytes(bytes, decimals) {
     if (0 === bytes) {
       return '0 Bytes';
@@ -121,18 +125,22 @@
       noLayout: { default: null }
     },
     mounted() {
-      if (this.model[this.field.key]) {
-        this.imageWidth = this.$refs.image.image.naturalWidth;
-        this.imageHeight = this.$refs.image.image.naturalHeight;
-        this.initDialog();
-      }
+      setTimeout(()=> {
+        if (this.$refs.image && this.model[this.field.key]) {
+          this.imageWidth = this.$refs.image.image.naturalWidth;
+          this.imageHeight = this.$refs.image.image.naturalHeight;
+        }
+      }, 100);
     },
     computed: {
       flex() {
         return this.noLayout ? 'xs-12' : this.field.flex;
       },
       imageSize() {
-        return formatBytes(Math.ceil(this.imageUrl.length * 4 / 3));
+        if (this.dialogImageUrl) {
+          return formatBytes(this.dialogImageUrl.length);
+        }
+        return 0;
       },
       dialogImageHeight: {
         get() {
@@ -182,7 +190,6 @@
               this.dialogImageWidth = this.imageWidth;
             };
           };
-          this.initDialog();
         }
       },
       clearFile() {
@@ -190,25 +197,17 @@
         this.imageUrl = '';
         this.imageWidth = 0;
         this.imageHeight = 0;
-        this.initDialog();
       },
       initDialog() {
         this.resolutionSliderModel = 100;
         this.compressionSliderModel = 100;
+        this.dialogImageUrl = this.imageUrl;
         this.dialogImageWidth = this.imageWidth;
       },
       save() {
-        // let canvas = document.createElement('canvas');
-        // canvas.width = this.dialogWidth;
-        // canvas.height = this.dialogHeight;
-        // const image = new Image();
-        // image.src = this.imageUrl;
-        // let context = canvas.getContext('2d').drawImage(image, 0, 0, canvas.width, canvas.height);
-        // this.imageUrl = canvas.toDataURL('image/jpg', this.compressionSliderModel / 100);
         this.imageUrl = this.dialogImageUrl;
         this.imageWidth = this.dialogImageWidth;
         this.imageHeight = this.dialogImageHeight;
-        this.initDialog();
         this.showDialog = false;
       },
       getPreviewImageUrl() {
@@ -220,6 +219,10 @@
         let context = canvas.getContext('2d').drawImage(image, 0, 0, canvas.width, canvas.height);
         let quality = this.compressionSliderModel / 100;
         this.dialogImageUrl = canvas.toDataURL('image/jpeg', quality);
+      },
+      openDialog() {
+        this.initDialog();
+        this.showDialog = true;
       }
     },
     watch: {
