@@ -1,7 +1,7 @@
 <template>
   <v-flex :class="flex" class="px-2">
     <v-layout row>
-      <v-menu v-model="menu"
+      <v-menu v-model="menu" z-index="10000"
               :close-on-content-click="false"
       >
         <v-text-field slot="activator"
