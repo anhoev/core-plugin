@@ -41,7 +41,7 @@
           @change="onFileSelected"
       />
     </v-layout>
-    <v-dialog v-model="showDialog" v-if="imageUrl" max-width="600" lazy>
+    <v-dialog v-model="showDialog" v-if="imageUrl" max-width="600" persistent lazy>
       <v-card>
         <v-card-title
             class="headline"
@@ -151,6 +151,7 @@
           this.originalImageHeight = this.$refs.image.naturalHeight;
           this.imageWidth = this.$refs.image.naturalWidth;
           this.imageHeight = this.$refs.image.naturalHeight;
+          this.dialogImageWidth = this.$refs.image.naturalWidth;
           this.imageAspectRatio = this.imageWidth / this.imageHeight;
         }
       }, 100);
@@ -229,8 +230,12 @@
         this.compressionSliderModel = 100;
       },
       initDialog() {
-        this.dialogImageWidth = this.imageWidth;
-        this.getPreviewImageUrl();
+        if (this.imageUrl === this.originalImageUrl) {
+          this.dialogImageUrl = this.originalImageUrl;
+        } else {
+          this.dialogImageWidth = this.imageWidth;
+          // this.getPreviewImageUrl();
+        }
       },
       save() {
         this.imageUrl = this.dialogImageUrl;
@@ -244,9 +249,11 @@
         canvas.height = this.dialogImageHeight;
         const image = new Image();
         image.src = this.originalImageUrl;
-        let context = canvas.getContext('2d').drawImage(image, 0, 0, canvas.width, canvas.height);
-        let quality = this.compressionSliderModel / 100;
-        this.dialogImageUrl = canvas.toDataURL('image/jpeg', quality);
+        image.onload = () => {
+          let context = canvas.getContext('2d').drawImage(image, 0, 0, canvas.width, canvas.height);
+          let quality = this.compressionSliderModel / 100;
+          this.dialogImageUrl = canvas.toDataURL('image/jpeg', quality);
+        }
       },
       openDialog() {
         this.initDialog();
