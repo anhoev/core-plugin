@@ -2,12 +2,12 @@
   <v-flex :class="flex" class="px-2">
     <v-layout row="" wrap="">
       <v-flex xs12="" sm12="">
-        <v-text-field :label="field.label || field.key" @click.stop="selectFile" v-model="imageName" prepend-icon="image" readonly="">
+        <v-text-field :label="field.label || field.key" placeholder="Upload image" @click.stop="selectFile" v-model="imageName" prepend-icon="image" readonly="">
           <v-icon slot="append" @click="clearFile">clear</v-icon>
         </v-text-field>
       </v-flex>
       <v-flex xs6="" align-self-start="" v-if="imageUrl" fill-height="">
-        <img :src="imageUrl" ref="image" alt="" style="max-height: 87px;">
+        <img :src="imageUrl" ref="image" alt="" style="height: 87px;">
       </v-flex>
       <v-flex xs6="" v-if="imageUrl">
         <v-layout column="" justify-space-between="" align-end="" fill-height="">
@@ -18,7 +18,7 @@
           </v-flex>
           <v-flex shrink="" style="margin-right: 15px; margin-bottom: 4px;">
             <v-subheader class="grey--text text--lighten-1 pa-0">
-              Resolution: {{ imageWidth }} x {{ imageHeight }}
+              Resolution: {{ imageWidth }} x {{ imageHeight }} ({{ imageSize }})
             </v-subheader>
           </v-flex>
         </v-layout>
@@ -29,7 +29,7 @@
     <v-dialog v-model="showDialog" v-if="imageUrl" max-width="600" lazy="">
       <v-card>
         <v-card-title class="headline" primary-title="" style="display: block;">
-          Image size: {{ imageSize }}<br>
+          Image size: {{ dialogImageSize }}<br>
           <span class="grey--text text--lighten-1" style="font-size: 13px;">
             Original image resolution: {{ originalImageWidth }} x {{ originalImageHeight }}
           </span>
@@ -139,6 +139,12 @@ var _default = {
     },
 
     imageSize() {
+      if (this.imageUrl) {
+        return formatBytes(this.imageUrl.length);
+      }
+    },
+
+    dialogImageSize() {
       if (this.dialogImageUrl) {
         return formatBytes(this.dialogImageUrl.length);
       }
@@ -203,6 +209,7 @@ var _default = {
             this.imageWidth = image.naturalWidth;
             this.imageHeight = image.naturalHeight;
             this.imageAspectRatio = this.originalImageWidth / this.originalImageHeight;
+            this.compressionSliderModel = 100;
           };
         };
       }
@@ -213,11 +220,12 @@ var _default = {
       this.imageUrl = '';
       this.imageWidth = 0;
       this.imageHeight = 0;
+      this.compressionSliderModel = 100;
     },
 
     initDialog() {
-      this.dialogImageUrl = this.originalImageUrl;
       this.dialogImageWidth = this.imageWidth;
+      this.getPreviewImageUrl();
     },
 
     save() {
