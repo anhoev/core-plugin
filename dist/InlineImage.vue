@@ -24,7 +24,7 @@
         </v-layout>
       </v-flex>
 
-      <input type="file" v-show="false" ref="uploadButton" accept="image/*" @change="onFileSelected">
+      <input type="file" v-show="false" ref="uploadButton" accept="image/*" @change="onFileSelected($event);onChange($event)">
     </v-layout>
     <v-dialog v-model="showDialog" v-if="imageUrl" max-width="600" persistent="" lazy="">
       <v-card>
@@ -256,6 +256,10 @@ var _default = {
     openDialog() {
       this.initDialog();
       this.showDialog = true;
+    },
+
+    onChange(e) {
+      if (this.field.onChange) this.field.onChange(e.target.files[0].name, this.rootModel, this.model);
     }
 
   },

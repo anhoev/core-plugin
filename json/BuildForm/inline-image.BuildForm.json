@@ -24,7 +24,16 @@
         "md5",
         "md6",
         "md12"
-      ]
+      ],
+      "default": "md6"
+    },
+    {
+      "_id": "5cadbffb07c3c83b743f0576",
+      "schemaType": "mixed",
+      "key": "onChange",
+      "type": "editor",
+      "codeType": "commonJs",
+      "height": "200px"
     }
   ],
   "id": "5cac416c8af207446c2819c6",
