@@ -1,0 +1,33 @@
+{
+  "_id": "5cac416c8af207446c2819c6",
+  "__v": 0,
+  "class": "string",
+  "extensions": [],
+  "fields": [
+    {
+      "_id": "5cac41df8af207446c2819c8",
+      "schemaType": "string",
+      "key": "label",
+      "type": "input",
+      "flex": "md6"
+    },
+    {
+      "_id": "5cac41df8af207446c2819c7",
+      "schemaType": "string",
+      "key": "flex",
+      "type": "input@select",
+      "optionsType": "onlyValue",
+      "options": [
+        "md2",
+        "md3",
+        "md4",
+        "md5",
+        "md6",
+        "md12"
+      ]
+    }
+  ],
+  "id": "5cac416c8af207446c2819c6",
+  "name": "inline-image",
+  "tabs": []
+}
