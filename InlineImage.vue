@@ -116,7 +116,8 @@
         resolutionSliderModel: 0,
         compressionSliderModel: 0,
         dialogImageWidth: 0,
-        dialogImageUrl: ''
+        dialogImageUrl: '',
+        imageAspectRatio: 0,
       };
     },
     inject: {
@@ -129,6 +130,8 @@
         if (this.$refs.image && this.model[this.field.key]) {
           this.imageWidth = this.$refs.image.image.naturalWidth;
           this.imageHeight = this.$refs.image.image.naturalHeight;
+          this.imageAspectRatio = this.imageWidth / this.imageHeight;
+          console.log(this.imageAspectRatio);
         }
       }, 100);
     },
@@ -144,13 +147,10 @@
       },
       dialogImageHeight: {
         get() {
-          const ratio = this.imageWidth / this.imageHeight;
-          return Math.floor(this.dialogImageWidth / ratio);
+          return Math.floor(this.dialogImageWidth / this.imageAspectRatio);
         },
         set(value) {
-          const ratio = this.imageWidth / this.imageHeight;
-          this.dialogImageWidth = Math.floor(value * ratio);
-          return value;
+          this.dialogImageWidth = Math.floor(value * this.imageAspectRatio);
         }
       },
       imageUrl: {
@@ -184,10 +184,10 @@
             this.dialogImageUrl = this.imageUrl;
             let image = new Image();
             image.src = this.imageUrl;
-            image.onload = e => {
+            image.onload = () => {
               this.imageWidth = image.naturalWidth;
               this.imageHeight = image.naturalHeight;
-              this.dialogImageWidth = this.imageWidth;
+              this.imageAspectRatio = this.imageWidth / this.imageHeight;
             };
           };
         }
