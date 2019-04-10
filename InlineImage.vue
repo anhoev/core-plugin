@@ -13,7 +13,7 @@
         </v-text-field>
       </v-flex>
       <v-flex xs6 align-self-start v-if="imageUrl">
-        <v-img :src="imageUrl" contain ref="image"></v-img>
+        <v-img :src="imageUrl" contain ref="image" max-height="87"></v-img>
       </v-flex>
       <v-flex xs6 d-block style="text-align: right;" v-if="imageUrl">
         <v-btn flat icon
