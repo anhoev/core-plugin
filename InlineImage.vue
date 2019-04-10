@@ -15,7 +15,7 @@
       <v-flex xs6 align-self-start v-if="imageUrl">
         <v-img :src="imageUrl" contain ref="image" max-height="87"></v-img>
       </v-flex>
-      <v-flex xs6 d-block style="text-align: right;" v-if="imageUrl">
+      <v-flex xs6 d-block align-self-end v-if="imageUrl" style="text-align: right; margin-bottom: -6px;">
         <v-btn flat icon
                @click="openDialog"
         >
@@ -117,7 +117,7 @@
         compressionSliderModel: 0,
         dialogImageWidth: 0,
         dialogImageUrl: '',
-        imageAspectRatio: 0,
+        imageAspectRatio: 0
       };
     },
     inject: {
@@ -126,7 +126,7 @@
       noLayout: { default: null }
     },
     mounted() {
-      setTimeout(()=> {
+      setTimeout(() => {
         if (this.$refs.image && this.model[this.field.key]) {
           this.imageWidth = this.$refs.image.image.naturalWidth;
           this.imageHeight = this.$refs.image.image.naturalHeight;
