@@ -12,17 +12,26 @@
           <v-icon slot="append" @click="clearFile">clear</v-icon>
         </v-text-field>
       </v-flex>
-      <v-flex xs6 align-self-start v-if="imageUrl">
-        <v-img :src="imageUrl" contain ref="image" max-height="87"></v-img>
+      <v-flex xs6 align-self-start v-if="imageUrl" fill-height>
+        <img :src="imageUrl" ref="image" alt="" style="max-height: 87px;" />
       </v-flex>
-      <v-flex xs6 d-block align-self-end v-if="imageUrl" style="text-align: right; margin-bottom: -6px;">
-        <v-btn flat icon
-               @click="openDialog"
-        >
-          <v-icon>edit</v-icon>
-        </v-btn>
-        <div> Resolution: {{ imageWidth }} x {{ imageHeight }}</div>
+      <v-flex xs6 v-if="imageUrl">
+        <v-layout column justify-space-between align-end fill-height>
+          <v-flex shrink>
+            <v-btn flat icon color="grey"
+                   @click="openDialog"
+            >
+              <v-icon>edit</v-icon>
+            </v-btn>
+          </v-flex>
+          <v-flex shrink style="margin-right: 15px; margin-bottom: 4px;">
+            <v-subheader class="grey--text text--lighten-1 pa-0">
+              Resolution: {{ imageWidth }} x {{ imageHeight }}
+            </v-subheader>
+          </v-flex>
+        </v-layout>
       </v-flex>
+
       <input
           type="file"
           v-show="false"
@@ -36,8 +45,12 @@
         <v-card-title
             class="headline"
             primary-title
+            style="display: block;"
         >
-          Image size: {{ imageSize }}
+          Image size: {{ imageSize }}<br />
+          <span class="grey--text text--lighten-1" style="font-size: 13px;">
+            Original image resolution: {{ originalImageWidth }} x {{ originalImageHeight }}
+          </span>
         </v-card-title>
         <v-card-text>
           <v-layout row wrap>
@@ -84,8 +97,10 @@
           </v-layout>
         </v-card-text>
         <v-card-actions>
-          <v-btn flat @click="showDialog = false">Cancel</v-btn>
-          <v-btn flat @click="save">Save</v-btn>
+          <v-layout align-center justify-end row fill-height>
+            <v-btn flat color="blue darken-1" @click="showDialog = false">Cancel</v-btn>
+            <v-btn flat color="success" @click="save">Save</v-btn>
+          </v-layout>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -113,10 +128,12 @@
         imageWidth: 0,
         imageHeight: 0,
         showDialog: false,
-        resolutionSliderModel: 0,
-        compressionSliderModel: 0,
+        compressionSliderModel: 100,
         dialogImageWidth: 0,
         dialogImageUrl: '',
+        originalImageUrl: '',
+        originalImageWidth: 0,
+        originalImageHeight: 0,
         imageAspectRatio: 0
       };
     },
@@ -126,12 +143,14 @@
       noLayout: { default: null }
     },
     mounted() {
+      this.originalImageUrl = this.model[this.field.key];
       setTimeout(() => {
         if (this.$refs.image && this.model[this.field.key]) {
-          this.imageWidth = this.$refs.image.image.naturalWidth;
-          this.imageHeight = this.$refs.image.image.naturalHeight;
+          this.originalImageWidth = this.$refs.image.naturalWidth;
+          this.originalImageHeight = this.$refs.image.naturalHeight;
+          this.imageWidth = this.$refs.image.naturalWidth;
+          this.imageHeight = this.$refs.image.naturalHeight;
           this.imageAspectRatio = this.imageWidth / this.imageHeight;
-          console.log(this.imageAspectRatio);
         }
       }, 100);
     },
@@ -181,13 +200,16 @@
           fileReader.readAsDataURL(file);
           fileReader.onload = e => {
             this.imageUrl = e.target.result;
+            this.originalImageUrl = e.target.result;
             this.dialogImageUrl = this.imageUrl;
             let image = new Image();
             image.src = this.imageUrl;
             image.onload = () => {
+              this.originalImageWidth = image.naturalWidth;
+              this.originalImageHeight = image.naturalHeight;
               this.imageWidth = image.naturalWidth;
               this.imageHeight = image.naturalHeight;
-              this.imageAspectRatio = this.imageWidth / this.imageHeight;
+              this.imageAspectRatio = this.originalImageWidth / this.originalImageHeight;
             };
           };
         }
@@ -199,9 +221,7 @@
         this.imageHeight = 0;
       },
       initDialog() {
-        this.resolutionSliderModel = 100;
-        this.compressionSliderModel = 100;
-        this.dialogImageUrl = this.imageUrl;
+        this.dialogImageUrl = this.originalImageUrl;
         this.dialogImageWidth = this.imageWidth;
       },
       save() {
@@ -215,7 +235,7 @@
         canvas.width = this.dialogImageWidth;
         canvas.height = this.dialogImageHeight;
         const image = new Image();
-        image.src = this.imageUrl;
+        image.src = this.originalImageUrl;
         let context = canvas.getContext('2d').drawImage(image, 0, 0, canvas.width, canvas.height);
         let quality = this.compressionSliderModel / 100;
         this.dialogImageUrl = canvas.toDataURL('image/jpeg', quality);
