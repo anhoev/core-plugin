@@ -4,6 +4,7 @@
       <v-flex xs12 sm12>
         <v-text-field
             :label="field.label || field.key"
+            placeholder="Upload image"
             @click.stop="selectFile"
             v-model="imageName"
             prepend-icon="image"
@@ -13,7 +14,7 @@
         </v-text-field>
       </v-flex>
       <v-flex xs6 align-self-start v-if="imageUrl" fill-height>
-        <img :src="imageUrl" ref="image" alt="" style="max-height: 87px;" />
+        <img :src="imageUrl" ref="image" alt="" style="height: 87px;" />
       </v-flex>
       <v-flex xs6 v-if="imageUrl">
         <v-layout column justify-space-between align-end fill-height>
@@ -26,7 +27,7 @@
           </v-flex>
           <v-flex shrink style="margin-right: 15px; margin-bottom: 4px;">
             <v-subheader class="grey--text text--lighten-1 pa-0">
-              Resolution: {{ imageWidth }} x {{ imageHeight }}
+              Resolution: {{ imageWidth }} x {{ imageHeight }} ({{ imageSize }})
             </v-subheader>
           </v-flex>
         </v-layout>
@@ -37,17 +38,17 @@
           v-show="false"
           ref="uploadButton"
           accept="image/*"
-          @change="onFileSelected"
+          @change="onFileSelected($event);onChange($event)"
       />
     </v-layout>
-    <v-dialog v-model="showDialog" v-if="imageUrl" max-width="600" lazy>
+    <v-dialog v-model="showDialog" v-if="imageUrl" max-width="600" persistent lazy>
       <v-card>
         <v-card-title
             class="headline"
             primary-title
             style="display: block;"
         >
-          Image size: {{ imageSize }}<br />
+          Image size: {{ dialogImageSize }}<br />
           <span class="grey--text text--lighten-1" style="font-size: 13px;">
             Original image resolution: {{ originalImageWidth }} x {{ originalImageHeight }}
           </span>
@@ -150,6 +151,7 @@
           this.originalImageHeight = this.$refs.image.naturalHeight;
           this.imageWidth = this.$refs.image.naturalWidth;
           this.imageHeight = this.$refs.image.naturalHeight;
+          this.dialogImageWidth = this.$refs.image.naturalWidth;
           this.imageAspectRatio = this.imageWidth / this.imageHeight;
         }
       }, 100);
@@ -159,6 +161,11 @@
         return this.noLayout ? 'xs-12' : this.field.flex;
       },
       imageSize() {
+        if (this.imageUrl)  {
+          return formatBytes(this.imageUrl.length);
+        }
+      },
+      dialogImageSize() {
         if (this.dialogImageUrl) {
           return formatBytes(this.dialogImageUrl.length);
         }
@@ -210,6 +217,7 @@
               this.imageWidth = image.naturalWidth;
               this.imageHeight = image.naturalHeight;
               this.imageAspectRatio = this.originalImageWidth / this.originalImageHeight;
+              this.compressionSliderModel = 100;
             };
           };
         }
@@ -219,10 +227,15 @@
         this.imageUrl = '';
         this.imageWidth = 0;
         this.imageHeight = 0;
+        this.compressionSliderModel = 100;
       },
       initDialog() {
-        this.dialogImageUrl = this.originalImageUrl;
-        this.dialogImageWidth = this.imageWidth;
+        if (this.imageUrl === this.originalImageUrl) {
+          this.dialogImageUrl = this.originalImageUrl;
+        } else {
+          this.dialogImageWidth = this.imageWidth;
+          // this.getPreviewImageUrl();
+        }
       },
       save() {
         this.imageUrl = this.dialogImageUrl;
@@ -236,13 +249,18 @@
         canvas.height = this.dialogImageHeight;
         const image = new Image();
         image.src = this.originalImageUrl;
-        let context = canvas.getContext('2d').drawImage(image, 0, 0, canvas.width, canvas.height);
-        let quality = this.compressionSliderModel / 100;
-        this.dialogImageUrl = canvas.toDataURL('image/jpeg', quality);
+        image.onload = () => {
+          let context = canvas.getContext('2d').drawImage(image, 0, 0, canvas.width, canvas.height);
+          let quality = this.compressionSliderModel / 100;
+          this.dialogImageUrl = canvas.toDataURL('image/jpeg', quality);
+        }
       },
       openDialog() {
         this.initDialog();
         this.showDialog = true;
+      },
+      onChange(e) {
+        if (this.field.onChange) this.field.onChange(e.target.files[0].name, this.rootModel, this.model);
       }
     },
     watch: {
