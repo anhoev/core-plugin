@@ -1,0 +1,70 @@
+{
+  "_id": "5caac25ee06b664df82651ba",
+  "__v": 0,
+  "class": "date",
+  "extensions": [],
+  "fields": [
+    {
+      "_id": "5caac3c0e06b664df82651bc",
+      "schemaType": "string",
+      "key": "label",
+      "type": "input",
+      "label": ""
+    },
+    {
+      "_id": "5caac3c0e06b664df82651bb",
+      "schemaType": "string",
+      "key": "flex",
+      "type": "input@select",
+      "flex": "md6",
+      "optionsType": "onlyValue",
+      "options": [
+        "md2",
+        "md3",
+        "md4",
+        "md5",
+        "md6",
+        "md12"
+      ]
+    },
+    {
+      "_id": "5cb065bb07c3c83b743f0622",
+      "schemaType": "string",
+      "key": "pickerType",
+      "type": "input@select",
+      "optionsType": "textValue",
+      "options": [
+        {
+          "value": "month",
+          "text": "Month picker"
+        },
+        {
+          "value": "date",
+          "text": "Date picker"
+        },
+        {
+          "value": "datetime",
+          "text": "Datetime Picker"
+        }
+      ],
+      "flex": "md6"
+    },
+    {
+      "_id": "5cb0727d07c3c83b743f064b",
+      "schemaType": "boolean",
+      "key": "pickSeconds",
+      "type": "input@switch",
+      "flex": "md3"
+    },
+    {
+      "_id": "5cb0727d07c3c83b743f064a",
+      "schemaType": "boolean",
+      "key": "is12Hour",
+      "type": "input@switch",
+      "flex": "md3"
+    }
+  ],
+  "id": "5caac25ee06b664df82651ba",
+  "name": "date-picker",
+  "tabs": []
+}
