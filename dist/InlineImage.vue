@@ -227,8 +227,9 @@ var _default = {
     initDialog() {
       if (this.imageUrl === this.originalImageUrl) {
         this.dialogImageUrl = this.originalImageUrl;
+        this.dialogImageWidth = this.imageWidth;
       } else {
-        this.dialogImageWidth = this.imageWidth; // this.getPreviewImageUrl();
+        this.dialogImageWidth = this.imageWidth;
       }
     },
 
