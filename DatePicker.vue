@@ -39,6 +39,7 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
+            <v-btn flat color="success" @click="getCurrentDateTime">Now</v-btn>
             <v-btn flat color="blue darken-1" @click="showMenu = false">Close</v-btn>
           </v-card-actions>
         </v-card>
@@ -63,7 +64,7 @@
       };
     },
     created() {
-      if (this.model[this.field.key] ) {
+      if (this.model[this.field.key]) {
         this.selectedDateTime = this.model[this.field.key];
         this.datePicked = true;
       }
@@ -80,21 +81,24 @@
       computedModel: {
         get() {
           this.computedModel = this.selectedDateTime;
-          if (this.field.pickerType === 'date') {
-            return this.selectedDateTime ? dayjs(this.selectedDateTime).format('DD/MM/YYYY') : '';
-          } else if (this.field.pickerType === 'month') {
-            return this.selectedDateTime ? dayjs(this.selectedDateTime).format('MM/YYYY') : '';
-          } else if (this.field.pickerType === 'datetime' && !this.field.is12Hour && !this.field.pickSeconds) {
-            return this.selectedDateTime ? dayjs(this.selectedDateTime).format('DD/MM/YYYY HH:mm') : '';
-          }  else if (this.field.pickerType === 'datetime' && this.field.is12Hour && this.field.pickSeconds) {
-            return this.selectedDateTime ? dayjs(this.selectedDateTime).format('DD/MM/YYYY hh:mm:ss A') : '';
-          } else if (this.field.pickerType === 'datetime' && this.field.pickSeconds && !this.field.is12Hour) {
-            return this.selectedDateTime ? dayjs(this.selectedDateTime).format('DD/MM/YYYY HH:mm:ss') : '';
-          } else if (this.field.pickerType === 'datetime' && this.field.is12Hour && !this.field.pickSeconds) {
-            return this.selectedDateTime ? dayjs(this.selectedDateTime).format('DD/MM/YYYY hh:mm A') : '';
-          } else  {
-            return this.selectedDateTime ? dayjs(this.selectedDateTime).format('YYYY-MM-DD[T]HH:mm') : '';
+          if (this.selectedDateTime) {
+            if (this.field.pickerType === 'date') {
+              return dayjs(this.selectedDateTime).format('DD/MM/YYYY');
+            } else if (this.field.pickerType === 'month') {
+              return dayjs(this.selectedDateTime).format('MM/YYYY');
+            } else if (this.field.pickerType === 'datetime' && !this.field.is12Hour && !this.field.pickSeconds) {
+              return dayjs(this.selectedDateTime).format('DD/MM/YYYY HH:mm');
+            } else if (this.field.pickerType === 'datetime' && this.field.is12Hour && this.field.pickSeconds) {
+              return dayjs(this.selectedDateTime).format('DD/MM/YYYY hh:mm:ss A');
+            } else if (this.field.pickerType === 'datetime' && this.field.pickSeconds && !this.field.is12Hour) {
+              return dayjs(this.selectedDateTime).format('DD/MM/YYYY HH:mm:ss');
+            } else if (this.field.pickerType === 'datetime' && this.field.is12Hour && !this.field.pickSeconds) {
+              return dayjs(this.selectedDateTime).format('DD/MM/YYYY hh:mm A');
+            } else {
+              return dayjs(this.selectedDateTime).format('YYYY-MM-DD[T]HH:mm');
+            }
           }
+          return '';
         },
         set(value) {
           console.log(value);
@@ -126,7 +130,7 @@
       },
       time: {
         get() {
-          return this.selectedDateTime ? dayjs(this.selectedDateTime).format('HH:mm') : '';
+          return this.selectedDateTime ? dayjs(this.selectedDateTime).format('HH:mm:ss') : '';
         },
         set(value) {
           const [hour, minute, seconds] = value.split(':');
@@ -145,6 +149,12 @@
       }
     },
     methods: {
+      getCurrentDateTime() {
+        this.selectedDateTime = dayjs().toDate();
+        this.datePicked = true;
+        this.showTab = 1;
+        this.showMenu = false;
+      }
     }
   };
 </script>
