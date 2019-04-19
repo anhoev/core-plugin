@@ -2,13 +2,13 @@
   <v-flex :class="flex" class="px-2">
     <v-layout row wrap>
       <v-flex xs12 sm12>
-        <v-text-field
-            :label="field.label || field.key"
-            placeholder="Upload image"
-            @click.stop="selectFile"
-            v-model="imageName"
-            prepend-icon="image"
-            readonly
+        <v-text-field class="custom-text-field"
+                      :label="field.label || field.key"
+                      placeholder="Upload image"
+                      @click.stop="selectFile"
+                      v-model="imageName"
+                      prepend-icon="image"
+                      readonly
         >
           <v-icon slot="append" @click="clearFile">clear</v-icon>
         </v-text-field>
@@ -161,7 +161,7 @@
         return this.noLayout ? 'xs-12' : this.field.flex;
       },
       imageSize() {
-        if (this.imageUrl)  {
+        if (this.imageUrl) {
           return formatBytes(this.imageUrl.length);
         }
       },
@@ -253,14 +253,16 @@
           let context = canvas.getContext('2d').drawImage(image, 0, 0, canvas.width, canvas.height);
           let quality = this.compressionSliderModel / 100;
           this.dialogImageUrl = canvas.toDataURL('image/jpeg', quality);
-        }
+        };
       },
       openDialog() {
         this.initDialog();
         this.showDialog = true;
       },
       onChange(e) {
-        if (this.field.onChange) this.field.onChange(e.target.files[0].name, this.rootModel, this.model);
+        if (this.field.onChange) {
+          this.field.onChange(e.target.files[0].name, this.rootModel, this.model);
+        }
       }
     },
     watch: {
