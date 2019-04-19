@@ -4,15 +4,18 @@
       <v-menu v-model="showMenu"
               lazy
               ref="menu"
+              left bottom :nudge-width="-100"
               :close-on-content-click="false"
       >
-        <v-text-field v-model="computedModel"
-                      slot="activator"
-                      :label="field.label || field.key"
-                      prepend-icon="event"
-                      readonly
-        >
-        </v-text-field>
+        <template v-slot:activator="{ on }">
+          <v-text-field v-model="computedModel"
+                        v-on="on"
+                        :label="field.label || field.key"
+                        prepend-icon="event"
+                        readonly
+          >
+          </v-text-field>
+        </template>
         <v-card>
           <v-card-text style="padding: 0 !important;">
             <v-tabs centered grow v-model="showTab">

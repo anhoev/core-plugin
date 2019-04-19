@@ -3,13 +3,17 @@
     <v-layout row>
       <v-menu v-model="menu" z-index="10000"
               :close-on-content-click="false"
+              full-width
       >
-        <v-text-field slot="activator"
-                      v-model="model[field.key]"
-                      :label="field.label || field.key"
-                      prepend-icon="access_time"
-                      readonly
-        ></v-text-field>
+        <template v-slot:activator="{ on }">
+          <v-text-field v-on="on"
+                        v-model="model[field.key]"
+                        :label="field.label || field.key"
+                        prepend-icon="access_time"
+                        readonly
+          ></v-text-field>
+        </template>
+        
         <v-time-picker format="24hr"
                        v-if="menu"
                        v-model="model[field.key]"
