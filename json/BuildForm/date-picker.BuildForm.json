@@ -54,14 +54,22 @@
       "schemaType": "boolean",
       "key": "pickSeconds",
       "type": "input@switch",
-      "flex": "md3"
+      "flex": "md3",
+      "isVisible": {
+        "_code_": "module.exports = function({model}) {\r\n  if (model.pickerType === 'datetime') return true;\r\n}",
+        "_code_type_": "commonJs"
+      }
     },
     {
       "_id": "5cb0727d07c3c83b743f064a",
       "schemaType": "boolean",
       "key": "is12Hour",
       "type": "input@switch",
-      "flex": "md3"
+      "flex": "md3",
+      "isVisible": {
+        "_code_": "module.exports = function({model}) {\r\n  if (model.pickerType === 'datetime') return true;\r\n}",
+        "_code_type_": "commonJs"
+      }
     }
   ],
   "id": "5caac25ee06b664df82651ba",
