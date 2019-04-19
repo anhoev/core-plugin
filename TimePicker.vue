@@ -6,14 +6,17 @@
               full-width
       >
         <template v-slot:activator="{ on }">
-          <v-text-field v-on="on"
+          <v-text-field class="custom-text-field"
+                        v-on="on"
                         v-model="model[field.key]"
-                        :label="field.label || field.key"
-                        prepend-icon="access_time"
+                        :label="field.tableCell ? '': field.label || field.key"
                         readonly
-          ></v-text-field>
+          >
+            <v-icon slot="append" style="opacity: 0.5;" @click.stop="clearTime">clear</v-icon>
+            <v-icon slot="append" style="padding-right: 4px;">access_time</v-icon>
+          </v-text-field>
         </template>
-        
+
         <v-time-picker format="24hr"
                        v-if="menu"
                        v-model="model[field.key]"
@@ -52,6 +55,9 @@
     methods: {
       closeMenu() {
         this.menu = false;
+      },
+      clearTime() {
+        this.model[this.field.key] = null;
       }
     }
   };

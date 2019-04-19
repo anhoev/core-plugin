@@ -3,9 +3,12 @@
     <v-layout row="">
       <v-menu v-model="menu" z-index="10000" :close-on-content-click="false" full-width="">
         <template v-slot:activator="{ on }">
-          <v-text-field v-on="on" v-model="model[field.key]" :label="field.label || field.key" prepend-icon="access_time" readonly=""></v-text-field>
+          <v-text-field class="custom-text-field" v-on="on" v-model="model[field.key]" :label="field.tableCell ? '': field.label || field.key" readonly="">
+            <v-icon slot="append" style="opacity: 0.5;" @click.stop="clearTime">clear</v-icon>
+            <v-icon slot="append" style="padding-right: 4px;">access_time</v-icon>
+          </v-text-field>
         </template>
-        
+
         <v-time-picker format="24hr" v-if="menu" v-model="model[field.key]" @click:minute="closeMenu()"></v-time-picker>
       </v-menu>
     </v-layout>
@@ -48,6 +51,10 @@ var _default = {
   methods: {
     closeMenu() {
       this.menu = false;
+    },
+
+    clearTime() {
+      this.model[this.field.key] = null;
     }
 
   }
