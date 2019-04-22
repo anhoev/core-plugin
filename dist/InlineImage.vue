@@ -2,7 +2,7 @@
   <v-flex :class="flex" class="px-2">
     <v-layout row="" wrap="">
       <v-flex xs12="" sm12="">
-        <v-text-field :label="field.label || field.key" placeholder="Upload image" @click.stop="selectFile" v-model="imageName" prepend-icon="image" readonly="">
+        <v-text-field class="custom-text-field" :label="field.label || field.key" placeholder="Upload image" @click.stop="selectFile" v-model="imageName" prepend-icon="image" readonly="">
           <v-icon slot="append" @click="clearFile">clear</v-icon>
         </v-text-field>
       </v-flex>
@@ -260,7 +260,9 @@ var _default = {
     },
 
     onChange(e) {
-      if (this.field.onChange) this.field.onChange(e.target.files[0].name, this.rootModel, this.model);
+      if (this.field.onChange) {
+        this.field.onChange(e.target.files[0].name, this.rootModel, this.model);
+      }
     }
 
   },

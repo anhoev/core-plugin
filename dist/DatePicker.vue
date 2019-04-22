@@ -1,9 +1,11 @@
 <template>
   <v-flex :class="flex" class="px-2">
     <v-layout row="">
-      <v-menu v-model="showMenu" lazy="" ref="menu" left="" bottom="" :nudge-width="-100" :close-on-content-click="false">
+      <v-menu v-model="showMenu" lazy="" ref="menu" left="" bottom="" max-width="290px" :close-on-content-click="false" z-index="10000">
         <template v-slot:activator="{ on }">
-          <v-text-field v-model="computedModel" v-on="on" :label="field.label || field.key" prepend-icon="event" readonly="">
+          <v-text-field class="custom-text-field" v-model="computedModel" v-on="on" :label="field.tableCell ? '': field.label || field.key" readonly="">
+            <v-icon slot="append" style="opacity: 0.5;" @click.stop="clearDate">clear</v-icon>
+            <v-icon slot="append" style="padding-right: 4px">event</v-icon>
           </v-text-field>
         </template>
         <v-card>
@@ -107,8 +109,7 @@ var _default = {
       },
 
       set(value) {
-        console.log(value);
-        this.$set(this.model, this.field.key, dayjs(value));
+        this.$set(this.model, this.field.key, value);
       }
 
     },
@@ -168,6 +169,10 @@ var _default = {
       this.datePicked = true;
       this.showTab = 1;
       this.showMenu = false;
+    },
+
+    clearDate() {
+      this.selectedDateTime = null;
     }
 
   }

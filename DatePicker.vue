@@ -4,16 +4,20 @@
       <v-menu v-model="showMenu"
               lazy
               ref="menu"
-              left bottom :nudge-width="-100"
+              left bottom
+              max-width="290px"
               :close-on-content-click="false"
+              z-index="10000"
       >
         <template v-slot:activator="{ on }">
-          <v-text-field v-model="computedModel"
+          <v-text-field class="custom-text-field"
+                        v-model="computedModel"
                         v-on="on"
-                        :label="field.label || field.key"
-                        prepend-icon="event"
+                        :label="field.tableCell ? '': field.label || field.key"
                         readonly
           >
+            <v-icon slot="append" style="opacity: 0.5;" @click.stop="clearDate">clear</v-icon>
+            <v-icon slot="append" style="padding-right: 4px">event</v-icon>
           </v-text-field>
         </template>
         <v-card>
@@ -104,8 +108,7 @@
           return '';
         },
         set(value) {
-          console.log(value);
-          this.$set(this.model, this.field.key, dayjs(value));
+          this.$set(this.model, this.field.key, value);
         }
       },
       datePickerType() {
@@ -157,6 +160,9 @@
         this.datePicked = true;
         this.showTab = 1;
         this.showMenu = false;
+      },
+      clearDate() {
+        this.selectedDateTime = null;
       }
     }
   };
