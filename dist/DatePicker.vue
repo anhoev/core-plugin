@@ -1,14 +1,14 @@
 <template>
   <v-flex :class="flex" class="px-2">
     <v-layout row="">
-      <v-menu v-model="showMenu" lazy="" ref="menu" left="" bottom="" max-width="290px" :close-on-content-click="false" z-index="10000">
+      <v-menu v-model="showMenu" lazy="" ref="menu" left="" bottom="" min-width="290px" max-width="330px" :close-on-content-click="false" z-index="10000">
         <template v-slot:activator="{ on }">
-          <v-text-field class="custom-text-field" v-model="computedModel" v-on="on" :label="field.tableCell ? '': field.label || field.key" readonly="">
-            <v-icon slot="append" style="opacity: 0.5;" @click.stop="clearDate">clear</v-icon>
-            <v-icon slot="append" style="padding-right: 4px">event</v-icon>
+          <v-text-field class="custom-text-field" v-model="selectedDateTime" v-on="on" :label="field.tableCell ? '': field.label || field.key" readonly="">
+            <v-icon slot="append" style="opacity: 0.5;" @click.stop="clearDate" v-if="field.clearable">clear</v-icon>
+            <v-icon slot="append" style="padding-right: 4px" v-if="field.showIcon">event</v-icon>
           </v-text-field>
         </template>
-        <v-card>
+        <v-card :key="keyCard">
           <v-card-text style="padding: 0 !important;">
             <v-tabs centered="" grow="" v-model="showTab">
               <v-tab key="datePicker">
@@ -51,18 +51,15 @@ var _default = {
 
   data() {
     return {
-      menu: false,
       showMenu: false,
-      selectedDateTime: null,
       datePicked: false,
-      timePicked: false,
-      showTab: 0
+      showTab: 0,
+      keyCard: 0
     };
   },
 
   created() {
     if (this.model[this.field.key]) {
-      this.selectedDateTime = this.model[this.field.key];
       this.datePicked = true;
     }
   },
@@ -85,33 +82,35 @@ var _default = {
 
     computedModel: {
       get() {
-        this.computedModel = this.selectedDateTime;
-
-        if (this.selectedDateTime) {
-          if (this.field.pickerType === 'date') {
-            return dayjs(this.selectedDateTime).format('DD/MM/YYYY');
-          } else if (this.field.pickerType === 'month') {
-            return dayjs(this.selectedDateTime).format('MM/YYYY');
-          } else if (this.field.pickerType === 'datetime' && !this.field.is12Hour && !this.field.pickSeconds) {
-            return dayjs(this.selectedDateTime).format('DD/MM/YYYY HH:mm');
-          } else if (this.field.pickerType === 'datetime' && this.field.is12Hour && this.field.pickSeconds) {
-            return dayjs(this.selectedDateTime).format('DD/MM/YYYY hh:mm:ss A');
-          } else if (this.field.pickerType === 'datetime' && this.field.pickSeconds && !this.field.is12Hour) {
-            return dayjs(this.selectedDateTime).format('DD/MM/YYYY HH:mm:ss');
-          } else if (this.field.pickerType === 'datetime' && this.field.is12Hour && !this.field.pickSeconds) {
-            return dayjs(this.selectedDateTime).format('DD/MM/YYYY hh:mm A');
-          } else {
-            return dayjs(this.selectedDateTime).format('YYYY-MM-DD[T]HH:mm');
-          }
-        }
-
-        return '';
+        return this.model[this.field.key];
       },
 
       set(value) {
         this.$set(this.model, this.field.key, value);
       }
 
+    },
+
+    selectedDateTime() {
+      if (this.computedModel) {
+        if (this.field.pickerType === 'date') {
+          return dayjs(this.computedModel).format('DD/MM/YYYY');
+        } else if (this.field.pickerType === 'month') {
+          return dayjs(this.computedModel).format('MM/YYYY');
+        } else if (this.field.pickerType === 'datetime' && !this.field.is12Hour && !this.field.pickSeconds) {
+          return dayjs(this.computedModel).format('DD/MM/YYYY HH:mm');
+        } else if (this.field.pickerType === 'datetime' && this.field.is12Hour && this.field.pickSeconds) {
+          return dayjs(this.computedModel).format('DD/MM/YYYY hh:mm:ss A');
+        } else if (this.field.pickerType === 'datetime' && this.field.pickSeconds && !this.field.is12Hour) {
+          return dayjs(this.computedModel).format('DD/MM/YYYY HH:mm:ss');
+        } else if (this.field.pickerType === 'datetime' && this.field.is12Hour && !this.field.pickSeconds) {
+          return dayjs(this.computedModel).format('DD/MM/YYYY hh:mm A');
+        } else {
+          return dayjs(this.computedModel).format('YYYY-MM-DD[T]HH:mm');
+        }
+      }
+
+      return '';
     },
 
     datePickerType() {
@@ -128,7 +127,8 @@ var _default = {
 
     date: {
       get() {
-        return this.selectedDateTime ? dayjs(this.selectedDateTime).format('YYYY-MM-DD') : '';
+        const model = this.computedModel;
+        return model ? dayjs(model).format('YYYY-MM-DD') : '';
       },
 
       set(value) {
@@ -136,7 +136,7 @@ var _default = {
         const year = date.year();
         const month = date.month();
         const dayOfMonth = date.date() ? date.date() : 1;
-        this.selectedDateTime = dayjs(new Date(year, month, dayOfMonth)).toDate();
+        this.computedModel = dayjs(new Date(year, month, dayOfMonth)).toDate();
         this.datePicked = true;
         this.showTab = 1;
       }
@@ -144,12 +144,13 @@ var _default = {
     },
     time: {
       get() {
-        return this.selectedDateTime ? dayjs(this.selectedDateTime).format('HH:mm:ss') : '';
+        const model = this.computedModel;
+        return model ? dayjs(model).format('HH:mm:ss') : '';
       },
 
       set(value) {
         const [hour, minute, seconds] = value.split(':');
-        this.selectedDateTime = dayjs(this.selectedDateTime).set('hour', hour).set('minute', minute).set('seconds', seconds).toDate();
+        this.computedModel = dayjs(this.computedModel).set('hour', hour).set('minute', minute).set('second', seconds ? seconds : 0).toDate();
       }
 
     },
@@ -165,14 +166,21 @@ var _default = {
   },
   methods: {
     getCurrentDateTime() {
-      this.selectedDateTime = dayjs().toDate();
+      this.computedModel = dayjs().toDate();
       this.datePicked = true;
       this.showTab = 1;
       this.showMenu = false;
     },
 
     clearDate() {
-      this.selectedDateTime = null;
+      if (!this.computedModel) {
+        return;
+      }
+
+      this.computedModel = null;
+      this.datePicked = false;
+      this.showTab = 0;
+      this.keyCard++;
     }
 
   }
