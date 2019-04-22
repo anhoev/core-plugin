@@ -5,7 +5,7 @@
                 :menu-props="{'z-index': 1000, 'closeOnContentClick': true}">
       <v-icon slot="append-outer" color="blue darken-1" @click.stop="toggleEditor">edit</v-icon>
     </v-combobox>
-    <v-dialog v-model="showEditorDialog" max-width="80%">
+    <v-dialog v-model="showEditorDialog" max-width="80%" lazy>
       <v-card style="height: 80vh">
         <v-card-text style="height: calc(100% - 55px)">
           <monaco-editor :value.sync="code" :language="currentLanguage"

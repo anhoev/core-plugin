@@ -77,11 +77,23 @@
               "key": "name",
               "type": "input",
               "label": null,
-              "flex": null
+              "flex": "md4"
+            },
+            {
+              "schemaType": "array",
+              "key": "events",
+              "fields": [
+                {
+                  "schemaType": "string"
+                }
+              ],
+              "type": "input@multiSelect",
+              "optionsType": null,
+              "flex": "md8"
             },
             {
               "schemaType": "object",
-              "key": "form",
+              "key": "props",
               "type": "object@dynamic",
               "dynamicFieldsType": "code",
               "dynamicFields": {

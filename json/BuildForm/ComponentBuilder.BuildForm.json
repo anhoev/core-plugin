@@ -12,12 +12,20 @@
         "renderToRoute",
         "name",
         "renderInAdminPage",
-        "renderInIframe",
-        "registerAsVueComponent",
-        "props"
+        "renderInIframe"
       ],
       "_id": "5c74b84321f0cd1602fb441a",
       "name": "Settings"
+    },
+    {
+      "fields": [
+        "registerAsVueComponent",
+        "props",
+        "events",
+        "mockProps"
+      ],
+      "_id": "5cb43d0f7c9b10937af22dbc",
+      "name": "VueComponent"
     }
   ],
   "fields": [
@@ -42,15 +50,16 @@
               "flex": "md4"
             },
             {
+              "schemaType": "boolean",
+              "key": "isScopedSlot",
+              "type": "input@checkbox",
+              "addable": true
+            },
+            {
               "schemaType": "string",
               "key": "component",
-              "type": "input@select",
-              "flex": "md4",
-              "optionsType": "code",
-              "options": {
-                "_code_": "module.exports = function ({ model }) {\n  return cms.pluginComponents;\n}",
-                "_code_type_": "commonJs"
-              }
+              "type": "component-select",
+              "optionsType": "code"
             },
             {
               "schemaType": "object",
@@ -60,10 +69,115 @@
               "addable": false,
               "dynamicFieldsType": "code",
               "dynamicFields": {
-                "_code_": "module.exports = function getDynamicFields({ model }) {\n  const pluginFiles = cms.getList('PluginFile');\n  const pluginFile = pluginFiles.find(p => {\n    if (!p.loader) return false;\n    if (p.loader.type !== \"vue-component-loader\") return false;\n    if (p.loader.name === model.component) return true;\n    return false;\n  })\n  if (!pluginFile.loader.form) return [];\n  console.log(pluginFile.loader.form.fields);\n  return pluginFile.loader.form.fields;\n}",
+                "_code_": "//const cms = require('cms');\nmodule.exports = function getDynamicFields({ model }) {\n  const component = cms.pluginComponents.find(c => c.name === model.component);\n  const props = component.props;\n  const events = component.events.map(key => ({key, type: 'editor', addable: true}));\n  return [{\n    key: 'props',\n    noPanel: true,\n    type: 'object',\n    fields: props\n  },{\n    key: 'events',\n    noPanel: true,\n    type: 'object',\n    fields: events\n  }]\n}",
                 "_code_type_": "commonJs"
               },
               "noPanel": true
+            },
+            {
+              "schemaType": "array",
+              "key": "binding",
+              "type": "tableArray",
+              "fields": [
+                {
+                  "schemaType": "string",
+                  "key": "type",
+                  "type": "input@select",
+                  "optionsType": "onlyValue",
+                  "options": [
+                    "prop",
+                    "emit",
+                    "slot"
+                  ]
+                },
+                {
+                  "schemaType": "string",
+                  "key": "local",
+                  "type": "input@select",
+                  "optionsType": "code",
+                  "options": {
+                    "_code_": "//const _ = require('lodash');\nmodule.exports = function getDynamicFields({ model, rootModel, path }) {\n  path = _.take(path.split('.'), 2).join('.');\n  model = _.get(rootModel, path);\n  const component = cms.pluginComponents.find(c => c.name === model.component);\n  const props = component.props;\n  return props.map(p => p.key).concat(component.events);\n}",
+                    "_code_type_": "commonJs"
+                  },
+                  "notOnlyValueInOptions": true
+                },
+                {
+                  "schemaType": "string",
+                  "key": "root",
+                  "type": "input@select",
+                  "optionsType": "code",
+                  "options": {
+                    "_code_": "module.exports = function getDynamicFields({ rootModel, model, path }) {\n  return rootModel.props.concat(rootModel.events);\n}",
+                    "_code_type_": "commonJs"
+                  },
+                  "notOnlyValueInOptions": true
+                },
+                {
+                  "schemaType": "string",
+                  "key": "emitObj",
+                  "type": "input@select",
+                  "isVisible": {
+                    "_code_": "module.exports = function ({model}) {\n  return model.type === 'emit';\n}",
+                    "_code_type_": "commonJs"
+                  },
+                  "optionsType": "onlyValue",
+                  "notOnlyValueInOptions": true
+                }
+              ],
+              "addable": true,
+              "expansion": [
+                "emitObj"
+              ]
+            },
+            {
+              "schemaType": "array",
+              "key": "slotScopeBinding",
+              "type": "tableArray",
+              "fields": [
+                {
+                  "schemaType": "string",
+                  "key": "type",
+                  "type": "input@select",
+                  "optionsType": "onlyValue",
+                  "options": [
+                    "prop",
+                    "emit",
+                    "slot",
+                    "v-model"
+                  ],
+                  "clipboardType": "cut"
+                },
+                {
+                  "schemaType": "string",
+                  "key": "local",
+                  "type": "input@select",
+                  "optionsType": "code",
+                  "options": {
+                    "_code_": "//const _ = require('lodash');\nmodule.exports = function getDynamicFields({ model, rootModel, path }) {\n  path = _.take(path.split('.'), 2).join('.');\n  model = _.get(rootModel, path);\n  const component = cms.pluginComponents.find(c => c.name === model.component);\n  const props = component.props;\n  return props.map(p => p.key).concat(component.events);\n}",
+                    "_code_type_": "commonJs"
+                  },
+                  "notOnlyValueInOptions": true
+                },
+                {
+                  "schemaType": "string",
+                  "key": "slotScope",
+                  "type": "input@select",
+                  "optionsType": "code",
+                  "options": {
+                    "_code_": "module.exports = function getDynamicFields({ rootModel, model, path }) {\n  return rootModel.props.concat(rootModel.events);\n}",
+                    "_code_type_": "commonJs"
+                  },
+                  "notOnlyValueInOptions": true
+                }
+              ],
+              "addable": true
+            },
+            {
+              "schemaType": "mixed",
+              "key": "mixin",
+              "type": "editor",
+              "addable": true,
+              "codeType": "vueComponent"
             }
           ],
           "default": null,
@@ -130,6 +244,25 @@
       ],
       "type": "input@multiSelect",
       "optionsType": null
+    },
+    {
+      "_id": "5caf044e9fe2377748da5460",
+      "schemaType": "array",
+      "key": "events",
+      "fields": [
+        {
+          "schemaType": "string"
+        }
+      ],
+      "type": "input@multiSelect",
+      "optionsType": null
+    },
+    {
+      "_id": "5cb30f507c9b10937af22bbf",
+      "schemaType": "mixed",
+      "key": "mockProps",
+      "type": "editor",
+      "addable": true
     }
   ],
   "alwaysLoad": true,
