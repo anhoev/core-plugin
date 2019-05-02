@@ -11,7 +11,7 @@
               z-index="10000"
       >
         <template v-slot:activator="{ on }">
-          <v-text-field class="custom-text-field"
+          <v-text-field :class="field.tableCell ? 'g-text-field' : ''"
                         v-model="selectedDateTime"
                         v-on="on"
                         :label="field.tableCell ? '': field.label || field.key"

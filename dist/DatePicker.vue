@@ -3,7 +3,7 @@
     <v-layout row="">
       <v-menu v-model="showMenu" lazy="" ref="menu" left="" bottom="" min-width="290px" max-width="330px" :close-on-content-click="false" z-index="10000">
         <template v-slot:activator="{ on }">
-          <v-text-field class="custom-text-field" v-model="selectedDateTime" v-on="on" :label="field.tableCell ? '': field.label || field.key" readonly="">
+          <v-text-field :class="field.tableCell ? 'g-text-field' : ''" v-model="selectedDateTime" v-on="on" :label="field.tableCell ? '': field.label || field.key" readonly="">
             <v-icon slot="append" style="opacity: 0.5;" @click.stop="clearDate" v-if="field.clearable">clear</v-icon>
             <v-icon slot="append" style="padding-right: 4px" v-if="field.showIcon">event</v-icon>
           </v-text-field>

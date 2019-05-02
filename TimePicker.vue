@@ -6,7 +6,7 @@
               full-width
       >
         <template v-slot:activator="{ on }">
-          <v-text-field class="g-text-field"
+          <v-text-field :class="field.tableCell ? 'g-text-field' : ''"
                         v-on="on"
                         v-model="model[field.key]"
                         :label="field.tableCell ? '': field.label || field.key"
