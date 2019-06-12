@@ -1,20 +1,9 @@
 {
   "_id": "5c3d90e839e5f23b9d7fe97a",
   "__v": 0,
-  "type": "Collection",
   "alwaysLoad": true,
   "class": null,
-  "name": "PluginFile",
-  "id": "5c3d90e839e5f23b9d7fe97a",
-  "tabs": [
-    {
-      "fields": [
-        "props"
-      ],
-      "_id": "5c4c19ea41a8b04ba690c142",
-      "name": "Props"
-    }
-  ],
+  "extensions": [],
   "fields": [
     {
       "_id": "5c4974534d5ad80da91e03b5",
@@ -77,30 +66,17 @@
               "key": "name",
               "type": "input",
               "label": null,
-              "flex": "md4"
+              "flex": null
             },
             {
-              "schemaType": "array",
-              "key": "events",
-              "fields": [
-                {
-                  "schemaType": "string"
-                }
-              ],
-              "type": "input@multiSelect",
-              "optionsType": null,
-              "flex": "md8"
-            },
-            {
-              "schemaType": "object",
-              "key": "props",
-              "type": "object@dynamic",
-              "dynamicFieldsType": "code",
-              "dynamicFields": {
-                "_code_": "module.exports = function getDynamicFields({ model }) {\n  return [cms.Types.BuildForm.form.find(f => f.key === 'fields')];\n}",
+              "schemaType": "string",
+              "key": "form",
+              "type": "input@select",
+              "optionsType": "code",
+              "options": {
+                "_code_": "module.exports = function ({ model }) {\n  return cms.Types.BuildForm.list.map(f => f.name);\n}",
                 "_code_type_": "commonJs"
-              },
-              "noPanel": true
+              }
             }
           ],
           "default": null,
@@ -117,6 +93,11 @@
               "type": "input",
               "label": null,
               "flex": null
+            },
+            {
+              "schemaType": "mixed",
+              "key": "handler",
+              "type": "editor"
             }
           ],
           "label": null,
@@ -139,23 +120,24 @@
               "type": "input",
               "label": null,
               "flex": null
+            },
+            {
+              "schemaType": "mixed",
+              "key": "handler",
+              "type": "editor",
+              "codeType": "commonJs"
             }
           ]
         },
         {
           "schemaType": "object",
-          "key": "form-field-loader",
+          "key": "css-loader",
           "type": "object",
-          "label": null,
-          "flex": null,
-          "noPanel": null,
           "fields": [
             {
               "schemaType": "string",
-              "type": "input",
-              "label": null,
-              "flex": null,
-              "key": "name"
+              "key": "name",
+              "type": "input"
             }
           ]
         },
@@ -248,5 +230,16 @@
       "mixed": null
     }
   ],
-  "extensions": []
+  "id": "5c3d90e839e5f23b9d7fe97a",
+  "name": "PluginFile",
+  "tabs": [
+    {
+      "fields": [
+        "props"
+      ],
+      "_id": "5c4c19ea41a8b04ba690c142",
+      "name": "Props"
+    }
+  ],
+  "type": "Collection"
 }
