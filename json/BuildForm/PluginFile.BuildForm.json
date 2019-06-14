@@ -66,17 +66,30 @@
               "key": "name",
               "type": "input",
               "label": null,
-              "flex": null
+              "flex": "md4"
             },
             {
-              "schemaType": "string",
-              "key": "form",
-              "type": "input@select",
-              "optionsType": "code",
-              "options": {
-                "_code_": "module.exports = function ({ model }) {\n  return cms.Types.BuildForm.list.map(f => f.name);\n}",
+              "schemaType": "array",
+              "key": "events",
+              "fields": [
+                {
+                  "schemaType": "string"
+                }
+              ],
+              "type": "input@multiSelect",
+              "optionsType": null,
+              "flex": "md8"
+            },
+            {
+              "schemaType": "object",
+              "key": "props",
+              "type": "object@dynamic",
+              "dynamicFieldsType": "code",
+              "dynamicFields": {
+                "_code_": "module.exports = function getDynamicFields({ model }) {\n  return [cms.Types.BuildForm.form.find(f => f.key === 'fields')];\n}",
                 "_code_type_": "commonJs"
-              }
+              },
+              "noPanel": true
             }
           ],
           "default": null,
