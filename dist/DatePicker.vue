@@ -155,7 +155,7 @@ var _default = {
     },
 
     inputMask() {
-      return this.getDateFormat().replace(/([DMYHhmMs])\w/g, '##');
+      return this.getDateFormat().replace(/([DMYHhms])./g, '##').replace(/(\[T])/, 'T');
     }
 
   },
@@ -172,7 +172,7 @@ var _default = {
 
         return 'DD/MM/YYYY HH:mm';
       } else {
-        return 'YYYY-MM-DD[T]HH:mm';
+        return 'YYYY-MM-DD[T]HH:mm:ss';
       }
     },
 
