@@ -146,7 +146,6 @@ var _default = {
     getFileContent() {
       return new Promise(res => {
         this.loading = true;
-        console.log(_cms.default.baseUrl);
         if (!this.model || !this.model.url) return;
         fetch(_cms.default.baseUrl + this.model.url).then(res => res.text()).then(json => {
           this.$nextTick(() => {
