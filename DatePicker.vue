@@ -191,8 +191,9 @@
         }
         const inputDateTime = dayjs(e, this.getDateFormat());
 
+        const dateFormat = this.getDateFormat().replace(/[[\[\]]/g, '');
         Object.assign(this.inputRules, {
-          validDate: ( !e || inputDateTime.isValid() ) || 'Wrong date format'
+          validDate: ( !e || inputDateTime.isValid() ) || `Please use correct date format (${dateFormat})`
         });
 
         if (inputDateTime.isValid()) {
