@@ -22,7 +22,9 @@
                         :rules="[inputRules.validDate]"
           >
             <v-icon slot="append" style="opacity: 0.5;" @click.stop="clearDate" v-if="field.clearable">clear</v-icon>
-            <v-icon slot="append" style="padding-right: 4px" v-if="field.showIcon" v-on="field.textEditable ? on : null">event</v-icon>
+            <v-icon slot="append" style="padding-right: 4px" v-if="field.showIcon"
+                    v-on="field.textEditable ? on : null">event
+            </v-icon>
           </v-text-field>
         </template>
         <v-card :key="keyCard">
@@ -73,7 +75,7 @@
         keyCard: 0,
         inputRules: {
           validDate: false
-        },
+        }
       };
     },
     created() {
@@ -105,7 +107,7 @@
           }
           return '';
         },
-        set(v){
+        set(v) {
           return v;
         }
       },
@@ -151,7 +153,7 @@
         return '24hr';
       },
       inputMask() {
-        return this.getDateFormat().replace(/([DMYHhms])./g, '##').replace(/(\[T])/, 'T');
+        return this.getDateFormat().replace(/([DMYHhms])./g, '##').replace(/[[\[\]]/g, '');
       }
     },
     methods: {
@@ -165,8 +167,7 @@
             return 'DD/MM/YYYY HH:mm:ss';
           }
           return 'DD/MM/YYYY HH:mm';
-        }
-        else {
+        } else {
           return 'YYYY-MM-DD[T]HH:mm:ss';
         }
       },
@@ -193,13 +194,12 @@
 
         const dateFormat = this.getDateFormat().replace(/[[\[\]]/g, '');
         Object.assign(this.inputRules, {
-          validDate: ( !e || inputDateTime.isValid() ) || `Please use correct date format (${dateFormat})`
+          validDate: (!e || inputDateTime.isValid()) || `Please use correct date format (${dateFormat})`
         });
 
         if (inputDateTime.isValid()) {
           this.computedModel = inputDateTime.toDate();
           this.datePicked = true;
-        } else {
         }
       }, 500)
     }

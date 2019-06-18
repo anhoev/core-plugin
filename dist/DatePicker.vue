@@ -5,7 +5,8 @@
         <template v-slot:activator="{ on }">
           <v-text-field class="custom-text-field" v-model="selectedDateTime" v-on="field.textEditable ? null : on" :label="field.tableCell ? '': field.label || field.key" @input="onInput" :readonly="!field.textEditable" :mask="inputMask" :return-masked-value="true" :rules="[inputRules.validDate]">
             <v-icon slot="append" style="opacity: 0.5;" @click.stop="clearDate" v-if="field.clearable">clear</v-icon>
-            <v-icon slot="append" style="padding-right: 4px" v-if="field.showIcon" v-on="field.textEditable ? on : null">event</v-icon>
+            <v-icon slot="append" style="padding-right: 4px" v-if="field.showIcon" v-on="field.textEditable ? on : null">event
+            </v-icon>
           </v-text-field>
         </template>
         <v-card :key="keyCard">
@@ -155,7 +156,7 @@ var _default = {
     },
 
     inputMask() {
-      return this.getDateFormat().replace(/([DMYHhms])./g, '##').replace(/(\[T])/, 'T');
+      return this.getDateFormat().replace(/([DMYHhms])./g, '##').replace(/[[\[\]]/g, '');
     }
 
   },
@@ -208,7 +209,7 @@ var _default = {
       if (inputDateTime.isValid()) {
         this.computedModel = inputDateTime.toDate();
         this.datePicked = true;
-      } else {}
+      }
     }, 500)
   }
 };
