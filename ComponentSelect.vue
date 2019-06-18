@@ -5,7 +5,7 @@
                 :menu-props="{'z-index': 1000, 'closeOnContentClick': true}">
       <v-icon slot="append-outer" color="blue darken-1" @click.stop="toggleEditor">edit</v-icon>
     </v-combobox>
-    <v-dialog v-model="showEditorDialog" max-width="80%">
+    <v-dialog v-model="showEditorDialog" max-width="80%" lazy>
       <v-card style="height: 80vh">
         <v-card-text style="height: calc(100% - 55px)">
           <monaco-editor :value.sync="code" :language="currentLanguage"
@@ -59,7 +59,7 @@
         return this.noLayout ? 'xs-12' : this.field.flex;
       },
       options() {
-        const list = cms.pluginComponents;
+        const list = cms.pluginComponents.map(c => c.name);
         return list.map(item => ({ text: item, value: item }));
       },
       value: {
@@ -67,7 +67,7 @@
           return { text: this.model[this.field.key] || '' };
         },
         set(v) {
-          this.model[this.field.key] = v.text;
+          this.model[this.field.key] = v ? v.text : null;
         }
       }
     },
@@ -77,6 +77,7 @@
         this.loadPlugin()
           .then((items) => {
             const plugin = this.getPlugin(items);
+            if (!plugin) return;
             Object.assign(this.model, {
               url: plugin.url,
               path: plugin.path,
@@ -118,6 +119,7 @@
         return new Promise(res => {
           this.loading = true;
           console.log(cms.baseUrl);
+          if (!this.model || !this.model.url) return;
           fetch(cms.baseUrl + this.model.url)
             .then(res => res.text())
             .then(json => {

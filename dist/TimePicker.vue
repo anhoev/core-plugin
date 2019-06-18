@@ -3,9 +3,9 @@
     <v-layout row="">
       <v-menu v-model="menu" z-index="10000" :close-on-content-click="false" full-width="">
         <template v-slot:activator="{ on }">
-          <v-text-field class="custom-text-field" v-on="on" v-model="model[field.key]" :label="field.tableCell ? '': field.label || field.key" readonly="">
-            <v-icon slot="append" style="opacity: 0.5;" @click.stop="clearTime">clear</v-icon>
-            <v-icon slot="append" style="padding-right: 4px;">access_time</v-icon>
+          <v-text-field :class="field.tableCell ? 'g-text-field' : ''" v-on="on" v-model="model[field.key]" :label="field.tableCell ? '': field.label || field.key" readonly="">
+            <v-icon slot="append" style="opacity: 0.5;" @click.stop="clearTime" v-if="field.clearable">clear</v-icon>
+            <v-icon slot="append" style="padding-right: 4px;" v-if="field.showIcon">access_time</v-icon>
           </v-text-field>
         </template>
 

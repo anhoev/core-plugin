@@ -26,6 +26,18 @@
         "md12"
       ],
       "flex": "md6"
+    },
+    {
+      "_id": "5cbd266b6a14be44d88fd0e0",
+      "schemaType": "boolean",
+      "key": "clearable",
+      "type": "input@switch"
+    },
+    {
+      "_id": "5cbd266b6a14be44d88fd0df",
+      "schemaType": "boolean",
+      "key": "showIcon",
+      "type": "input@switch"
     }
   ],
   "id": "5ca33f3cf8150e04e8a66e56",
