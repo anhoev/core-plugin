@@ -61,17 +61,6 @@
       }
     },
     {
-      "_id": "5cb0727d07c3c83b743f064a",
-      "schemaType": "boolean",
-      "key": "is12Hour",
-      "type": "input@switch",
-      "flex": "md3",
-      "isVisible": {
-        "_code_": "module.exports = function({model}) {\r\n  if (model.pickerType === 'datetime') return true;\r\n}",
-        "_code_type_": "commonJs"
-      }
-    },
-    {
       "_id": "5cbb66446a14be44d88fd0bc",
       "schemaType": "boolean",
       "key": "clearable",
@@ -81,7 +70,17 @@
       "_id": "5cbb66446a14be44d88fd0bb",
       "schemaType": "boolean",
       "key": "showIcon",
-      "type": "input@switch"
+      "type": "input@switch",
+      "flex": "md3"
+    },
+    {
+      "_id": "5d0886e01c9ec6523441dc8c",
+      "schemaType": "boolean",
+      "key": "textEditable",
+      "default": "",
+      "type": "input@switch",
+      "label": "",
+      "flex": "md3"
     }
   ],
   "id": "5caac25ee06b664df82651ba",
