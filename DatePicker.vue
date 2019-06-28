@@ -13,12 +13,18 @@
         <template v-slot:activator="{ on }">
           <v-text-field :class="field.tableCell ? 'g-text-field' : ''"
                         v-model="selectedDateTime"
-                        v-on="on"
+                        v-on="field.textEditable ? null : on"
                         :label="field.tableCell ? '': field.label || field.key"
-                        readonly
+                        @input="onInput"
+                        :readonly="!field.textEditable"
+                        :mask="inputMask"
+                        :return-masked-value="true"
+                        :rules="[inputRules.validDate]"
           >
             <v-icon slot="append" style="opacity: 0.5;" @click.stop="clearDate" v-if="field.clearable">clear</v-icon>
-            <v-icon slot="append" style="padding-right: 4px" v-if="field.showIcon">event</v-icon>
+            <v-icon slot="append" style="padding-right: 4px" v-if="field.showIcon"
+                    v-on="field.textEditable ? on : null">event
+            </v-icon>
           </v-text-field>
         </template>
         <v-card :key="keyCard">
@@ -66,7 +72,10 @@
         showMenu: false,
         datePicked: false,
         showTab: 0,
-        keyCard: 0
+        keyCard: 0,
+        inputRules: {
+          validDate: false
+        }
       };
     },
     created() {
@@ -91,25 +100,16 @@
           this.$set(this.model, this.field.key, value);
         }
       },
-      selectedDateTime() {
-        if (this.computedModel) {
-          if (this.field.pickerType === 'date') {
-            return dayjs(this.computedModel).format('DD/MM/YYYY');
-          } else if (this.field.pickerType === 'month') {
-            return dayjs(this.computedModel).format('MM/YYYY');
-          } else if (this.field.pickerType === 'datetime' && !this.field.is12Hour && !this.field.pickSeconds) {
-            return dayjs(this.computedModel).format('DD/MM/YYYY HH:mm');
-          } else if (this.field.pickerType === 'datetime' && this.field.is12Hour && this.field.pickSeconds) {
-            return dayjs(this.computedModel).format('DD/MM/YYYY hh:mm:ss A');
-          } else if (this.field.pickerType === 'datetime' && this.field.pickSeconds && !this.field.is12Hour) {
-            return dayjs(this.computedModel).format('DD/MM/YYYY HH:mm:ss');
-          } else if (this.field.pickerType === 'datetime' && this.field.is12Hour && !this.field.pickSeconds) {
-            return dayjs(this.computedModel).format('DD/MM/YYYY hh:mm A');
-          } else {
-            return dayjs(this.computedModel).format('YYYY-MM-DD[T]HH:mm');
+      selectedDateTime: {
+        get() {
+          if (this.computedModel) {
+            return dayjs(this.computedModel).format(this.getDateFormat());
           }
+          return '';
+        },
+        set(v) {
+          return v;
         }
-        return '';
       },
       datePickerType() {
         if (this.field) {
@@ -150,13 +150,27 @@
         }
       },
       timePickerFormat() {
-        if (this.field.is12Hour) {
-          return 'ampm';
-        }
         return '24hr';
+      },
+      inputMask() {
+        return this.getDateFormat().replace(/([DMYHhms])./g, '##').replace(/[[\[\]]/g, '');
       }
     },
     methods: {
+      getDateFormat() {
+        if (this.field.pickerType === 'date') {
+          return 'DD/MM/YYYY';
+        } else if (this.field.pickerType === 'month') {
+          return 'MM/YYYY';
+        } else if (this.field.pickerType === 'datetime') {
+          if (this.field.pickSeconds) {
+            return 'DD/MM/YYYY HH:mm:ss';
+          }
+          return 'DD/MM/YYYY HH:mm';
+        } else {
+          return 'YYYY-MM-DD[T]HH:mm:ss';
+        }
+      },
       getCurrentDateTime() {
         this.computedModel = dayjs().toDate();
         this.datePicked = true;
@@ -171,7 +185,23 @@
         this.datePicked = false;
         this.showTab = 0;
         this.keyCard++;
-      }
+      },
+      onInput: _.debounce(function(e) {
+        if (e === '') {
+          this.computedModel = null;
+        }
+        const inputDateTime = dayjs(e, this.getDateFormat());
+
+        const dateFormat = this.getDateFormat().replace(/[[\[\]]/g, '');
+        Object.assign(this.inputRules, {
+          validDate: (!e || inputDateTime.isValid()) || `Please use correct date format (${dateFormat})`
+        });
+
+        if (inputDateTime.isValid()) {
+          this.computedModel = inputDateTime.toDate();
+          this.datePicked = true;
+        }
+      }, 500)
     }
   };
 </script>
