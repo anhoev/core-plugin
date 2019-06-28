@@ -5,6 +5,7 @@
   "alwaysLoad": true,
   "class": null,
   "name": "Config",
+  "id": "5c40af7da875ee06569245ca",
   "tabs": [
     {
       "fields": [
@@ -91,7 +92,7 @@
       "flex": "md6",
       "optionsType": "code",
       "options": {
-        "_code_": "module.exports = function getOptions() {\n   return cms.pluginComponents; \n}",
+        "_code_": "module.exports = function getOptions() {\n   return cms.pluginComponents.map(c => c.name); \n}",
         "_code_type_": "commonJs"
       }
     },
@@ -284,6 +285,5 @@
       "flex": "md12"
     }
   ],
-  "id": "5c40af7da875ee06569245ca",
   "extensions": []
 }
