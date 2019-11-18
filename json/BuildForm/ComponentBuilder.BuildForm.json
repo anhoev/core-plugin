@@ -12,20 +12,20 @@
         "renderToRoute",
         "name",
         "renderInAdminPage",
-        "renderInIframe"
+        "renderInIframe",
+        "registerAsVueComponent",
+        "events",
+        "mockProps"
       ],
       "_id": "5c74b84321f0cd1602fb441a",
       "name": "Settings"
     },
     {
       "fields": [
-        "registerAsVueComponent",
-        "props",
-        "events",
-        "mockProps"
+        "props"
       ],
-      "_id": "5cb43d0f7c9b10937af22dbc",
-      "name": "VueComponent"
+      "_id": "5cc6dd3cd901a07afc3258dc",
+      "name": "VueProps"
     }
   ],
   "fields": [
@@ -45,9 +45,14 @@
             {
               "schemaType": "string",
               "key": "slot",
-              "type": "input",
-              "addable": true,
-              "flex": "md4"
+              "type": "input@select",
+              "notOnlyValueInOptions": true,
+              "optionsType": "code",
+              "options": {
+                "_code_": "module.exports = function({model, rootModel, path}) {\n  const _path = _.take(path.split('.'), path.split('.').length - 3).join('.');\n  if (!_.isEmpty(_path)) {\n    const parentNode = _.get(rootModel, _path);\n    if (parentNode) { \n      const component = cms.pluginComponents.find(c => c.name === parentNode.component);\n      const slots = component.slots;\n      if (typeof slots === 'function') { \n        return slots(parentNode.content.props);\n      }\n    }\n    \n  }\n  \n  return [];\n}",
+                "_code_type_": "commonJs"
+              },
+              "addable": false
             },
             {
               "schemaType": "boolean",
@@ -107,7 +112,7 @@
                   "type": "input@select",
                   "optionsType": "code",
                   "options": {
-                    "_code_": "module.exports = function getDynamicFields({ rootModel, model, path }) {\n  return rootModel.props.concat(rootModel.events);\n}",
+                    "_code_": "module.exports = function getDynamicFields({ rootModel, model, path }) {\n  return rootModel.props.fields.map(f => f.key).concat(rootModel.events);\n}",
                     "_code_type_": "commonJs"
                   },
                   "notOnlyValueInOptions": true
@@ -164,7 +169,7 @@
                   "type": "input@select",
                   "optionsType": "code",
                   "options": {
-                    "_code_": "module.exports = function getDynamicFields({ rootModel, model, path }) {\n  return rootModel.props.concat(rootModel.events);\n}",
+                    "_code_": "module.exports = function getDynamicFields({ rootModel, model, path }) {\n  return rootModel.props.fields.map(f => f.key).concat(rootModel.events);\n}",
                     "_code_type_": "commonJs"
                   },
                   "notOnlyValueInOptions": true
@@ -189,7 +194,8 @@
       "getText": {
         "_code_": "module.exports = function getText(item) {\n   let str = ''; \n   if (item.slot) str += item.slot + ':'; \n   return `${str}${item.component}`; \n}",
         "_code_type_": "commonJs"
-      }
+      },
+      "selectNodeAfterClick": true
     },
     {
       "_id": "5c945bc87a578a5d2b27ab2d",
@@ -234,16 +240,16 @@
       "type": "input@checkbox"
     },
     {
-      "_id": "5cac239278e22f41dfb9d349",
-      "schemaType": "array",
+      "_id": "5cc6dca9d901a07afc3258cd",
+      "schemaType": "mixed",
       "key": "props",
-      "fields": [
-        {
-          "schemaType": "string"
-        }
-      ],
-      "type": "input@multiSelect",
-      "optionsType": null
+      "type": "object@dynamic",
+      "noPanel": true,
+      "dynamicFieldsType": "code",
+      "dynamicFields": {
+        "_code_": "module.exports = function getDynamicFields({ model }) {\n  return [cms.Types.BuildForm.form.find(f => f.key === 'fields')];\n}",
+        "_code_type_": "commonJs"
+      }
     },
     {
       "_id": "5caf044e9fe2377748da5460",

@@ -35,7 +35,7 @@
     methods: {
       compute() {
         const fn = jsonFn.clone(this.field.fn, true, true);
-        this.result = fn.bind(this.rootModel)();
+        this.result = fn.bind(this.rootModel)({model: this.model, rootModel: this.rootModel});
       }
     }
 

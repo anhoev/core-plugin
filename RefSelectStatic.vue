@@ -12,7 +12,7 @@
   import cms from 'cms';
 
   export default {
-    props: ['model', 'field', 'inArray', 'noFlex'],
+    props: ['model', 'field', 'inArray', 'noFlex', 'path', 'noLayout'],
     created() {
     },
     data() {
@@ -22,8 +22,8 @@
     },
     inject: {
       rootModel: {default: null},
-      path: {default: null},
-      noLayout: {default: null}
+      //path: {default: null},
+      //noLayout: {default: null}
     },
     computed: {
       flex() {
@@ -39,7 +39,7 @@
           return {text: this.model[this.field.key] || ''};
         },
         set(v) {
-          this.model[this.field.key] = v.text;
+          this.model[this.field.key] = v ? v.text : undefined;
         }
       }
     },
