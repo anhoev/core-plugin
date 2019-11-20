@@ -43,22 +43,37 @@
           "key": "view",
           "fields": [
             {
-              "schemaType": "string",
-              "key": "slot",
-              "type": "input@select",
-              "notOnlyValueInOptions": true,
-              "optionsType": "code",
-              "options": {
-                "_code_": "module.exports = function({model, rootModel, path}) {\n  const _path = _.take(path.split('.'), path.split('.').length - 3).join('.');\n  if (!_.isEmpty(_path)) {\n    const parentNode = _.get(rootModel, _path);\n    if (parentNode) { \n      const component = cms.pluginComponents.find(c => c.name === parentNode.component);\n      const slots = component.slots;\n      if (typeof slots === 'function') { \n        return slots(parentNode.content.props);\n      }\n    }\n    \n  }\n  \n  return [];\n}",
+              "schemaType": "object",
+              "type": "GObjectDelegate",
+              "formatItems": {
+                "_code_": "module.exports = function (item) {\n  return [\n    {\n      text: item.slot,\n      showChip: false\n    },\n    {\n      text: item.isScopedSlot ? 'scopedSlot' : null,\n      align: 'right'\n    }\n  ]\n}",
                 "_code_type_": "commonJs"
               },
-              "addable": false
-            },
-            {
-              "schemaType": "boolean",
-              "key": "isScopedSlot",
-              "type": "input@checkbox",
-              "addable": true
+              "fields": [
+                {
+                  "schemaType": "string",
+                  "key": "slot",
+                  "type": "input@select",
+                  "notOnlyValueInOptions": true,
+                  "optionsType": "code",
+                  "options": {
+                    "_code_": "module.exports = function({model, rootModel, path}) {\n  try {\n    const _path = _.take(path.split('.'), path.split('.').length - 3).join('.');\n    if (!_.isEmpty(_path)) {\n      const parentNode = _.get(rootModel, _path);\n      if (parentNode) { \n        const component = cms.pluginComponents.find(c => c.name === parentNode.component);\n        const slots = component.slots;\n        if (typeof slots === 'function') { \n          return slots(parentNode.content.props);\n        }\n      }\n    }\n  } catch (e) {\n    console.log(e);\n  }\n  \n  return [];\n}",
+                    "_code_type_": "commonJs"
+                  },
+                  "addable": false,
+                  "clipboardType": "cut"
+                },
+                {
+                  "schemaType": "boolean",
+                  "key": "isScopedSlot",
+                  "type": "input@checkbox",
+                  "addable": true,
+                  "clipboardType": "cut"
+                }
+              ],
+              "label": "slot",
+              "flex": "md12",
+              "editOnFocus": true
             },
             {
               "schemaType": "string",
@@ -97,22 +112,22 @@
                 },
                 {
                   "schemaType": "string",
-                  "key": "local",
+                  "key": "root",
                   "type": "input@select",
                   "optionsType": "code",
                   "options": {
-                    "_code_": "//const _ = require('lodash');\nmodule.exports = function getDynamicFields({ model, rootModel, path }) {\n  path = _.take(path.split('.'), 2).join('.');\n  model = _.get(rootModel, path);\n  const component = cms.pluginComponents.find(c => c.name === model.component);\n  const props = component.props;\n  return props.map(p => p.key).concat(component.events);\n}",
+                    "_code_": "module.exports = function getDynamicFields({ rootModel, model, path }) {\n  return rootModel.props.fields.map(f => f.key).concat(rootModel.events);\n}",
                     "_code_type_": "commonJs"
                   },
                   "notOnlyValueInOptions": true
                 },
                 {
                   "schemaType": "string",
-                  "key": "root",
+                  "key": "local",
                   "type": "input@select",
                   "optionsType": "code",
                   "options": {
-                    "_code_": "module.exports = function getDynamicFields({ rootModel, model, path }) {\n  return rootModel.props.fields.map(f => f.key).concat(rootModel.events);\n}",
+                    "_code_": "//const _ = require('lodash');\nmodule.exports = function getDynamicFields({ model, rootModel, path }) {\n  path = _.take(path.split('.'), 2).join('.');\n  model = _.get(rootModel, path);\n  const component = cms.pluginComponents.find(c => c.name === model.component);\n  const props = component.props;\n  return props.map(p => p.key).concat(component.events);\n}",
                     "_code_type_": "commonJs"
                   },
                   "notOnlyValueInOptions": true
@@ -154,22 +169,22 @@
                 },
                 {
                   "schemaType": "string",
-                  "key": "local",
+                  "key": "slotScope",
                   "type": "input@select",
                   "optionsType": "code",
                   "options": {
-                    "_code_": "//const _ = require('lodash');\nmodule.exports = function getDynamicFields({ model, rootModel, path }) {\n  path = _.take(path.split('.'), 2).join('.');\n  model = _.get(rootModel, path);\n  const component = cms.pluginComponents.find(c => c.name === model.component);\n  const props = component.props;\n  return props.map(p => p.key).concat(component.events);\n}",
+                    "_code_": "module.exports = function getDynamicFields({ rootModel, model, path }) {\n  return rootModel.props.fields.map(f => f.key).concat(rootModel.events);\n}",
                     "_code_type_": "commonJs"
                   },
                   "notOnlyValueInOptions": true
                 },
                 {
                   "schemaType": "string",
-                  "key": "slotScope",
+                  "key": "local",
                   "type": "input@select",
                   "optionsType": "code",
                   "options": {
-                    "_code_": "module.exports = function getDynamicFields({ rootModel, model, path }) {\n  return rootModel.props.fields.map(f => f.key).concat(rootModel.events);\n}",
+                    "_code_": "//const _ = require('lodash');\nmodule.exports = function getDynamicFields({ model, rootModel, path }) {\n  path = _.take(path.split('.'), 2).join('.');\n  model = _.get(rootModel, path);\n  const component = cms.pluginComponents.find(c => c.name === model.component);\n  const props = component.props;\n  return props.map(p => p.key).concat(component.events);\n}",
                     "_code_type_": "commonJs"
                   },
                   "notOnlyValueInOptions": true
@@ -183,6 +198,72 @@
               "type": "editor",
               "addable": true,
               "codeType": "vueComponent"
+            },
+            {
+              "schemaType": "object",
+              "key": "provide",
+              "type": "object",
+              "fields": [
+                {
+                  "schemaType": "string",
+                  "key": "domain",
+                  "type": "input",
+                  "flex": "md12"
+                },
+                {
+                  "schemaType": "array",
+                  "key": "binding",
+                  "type": "GArrayDelegate",
+                  "fields": [
+                    {
+                      "schemaType": "string",
+                      "key": "type",
+                      "type": "input@select",
+                      "optionsType": "onlyValue",
+                      "options": [
+                        "v-model",
+                        ".sync",
+                        "method"
+                      ]
+                    },
+                    {
+                      "schemaType": "string",
+                      "key": "serviceName",
+                      "type": "input"
+                    }
+                  ],
+                  "addable": false,
+                  "formatItem": {
+                    "_code_": "module.exports = function (item) {\n  return {text: `${item.type}: ${item.serviceName}`}\n}",
+                    "_code_type_": "commonJs"
+                  },
+                  "editOnFocus": true
+                }
+              ],
+              "addable": true
+            },
+            {
+              "schemaType": "array",
+              "key": "inject",
+              "type": "GArrayDelegate",
+              "fields": [
+                {
+                  "schemaType": "string",
+                  "key": "service",
+                  "type": "input"
+                },
+                {
+                  "schemaType": "string",
+                  "key": "local",
+                  "type": "input"
+                }
+              ],
+              "formatItem": {
+                "_code_": "module.exports = function (item) {\n  return {\n    text: `${item.service} -> ${item.local}`,\n  }\n}",
+                "_code_type_": "commonJs"
+              },
+              "editOnFocus": true,
+              "addable": true
             }
           ],
           "default": null,

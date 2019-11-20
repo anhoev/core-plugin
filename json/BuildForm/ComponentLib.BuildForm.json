@@ -1,0 +1,48 @@
+{
+  "_id": "5cad8a37732d4261b6a2cd0e",
+  "__v": 0,
+  "type": "Extension",
+  "class": "form-extension",
+  "name": "ComponentLib",
+  "id": "5cad8a37732d4261b6a2cd0e",
+  "tabs": [],
+  "extensions": [],
+  "fields": [
+    {
+      "_id": "5cad8b63732d4261b6a2cd14",
+      "schemaType": "array",
+      "key": "events",
+      "fields": [
+        {
+          "schemaType": "string"
+        }
+      ],
+      "type": "input@multiSelect"
+    },
+    {
+      "_id": "5cd8e78766ef8076cd1b3dca",
+      "schemaType": "mixed",
+      "key": "slots",
+      "type": "choice",
+      "choiceKey": "slotsType",
+      "choiceKeyOutside": true,
+      "fields": [
+        {
+          "schemaType": "mixed",
+          "key": "code",
+          "type": "editor"
+        },
+        {
+          "schemaType": "array",
+          "key": "array",
+          "fields": [
+            {
+              "schemaType": "string"
+            }
+          ],
+          "type": "input@multiSelect"
+        }
+      ]
+    }
+  ]
+}

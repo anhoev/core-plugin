@@ -1,0 +1,56 @@
+{
+  "_id": "5dd3c6ce11ab65f1913de06d",
+  "__v": 0,
+  "type": "Component",
+  "name": "GGridLayout",
+  "tabs": [],
+  "extensions": [
+    {
+      "_id": "5cad8d77732d4261b6a2cd1a",
+      "extensionType": "ComponentLib",
+      "events": [],
+      "slotsType": "array",
+      "slots": [
+        "default"
+      ]
+    }
+  ],
+  "fields": [
+    {
+      "_id": "5dd3c77411ab65f1913de078",
+      "schemaType": "object",
+      "key": "layout",
+      "type": "GGridGeneratorInput"
+    },
+    {
+      "_id": "5dd3c77411ab65f1913de077",
+      "schemaType": "boolean",
+      "key": "displayPreviewColor",
+      "type": "input@checkbox",
+      "flex": "md12"
+    },
+    {
+      "_id": "5dd3c77411ab65f1913de076",
+      "schemaType": "boolean",
+      "key": "editable",
+      "type": "input@checkbox",
+      "flex": "md12"
+    },
+    {
+      "_id": "5dd3c77411ab65f1913de075",
+      "schemaType": "boolean",
+      "key": "passThrough",
+      "type": "input@checkbox",
+      "flex": "md12"
+    },
+    {
+      "_id": "5dd4feac699667151f0a389b",
+      "schemaType": "mixed",
+      "key": "style",
+      "mixed": false,
+      "type": "editor",
+      "addable": true
+    }
+  ],
+  "id": "5dd3c6ce11ab65f1913de06d"
+}

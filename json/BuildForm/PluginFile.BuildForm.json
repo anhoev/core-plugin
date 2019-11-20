@@ -1,9 +1,20 @@
 {
   "_id": "5c3d90e839e5f23b9d7fe97a",
   "__v": 0,
+  "type": "Collection",
   "alwaysLoad": true,
   "class": null,
-  "extensions": [],
+  "name": "PluginFile",
+  "id": "5c3d90e839e5f23b9d7fe97a",
+  "tabs": [
+    {
+      "fields": [
+        "props"
+      ],
+      "_id": "5c4c19ea41a8b04ba690c142",
+      "name": "Props"
+    }
+  ],
   "fields": [
     {
       "_id": "5c4974534d5ad80da91e03b5",
@@ -225,6 +236,18 @@
             }
           ],
           "type": "object"
+        },
+        {
+          "schemaType": "object",
+          "key": "vue-singleton",
+          "fields": [
+            {
+              "schemaType": "string",
+              "key": "parameter",
+              "type": "input"
+            }
+          ],
+          "type": "object"
         }
       ],
       "default": null,
@@ -243,16 +266,6 @@
       "mixed": null
     }
   ],
-  "id": "5c3d90e839e5f23b9d7fe97a",
-  "name": "PluginFile",
-  "tabs": [
-    {
-      "fields": [
-        "props"
-      ],
-      "_id": "5c4c19ea41a8b04ba690c142",
-      "name": "Props"
-    }
-  ],
-  "type": "Collection"
+  "extensions": [],
+  "title": "path"
 }

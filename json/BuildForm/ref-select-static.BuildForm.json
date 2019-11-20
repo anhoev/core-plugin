@@ -50,6 +50,12 @@
       "codeType": "commonJs",
       "height": "200px",
       "addable": true
+    },
+    {
+      "_id": "5d09edd24fbc7211fc7b2d5d",
+      "schemaType": "boolean",
+      "key": "addable",
+      "type": "input@checkbox"
     }
   ],
   "name": "ref-select-static",

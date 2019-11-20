@@ -1,0 +1,63 @@
+{
+  "_id": "5d20c0349c8684d1a23e2b90",
+  "__v": 0,
+  "type": null,
+  "alwaysLoad": null,
+  "class": "object",
+  "name": "GObjectDelegate",
+  "tabs": [],
+  "fields": [
+    {
+      "_id": "5c3daba030f9c33c9c3a3a27",
+      "schemaType": "string",
+      "key": "label",
+      "default": null,
+      "type": "input",
+      "label": null,
+      "flex": "md6"
+    },
+    {
+      "_id": "5d20c36f9c8684d1a23e2c17",
+      "schemaType": "string",
+      "key": "flex",
+      "type": "input@select",
+      "notOnlyValueInOptions": true,
+      "optionsType": "onlyValue",
+      "options": [
+        "md1",
+        "md2",
+        "md3",
+        "md4",
+        "md5",
+        "md6",
+        "md7",
+        "md8",
+        "md9",
+        "md10",
+        "md11",
+        "md12"
+      ]
+    },
+    {
+      "_id": "5c5ede2a6bd11f1ee9a46dd6",
+      "schemaType": "boolean",
+      "key": "addable",
+      "type": "input@checkbox"
+    },
+    {
+      "_id": "5d20c3fe9c8684d1a23e2c3c",
+      "schemaType": "mixed",
+      "key": "formatItems",
+      "type": "editor",
+      "addable": true
+    },
+    {
+      "_id": "5d20ce4d9c8684d1a23e2d07",
+      "schemaType": "boolean",
+      "key": "editOnFocus",
+      "type": "input@switch"
+    }
+  ],
+  "extensions": [],
+  "id": "5d20c0349c8684d1a23e2b90"
+}

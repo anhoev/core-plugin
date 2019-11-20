@@ -1,0 +1,40 @@
+{
+  "_id": "5dd3c0c511ab65f1913de024",
+  "__v": 0,
+  "type": null,
+  "alwaysLoad": null,
+  "class": "object",
+  "name": "GGridGeneratorInput",
+  "tabs": [],
+  "fields": [
+    {
+      "_id": "5c3eff7eff94f201059ae5f3",
+      "schemaType": "string",
+      "key": "label",
+      "default": null,
+      "type": "input",
+      "label": null,
+      "flex": "md6"
+    },
+    {
+      "_id": "5c3f0c3dff94f201059ae609",
+      "schemaType": "string",
+      "key": "flex",
+      "default": null,
+      "type": "input@select",
+      "label": null,
+      "flex": "md6",
+      "optionsType": "onlyValue",
+      "options": [
+        "md2",
+        "md3",
+        "md4",
+        "md5",
+        "md6",
+        "md12"
+      ]
+    }
+  ],
+  "extensions": [],
+  "id": "5dd3c0c511ab65f1913de024"
+}
