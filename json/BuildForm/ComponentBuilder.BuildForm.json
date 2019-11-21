@@ -15,7 +15,8 @@
         "renderInIframe",
         "registerAsVueComponent",
         "events",
-        "mockProps"
+        "mockProps",
+        "isolateCss"
       ],
       "_id": "5c74b84321f0cd1602fb441a",
       "name": "Settings"
@@ -89,7 +90,7 @@
               "addable": false,
               "dynamicFieldsType": "code",
               "dynamicFields": {
-                "_code_": "//const cms = require('cms');\nmodule.exports = function getDynamicFields({ model }) {\n  const component = cms.pluginComponents.find(c => c.name === model.component);\n  const props = component.props;\n  const events = component.events.map(key => ({key, type: 'editor', addable: true}));\n  return [{\n    key: 'props',\n    noPanel: true,\n    type: 'object',\n    fields: props\n  },{\n    key: 'events',\n    noPanel: true,\n    type: 'object',\n    fields: events\n  }]\n}",
+                "_code_": "//const cms = require('cms');\nmodule.exports = function getDynamicFields({ model }) {\n  const component = cms.pluginComponents.find(c => c.name === model.component);\n  const props = component.props;\n  const events = (component.events || []).map(key => ({key, type: 'editor', addable: true}));\n  return [{\n    key: 'props',\n    noPanel: true,\n    type: 'object',\n    fields: props\n  },{\n    key: 'events',\n    noPanel: true,\n    type: 'object',\n    fields: events\n  }]\n}",
                 "_code_type_": "commonJs"
               },
               "noPanel": true
@@ -349,6 +350,13 @@
       "schemaType": "mixed",
       "key": "mockProps",
       "type": "editor",
+      "addable": true
+    },
+    {
+      "_id": "5dd65138e221ef3fff05f8bd",
+      "schemaType": "boolean",
+      "key": "isolateCss",
+      "type": "input@checkbox",
       "addable": true
     }
   ],
