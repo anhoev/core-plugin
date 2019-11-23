@@ -257,6 +257,11 @@
                   "schemaType": "string",
                   "key": "local",
                   "type": "input"
+                },
+                {
+                  "schemaType": "boolean",
+                  "key": "isVModel",
+                  "type": "input@checkbox"
                 }
               ],
               "formatItem": {
