@@ -1,69 +1,66 @@
 <template>
-  <v-flex :class="flex" class="px-2">
-    <v-layout row>
-      <v-menu v-model="showMenu"
-              lazy
-              ref="menu"
-              left bottom
-              min-width="290px"
-              max-width="330px"
-              :close-on-content-click="false"
-              z-index="10000"
-      >
-        <template v-slot:activator="{ on }">
-          <v-text-field :class="field.tableCell ? 'g-text-field' : ''"
-                        v-model="selectedDateTime"
-                        v-on="field.textEditable ? null : on"
-                        :label="field.tableCell ? '': field.label || field.key"
-                        @input="onInput"
-                        :readonly="!field.textEditable"
-                        :mask="inputMask"
-                        :return-masked-value="true"
-                        :rules="[inputRules.validDate]"
-          >
-            <v-icon slot="append" style="opacity: 0.5;" @click.stop="clearDate" v-if="field.clearable">clear</v-icon>
-            <v-icon slot="append" style="padding-right: 4px" v-if="field.showIcon"
-                    v-on="field.textEditable ? on : null">event
-            </v-icon>
-          </v-text-field>
-        </template>
-        <v-card :key="keyCard">
-          <v-card-text style="padding: 0 !important;">
-            <v-tabs centered grow v-model="showTab">
-              <v-tab key="datePicker">
-                <v-icon>event</v-icon>
-              </v-tab>
-              <v-tab key="timePicker" :disabled="!datePicked" v-if="field.pickerType === 'datetime'">
-                <v-icon>access_time</v-icon>
-              </v-tab>
-              <v-tabs-items>
-                <v-tab-item>
-                  <v-date-picker v-model="date"
-                                 :type="datePickerType"
-                                 scrollable
-                  >
-                  </v-date-picker>
-                </v-tab-item>
-                <v-tab-item :disabled="!datePicked" v-if="field.pickerType === 'datetime'">
-                  <v-time-picker v-model="time" :format="timePickerFormat" :use-seconds="field.pickSeconds"
-                  ></v-time-picker>
-                </v-tab-item>
-              </v-tabs-items>
-            </v-tabs>
-          </v-card-text>
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn flat color="success" @click="getCurrentDateTime">Now</v-btn>
-            <v-btn flat color="blue darken-1" @click="showMenu = false">Close</v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-menu>
-    </v-layout>
-  </v-flex>
+  <g-row :class="flex" class="px-2">
+    <g-menu v-model="showMenu"
+            ref="menu"
+            left bottom
+            min-width="290px"
+            max-width="330px"
+            :close-on-content-click="false"
+            :content-fill-width="false"
+    >
+      <template v-slot:activator="{ on }">
+        <g-text-field :class="field.tableCell ? 'g-text-field' : ''"
+                      v-model="selectedDateTime"
+                      v-on="field.textEditable ? null : on"
+                      :label="field.tableCell ? '': field.label || field.key"
+                      @input="onInput"
+                      :read-only="!field.textEditable"
+                      :mask="inputMask"
+                      :return-masked-value="true"
+                      :rules="[inputRules.validDate]"
+        >
+          <g-icon slot="append" style="opacity: 0.5;" @click.stop="clearDate" v-if="field.clearable">clear</g-icon>
+          <g-icon slot="append" style="padding-right: 4px" v-if="field.showIcon"
+                  v-on="field.textEditable ? on : null">event
+          </g-icon>
+        </g-text-field>
+      </template>
+      <g-card :key="keyCard">
+        <g-card-text style="padding: 0 !important;">
+          <g-tabs centered grow v-model="showTab" :items="[0,1]">
+            <template #tabs>
+              <g-tab key="datePicker" :item="0">
+                <g-icon>event</g-icon>
+              </g-tab>
+              <g-tab key="timePicker" :item="1" :disabled="!datePicked" v-if="field.pickerType === 'datetime'">
+                <g-icon>access_time</g-icon>
+              </g-tab>
+            </template>
+
+            <g-tab-item :item="0">
+              <g-date-picker v-model="date"
+                             :type="datePickerType"
+                             scrollable
+              >
+              </g-date-picker>
+            </g-tab-item>
+            <g-tab-item :item="1" :disabled="!datePicked" v-if="field.pickerType === 'datetime'">
+              <g-time-picker v-model="time" :use24-hours="true" :use-seconds="field.pickSeconds"
+              ></g-time-picker>
+            </g-tab-item>
+          </g-tabs>
+        </g-card-text>
+        <g-card-actions>
+          <g-spacer></g-spacer>
+          <g-btn flat color="success" @click="getCurrentDateTime">Now</g-btn>
+          <g-btn flat color="blue darken-1" @click="showMenu = false">Close</g-btn>
+        </g-card-actions>
+      </g-card>
+    </g-menu>
+  </g-row>
 </template>
 
 <script>
-
   export default {
     name: 'DatePicker',
     props: ['model', 'field', 'noFlex'],
@@ -143,10 +140,10 @@
         set(value) {
           const [hour, minute, seconds] = value.split(':');
           this.computedModel = dayjs(this.computedModel)
-            .set('hour', hour)
-            .set('minute', minute)
-            .set('second', seconds ? seconds : 0)
-            .toDate();
+          .set('hour', hour)
+          .set('minute', minute)
+          .set('second', seconds ? seconds : 0)
+          .toDate();
         }
       },
       timePickerFormat() {
@@ -186,7 +183,7 @@
         this.showTab = 0;
         this.keyCard++;
       },
-      onInput: _.debounce(function(e) {
+      onInput: _.debounce(function (e) {
         if (e === '') {
           this.computedModel = null;
         }
@@ -203,7 +200,7 @@
         }
       }, 500)
     }
-  };
+  }
 </script>
 
 <style>
