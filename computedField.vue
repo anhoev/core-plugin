@@ -1,11 +1,12 @@
 <template>
-  <v-flex :class="flex">
-    <v-subheader>{{field.label || field.key}}:  {{result}}</v-subheader>
-  </v-flex>
+  <g-col :class="flex">
+    <div>{{field.label || field.key}}: {{result}}</div>
+  </g-col>
 </template>
 
 <script>
   import jsonFn from 'json-fn';
+
   export default {
     name: '',
     props: ['model', 'field'],

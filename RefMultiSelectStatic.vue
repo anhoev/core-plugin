@@ -1,12 +1,14 @@
 <template>
-  <v-flex :class="flex" class="px-2">
-    <v-combobox v-model="value" :items="options" :label="field.tableCell ? '': field.label || field.key" clearable
-                    deletable-chips chips small-chips
-                    @change="onChange" multiple hide-selected
-                    :menu-props="{'z-index': 1000, 'closeOnContentClick': true}">
-      <v-icon slot="append" v-if="inArray" @click.stop="$emit('remove-field')">delete_outline</v-icon>
-    </v-combobox>
-  </v-flex>
+  <g-col :class="flex" class="px-2">
+    <g-combobox v-model="value" :items="options" :label="field.tableCell ? '': field.label || field.key" clearable
+                deletable-chips chips small-chips
+                @change="onChange" multiple hide-selected
+                :menu-props="{'z-index': 1000, 'closeOnContentClick': true}">
+      <template #append-outer v-if="inArray">
+        <g-icon @click.stop="$emit('remove-field')">delete_outline</g-icon>
+      </template>
+    </g-combobox>
+  </g-col>
 </template>
 
 <script>

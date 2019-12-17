@@ -1,111 +1,100 @@
 <template>
-  <v-flex :class="flex" class="px-2">
-    <v-layout row wrap>
-      <v-flex xs12 sm12>
-        <v-text-field class="custom-text-field"
+  <g-col :class="flex" class="px-2">
+    <g-row>
+      <g-col xs="12" sm="12">
+        <g-text-field class="custom-text-field"
                       :label="field.label || field.key"
                       placeholder="Upload image"
                       @click.stop="selectFile"
                       v-model="imageName"
                       prepend-icon="image"
-                      readonly
-        >
-          <v-icon slot="append" @click="clearFile">clear</v-icon>
-        </v-text-field>
-      </v-flex>
-      <v-flex xs6 align-self-start v-if="imageUrl" fill-height>
-        <img :src="imageUrl" ref="image" alt="" style="height: 87px;" />
-      </v-flex>
-      <v-flex xs6 v-if="imageUrl">
-        <v-layout column justify-space-between align-end fill-height>
-          <v-flex shrink>
-            <v-btn flat icon color="grey"
-                   @click="openDialog"
-            >
-              <v-icon>edit</v-icon>
-            </v-btn>
-          </v-flex>
-          <v-flex shrink style="margin-right: 15px; margin-bottom: 4px;">
-            <v-subheader class="grey--text text--lighten-1 pa-0">
+                      read-only>
+          <template #append-inner>
+            <g-icon @click="clearFile">clear</g-icon>
+          </template>
+        </g-text-field>
+      </g-col>
+      <g-col xs="6" align-self-start v-if="imageUrl">
+        <img :src="imageUrl" ref="image" alt="" style="height: 87px;"/>
+      </g-col>
+      <g-col xs="6" v-if="imageUrl">
+        <g-row class="flex-column" justify-content="space-between" align-items="end" fill-height>
+          <g-col class="flex-shrink-1">
+            <g-btn flat icon text-color="grey" @click="openDialog">
+              <g-icon>edit</g-icon>
+            </g-btn>
+          </g-col>
+          <g-col class="flex-shrink-1" style="margin-right: 15px; margin-bottom: 4px;">
+            <span class="grey--text text--lighten-1 pa-0">
               Resolution: {{ imageWidth }} x {{ imageHeight }} ({{ imageSize }})
-            </v-subheader>
-          </v-flex>
-        </v-layout>
-      </v-flex>
+            </span>
+          </g-col>
+        </g-row>
+      </g-col>
 
       <input
           type="file"
           v-show="false"
           ref="uploadButton"
           accept="image/*"
-          @change="onFileSelected($event);onChange($event)"
-      />
-    </v-layout>
-    <v-dialog v-model="showDialog" v-if="imageUrl" max-width="600" persistent lazy>
-      <v-card>
-        <v-card-title
+          @change="onFileSelected($event);onChange($event)"/>
+    </g-row>
+    <g-dialog v-model="showDialog" v-if="imageUrl" max-width="600" persistent lazy>
+      <g-card>
+        <g-card-title
             class="headline"
-            primary-title
-            style="display: block;"
-        >
-          Image size: {{ dialogImageSize }}<br />
+            style="display: block;">
+          Image size: {{ dialogImageSize }}<br/>
           <span class="grey--text text--lighten-1" style="font-size: 13px;">
             Original image resolution: {{ originalImageWidth }} x {{ originalImageHeight }}
           </span>
-        </v-card-title>
-        <v-card-text>
-          <v-layout row wrap>
-            <v-flex xs5>
-              <v-text-field
+        </g-card-title>
+        <g-card-text>
+          <g-row>
+            <g-col xs="5">
+              <g-text-field
                   label="Width"
                   v-model="dialogImageWidth"
                   type="number"
-                  class="mt-0"
-              ></v-text-field>
-            </v-flex>
-            <v-spacer></v-spacer>
-            <v-flex xs5>
-              <v-text-field
+                  class="mt-0"/>
+            </g-col>
+            <g-spacer/>
+            <g-col xs="5">
+              <g-text-field
                   label="Height"
                   v-model="dialogImageHeight"
                   type="number"
-                  class="mt-0"
-              ></v-text-field>
-            </v-flex>
-            <v-flex xs10>
+                  class="mt-0"/>
+            </g-col>
+            <g-col xs="10">
               <v-slider
                   v-model="compressionSliderModel"
-                  label="Quality"
-                  min="1"
-                  max="100"
-                  step="1"
-              >
-              </v-slider>
-            </v-flex>
-            <v-spacer></v-spacer>
-            <v-flex shrink style="width: 60px;">
+                  thumb-label="Quality"
+                  min="1" max="100" step="1"/>
+            </g-col>
+            <g-spacer/>
+            <g-col class="flex-shrink-1" style="width: 60px;">
               <v-text-field
                   v-model="compressionSliderModel"
                   hide-details
                   single-line
                   type="number"
-                  class="mt-0"
-              ></v-text-field>
-            </v-flex>
-            <v-flex xs12>
-              <v-img :src="dialogImageUrl" :width="dialogImageWidth" max-width="568"></v-img>
-            </v-flex>
-          </v-layout>
-        </v-card-text>
-        <v-card-actions>
-          <v-layout align-center justify-end row fill-height>
-            <v-btn flat color="blue darken-1" @click="showDialog = false">Cancel</v-btn>
-            <v-btn flat color="success" @click="save">Save</v-btn>
-          </v-layout>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-  </v-flex>
+                  class="mt-0"/>
+            </g-col>
+            <g-col xs="12">
+              <g-img :src="dialogImageUrl" :width="dialogImageWidth" max-width="568"/>
+            </g-col>
+          </g-row>
+        </g-card-text>
+        <g-card-actions>
+          <g-row align-items="center" justify-content="end">
+            <g-btn flat text-color="blue darken-1" @click="showDialog = false">Cancel</g-btn>
+            <g-btn flat text-color="success" @click="save">Save</g-btn>
+          </g-row>
+        </g-card-actions>
+      </g-card>
+    </g-dialog>
+  </g-col>
 </template>
 
 <script>
@@ -139,9 +128,9 @@
       };
     },
     inject: {
-      rootModel: { default: null },
-      path: { default: null },
-      noLayout: { default: null }
+      rootModel: {default: null},
+      path: {default: null},
+      noLayout: {default: null}
     },
     mounted() {
       this.originalImageUrl = this.model[this.field.key];
@@ -266,10 +255,10 @@
       }
     },
     watch: {
-      dialogImageWidth: _.debounce(function() {
+      dialogImageWidth: _.debounce(function () {
         this.getPreviewImageUrl();
       }, 500),
-      compressionSliderModel: _.debounce(function() {
+      compressionSliderModel: _.debounce(function () {
         this.getPreviewImageUrl();
       }, 500)
     }

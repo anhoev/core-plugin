@@ -1,16 +1,15 @@
 <template>
-  <v-flex :class="flex" class="px-2">
-    <v-layout row style="padding: 0">
+  <g-col :class="flex" class="px-2">
+    <g-row style="padding: 0">
       <label class="v-label theme--light middle">{{field.label || field.key}}</label>
-      <v-spacer></v-spacer>
-      <v-slider
+      <g-spacer/>
+      <g-slider
           v-model="model[field.key]"
           thumb-label="always"
           :min="field.min"
-          :max="field.max"
-        ></v-slider>
-    </v-layout>
-  </v-flex>
+          :max="field.max"/>
+    </g-row>
+  </g-col>
 </template>
 
 <script>

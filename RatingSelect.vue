@@ -1,19 +1,18 @@
 <template>
-	<v-flex :class="flex" class="px-2">
-		<v-layout row style="padding-top: 20px">
-			<label class="v-label theme--light middle">{{field.label || field.key}}</label>
-			<v-spacer></v-spacer>
-			<span class="grey--text caption mr-2 middle" v-if="model[field.key]">
+  <g-col :class="flex" class="px-2">
+    <g-row style="padding-top: 20px">
+      <label class="v-label theme--light middle">{{field.label || field.key}}</label>
+      <g-spacer/>
+      <span class="grey--text caption mr-2 middle" v-if="model[field.key]">
 				({{field.hintPrepend}}{{ model[field.key] }})
 			</span>
-			<v-rating v-model="model[field.key]" :length="field.length"
-								dense hover
-								empty-icon="fiber_manual_record"
-								full-icon="fiber_manual_record"
-								background-color="grey lighten-1"
-			></v-rating>
-		</v-layout>
-	</v-flex>
+      <v-rating v-model="model[field.key]" :length="field.length"
+                dense hover
+                empty-icon="fiber_manual_record"
+                full-icon="fiber_manual_record"
+                background-color="grey lighten-1"/>
+    </g-row>
+  </g-col>
 </template>
 
 <script>
@@ -33,7 +32,7 @@
 </script>
 
 <style>
-	.middle {
-		padding-top: 5px !important;
-	}
+  .middle {
+    padding-top: 5px !important;
+  }
 </style>
