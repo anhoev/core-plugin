@@ -1,6 +1,6 @@
 <template>
   <g-col :class="flex" class="px-2">
-    <g-combobox v-model="value" :items="options" :label="field.tableCell ? '': field.label || field.key" clearable
+    <g-combobox v-model="value" :items="options" :label="field.tableCell ? '': field.label || field.key" clearable item-value="text"
                 @change="onChange"
                 :menu-props="{'z-index': 1000, 'closeOnContentClick': true}">
       <template #append-outer v-if="inArray">
