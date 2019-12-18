@@ -1,7 +1,7 @@
 <template>
   <g-col :class="flex" class="px-2">
     <g-row>
-      <g-col xs="12" sm="12">
+      <g-col xs="12" sm="12" class="py-0">
         <g-text-field class="custom-text-field"
                       :label="field.label || field.key"
                       placeholder="Upload image"
@@ -14,20 +14,20 @@
           </template>
         </g-text-field>
       </g-col>
-      <g-col xs="6" align-self-start v-if="imageUrl">
+      <g-col class="pa-0" xs="6" align-self-start v-if="imageUrl">
         <img :src="imageUrl" ref="image" alt="" style="height: 87px;"/>
       </g-col>
-      <g-col xs="6" v-if="imageUrl">
+      <g-col class="pa-0" xs="6" v-if="imageUrl">
         <g-row class="flex-column" justify-content="space-between" align-items="end" fill-height>
-          <g-col class="flex-shrink-1">
+          <g-col class="flex-shrink-1 pa-0" style="margin-right: 15px; display: flex; justify-content: flex-end">
             <g-btn flat icon text-color="grey" @click="openDialog">
               <g-icon>edit</g-icon>
             </g-btn>
           </g-col>
-          <g-col class="flex-shrink-1" style="margin-right: 15px; margin-bottom: 4px;">
-            <span class="grey--text text--lighten-1 pa-0">
+          <g-col class="flex-shrink-1 pa-0" style="margin-right: 15px; margin-bottom: 4px;">
+            <g-subheader class="grey--text pa-0">
               Resolution: {{ imageWidth }} x {{ imageHeight }} ({{ imageSize }})
-            </span>
+            </g-subheader>
           </g-col>
         </g-row>
       </g-col>
@@ -67,14 +67,14 @@
                   class="mt-0"/>
             </g-col>
             <g-col xs="10">
-              <v-slider
+              <g-slider
                   v-model="compressionSliderModel"
-                  thumb-label="Quality"
+                  thumb-label
                   min="1" max="100" step="1"/>
             </g-col>
             <g-spacer/>
             <g-col class="flex-shrink-1" style="width: 60px;">
-              <v-text-field
+              <g-text-field
                   v-model="compressionSliderModel"
                   hide-details
                   single-line
@@ -82,12 +82,13 @@
                   class="mt-0"/>
             </g-col>
             <g-col xs="12">
-              <g-img :src="dialogImageUrl" :width="dialogImageWidth" max-width="568"/>
+              <g-img :src="dialogImageUrl" :width="dialogImageWidth" :height="imageHeight" max-width="568"/>
             </g-col>
           </g-row>
         </g-card-text>
         <g-card-actions>
           <g-row align-items="center" justify-content="end">
+            <g-spacer/>
             <g-btn flat text-color="blue darken-1" @click="showDialog = false">Cancel</g-btn>
             <g-btn flat text-color="success" @click="save">Save</g-btn>
           </g-row>
@@ -98,6 +99,7 @@
 </template>
 
 <script>
+  //import GSubheader from "../../gform/pos-vue-framework/src/components/GSubheader/GSubheader";
   function formatBytes(bytes, decimals) {
     if (0 === bytes) {
       return '0 Bytes';
@@ -111,6 +113,7 @@
 
   export default {
     name: 'InlineImage',
+    //components: {GSubheader},
     props: ['model', 'field', 'noFlex'],
     data() {
       return {
@@ -265,8 +268,12 @@
   };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
   .middle {
     padding-top: 5px !important;
+  }
+
+  .grey--text {
+    color: #bdbdbd;
   }
 </style>

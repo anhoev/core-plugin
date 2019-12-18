@@ -1,6 +1,6 @@
 <template>
   <g-col :class="flex">
-    <div>{{field.label || field.key}}: {{result}}</div>
+    <g-subheader>{{field.label || field.key}}: {{result}}</g-subheader>
   </g-col>
 </template>
 

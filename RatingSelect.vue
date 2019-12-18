@@ -6,7 +6,7 @@
       <span class="grey--text caption mr-2 middle" v-if="model[field.key]">
 				({{field.hintPrepend}}{{ model[field.key] }})
 			</span>
-      <v-rating v-model="model[field.key]" :length="field.length"
+      <g-rating v-model="model[field.key]" :length="field.length"
                 dense hover
                 empty-icon="fiber_manual_record"
                 full-icon="fiber_manual_record"

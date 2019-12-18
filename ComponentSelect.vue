@@ -24,7 +24,7 @@
 
 <script>
   import cms from 'cms';
-  import {SnackBarController} from '../../src/helpers/snackbarController'; //from 'backoffice'
+  import SnackBarController from 'SnackBarController'; //from 'backoffice';
 
   const vueLanguage = 'vue';
   export default {
