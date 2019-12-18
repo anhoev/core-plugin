@@ -69,6 +69,7 @@
             <g-col xs="10">
               <g-slider
                   v-model="compressionSliderModel"
+                  label="Quality"
                   thumb-label
                   min="1" max="100" step="1"/>
             </g-col>
