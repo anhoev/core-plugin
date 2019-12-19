@@ -7,15 +7,15 @@
         <g-icon color="blue darken-1" @click.stop="toggleEditor">edit</g-icon>
       </template>
     </g-combobox>
-    <g-dialog class="flex-grow-1" v-model="showEditorDialog" max-width="80%" lazy>
+    <g-dialog v-model="showEditorDialog" width="80%" lazy>
       <g-card class="flex-grow-1" style="height: 80vh">
         <g-card-text style="height: calc(100% - 55px)">
           <monaco-editor :value.sync="code" :language="currentLanguage" :label="model ? model.component : ''"/>
         </g-card-text>
         <g-card-actions>
           <g-spacer/>
-          <g-btn color="blue darken-1" flat @click.stop="toggleEditor">Close</g-btn>
-          <g-btn color="blue darken-1" flat @click.stop="save">Save</g-btn>
+          <g-btn textColor="blue darken-1" flat @click.stop="toggleEditor">Close</g-btn>
+          <g-btn textColor="blue darken-1" flat @click.stop="save">Save</g-btn>
         </g-card-actions>
       </g-card>
     </g-dialog>
