@@ -1,13 +1,12 @@
 <template>
-  <g-row :class="flex" class="px-2">
+  <g-row :class="flex" class="px-2 g-date-picker">
     <g-menu v-model="showMenu"
             ref="menu"
             left bottom
             min-width="290px"
             max-width="330px"
             :close-on-content-click="false"
-            :content-fill-width="false"
-    >
+            :content-fill-width="false">
       <template v-slot:activator="{ on }">
         <g-text-field :class="field.tableCell ? 'g-text-field' : ''"
                       v-model="selectedDateTime"
@@ -17,8 +16,7 @@
                       :read-only="!field.textEditable"
                       :mask="inputMask"
                       :return-masked-value="true"
-                      :rules="[inputRules.validDate]"
-        >
+                      :rules="[inputRules.validDate]">
           <g-icon slot="append" style="opacity: 0.5;" @click.stop="clearDate" v-if="field.clearable">clear</g-icon>
           <g-icon slot="append" style="padding-right: 4px" v-if="field.showIcon"
                   v-on="field.textEditable ? on : null">event
@@ -81,9 +79,9 @@
       }
     },
     inject: {
-      rootModel: { default: null },
-      path: { default: null },
-      noLayout: { default: null }
+      rootModel: {default: null},
+      path: {default: null},
+      noLayout: {default: null}
     },
     computed: {
       flex() {
@@ -140,10 +138,10 @@
         set(value) {
           const [hour, minute, seconds] = value.split(':');
           this.computedModel = dayjs(this.computedModel)
-          .set('hour', hour)
-          .set('minute', minute)
-          .set('second', seconds ? seconds : 0)
-          .toDate();
+              .set('hour', hour)
+              .set('minute', minute)
+              .set('second', seconds ? seconds : 0)
+              .toDate();
         }
       },
       timePickerFormat() {
