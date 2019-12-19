@@ -18,7 +18,7 @@
         <img :src="imageUrl" ref="image" alt="" style="height: 87px;"/>
       </g-col>
       <g-col class="pa-0" xs="6" v-if="imageUrl">
-        <g-row class="flex-column" justify-content="space-between" align-items="end" fill-height>
+        <g-row class="flex-column fill-height" justify-content="space-between" align-items="end">
           <g-col class="flex-shrink-1 pa-0" style="margin-right: 15px; display: flex; justify-content: flex-end">
             <g-btn flat icon text-color="grey" @click="openDialog">
               <g-icon>edit</g-icon>
