@@ -1,6 +1,6 @@
 <template>
   <g-row :class="flex" class="px-2">
-    <g-combobox v-model="value" :items="options" :label="field.label || field.key" clearable
+    <g-combobox v-model="model[field.key]" :items="options" :label="field.label || field.key" clearable
                 @change="onChange" class="flex-grow-1"
                 :menu-props="{'z-index': 1000, 'closeOnContentClick': true}">
       <template #append-outer>
@@ -51,20 +51,10 @@
         return this.noLayout ? 'col-xs-12' : this.field.flex;
       },
       options() {
-        const list = cms.pluginComponents.map(c => c.name);
-        return list.map(item => ({text: item, value: item}));
-      },
-      value: {
-        get() {
-          return {text: this.model[this.field.key] || ''};
-        },
-        set(v) {
-          this.model[this.field.key] = v ? v.text : null;
-        }
+        return cms.pluginComponents.map(c => c.name);
       }
     },
     mounted() {
-      this.value = {text: this.model[this.field.key]};
       if (this.model) {
         this.loadPlugin()
             .then((items) => {
