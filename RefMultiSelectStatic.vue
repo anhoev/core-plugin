@@ -1,7 +1,7 @@
 <template>
   <g-col :class="flex" class="px-2">
-    <g-combobox v-model="value" :items="options" :label="field.tableCell ? '': field.label || field.key" clearable
-                deletable-chips chips small-chips
+    <g-combobox v-model="model[field.key]" :items="options" :label="field.tableCell ? '': field.label || field.key" clearable
+                deletable-chips chips small-chips allow-duplicate
                 @change="onChange" multiple hide-selected
                 :menu-props="{'z-index': 1000, 'closeOnContentClick': true}">
       <template #append-outer v-if="inArray">
@@ -35,20 +35,7 @@
       options() {
         const list = cms.Types[this.field.Type || this.field.ref].list;
         const labelProp = this.field.labelProp || cms.Types[this.field.Type || this.field.ref].info.title;
-        return list.map(item => ({text: item[labelProp], value: item}));
-      },
-      value: {
-        get() {
-          if (!this.model[this.field.key]) return [];
-          return this.model[this.field.key].map(i => ({text: i}));
-        },
-        set(v) {
-          if (!this.model[this.field.key]) {
-            this.$set(this.model, this.field.key, []);
-          }
-          this.model[this.field.key].length = 0;
-          if (v && v.map) this.model[this.field.key].push(...v.map(i => i.text));
-        }
+        return list.map(item => item[labelProp]);
       }
     },
     methods: {
