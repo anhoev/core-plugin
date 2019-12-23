@@ -1,12 +1,10 @@
 <template>
-  <g-row class="flex" class="px-2">
+  <g-row class="flex px-2">
     <!--TODO dynamic class when field shown in table-->
     <g-time-picker-input v-model="model[field.key]"
                          :show-icon="field.showIcon"
                          :clearable="field.clearable"
-                         use24-hours
-    >
-    </g-time-picker-input>
+                         use24-hours/>
   </g-row>
 </template>
 
