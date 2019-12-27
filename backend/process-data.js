@@ -11,6 +11,9 @@ module.exports = async (cms) => {
 
   async function processDataFn(reportName, input, callback) {
     try {
+      input.from = new Date(input.from) // Socket.io send Dates as Strings
+      input.to = new Date(input.to)
+
       const processData = jsonfn.clone(await cms.getModel('ProcessData').findOne({name: reportName}), true, true);
       const processDataTargetModel = cms.getModel(processData.collections)
       const steps = processData.items;
