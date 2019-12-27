@@ -1,0 +1,8 @@
+{
+  "_id": "5e059017fc7ca91fa4ae0e1a",
+  "loader": {
+    "type": "backend-api"
+  },
+  "path": "backend/process-data.js",
+  "plugin": "core-plugin"
+}
