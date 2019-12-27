@@ -5,8 +5,9 @@ const customParseFormat = require('dayjs/plugin/customParseFormat');
 dayjs.extend(customParseFormat);
 
 module.exports = async (cms) => {
-
-  cms.io.on('processData', processDataFn);
+  cms.socket.on('connect', socket => {
+    socket.on('processData', processDataFn);
+  })
 
   async function processDataFn(reportName, input, callback) {
     try {
