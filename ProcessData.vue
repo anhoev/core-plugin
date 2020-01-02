@@ -35,18 +35,20 @@
   const cms = global['cms'];
   import _ from 'lodash';
 
-  console.log('cms')
-  console.log(cms.models);
+  //console.log('cms')
+  //console.log(cms.models);
 
   export default {
     name: 'ProcessData',
     props: {
-      model: Object,
+      model: {
+        type: Object,
+        default: () => ({})
+      },
       onlyData: Boolean
     },
     data() {
       return {
-        model: {},
         items: [],
         reducers: [],
         rows: [{
@@ -87,7 +89,6 @@
               queryConditions.push({ [query.path]: { [query.comparator]: val } });
             }
             const result = await this.Model.find({ $and: queryConditions });
-            console.log(step.output, jsonFn.clone(result));
             this.$set(this.scope, step.output, result);
             //this.scope[step.output] = result;
           } else if (step.choice === 'pivottable') {
@@ -96,7 +97,7 @@
             const { renderData, jsonData } = await this.renderPivotTable(step, items);
             this.$set(this.scope, step.output, jsonData);
             //this.scope[renderData] = jsonData;
-            console.log(step.output, jsonFn.clone(jsonData));
+            //console.log(step.output, jsonFn.clone(jsonData));
             if (step.view === 'json') {
               this.renderData.push({ type: 'json', data: jsonData, name: step.name || step.output });
             } else if (_.isEmpty(step.filter)) {
@@ -119,7 +120,7 @@
               this.$set(this.scope, step.output, convertFn(items));
               //this.scope[step.output] = convertFn(items);
             }
-            console.log(step.output, jsonFn.clone(this.scope[step.output]));
+            //console.log(step.output, jsonFn.clone(this.scope[step.output]));
           } else if (step.choice === 'filter') {
             let items = this.scope[step.input];
             const convertFn = step.fn.fn;
@@ -127,7 +128,7 @@
               this.$set(this.scope, step.output, items.filter(convertFn));
               //this.scope[step.output] = items.filter(convertFn);
             }
-            console.log(step.output, jsonFn.clone(this.scope[step.output]));
+            //console.log(step.output, jsonFn.clone(this.scope[step.output]));
           } else if (step.choice === 'mergePivot') {
             //todo: getAllProps
             const props = _.union(..._(step.input).map(i => this.scope[i.name]).map(obj => Object.keys(obj)).value());
@@ -147,7 +148,7 @@
             }
             this.renderData.push({ type: 'json', data: result, name: step.output });
             this.$set(this.scope, step.output, result);
-            console.log(step.output, jsonFn.clone(this.scope[step.output]));
+            //console.log(step.output, jsonFn.clone(this.scope[step.output]));
           }
         }
         this.$emit('processFinish', this.scope);
@@ -221,12 +222,13 @@
       }
     },
     created() {
-      console.log(this.model)
+      //console.log(this.model)
       if (!this.onlyData) {
         this.$set(this, 'scope', _.assign(this.scope, this.model.initProps));
       } else {
         let fields = this.model.inputForm.fields.map(f => f.key);
-        this.$set(this, 'scope', _.assign(this.scope, _.pick(this, fields)));
+        this.$set(this, 'scope', _.assign(this.scope, _.pick(this.$attrs, fields)));
+
       }
       //this.renderPivotTable();
       this.process();

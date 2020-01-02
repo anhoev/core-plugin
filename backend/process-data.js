@@ -6,36 +6,45 @@ const vueRuntimeHelpers = require('vue-runtime-helpers')
 const renderer = require('vue-server-renderer').createRenderer({
   template: '<!DOCTYPE html><html lang="en"><head><title>template</title></head><body><!--vue-ssr-outlet--></body></html>'
 });
+const _ = require('lodash')
 
 vueRuntimeHelpers.createInjector = vueRuntimeHelpers.createInjectorSSR;
 global['vue'] = Vue
 global['vue-runtime-helpers'] = vueRuntimeHelpers
+global['dayjs'] = dayjs
 
 dayjs.extend(customParseFormat)
 
 module.exports = async (cms) => {
+  global['cms'] = cms
+
   cms.socket.on('connect', socket => {
     socket.on('processData', processDataFn);
   })
 
   async function processDataFn(reportName, input, callback) {
     try {
-      input.from = new Date(input.from) // Socket.io send Dates as Strings
-      input.to = new Date(input.to)
+      input = jsonfn.clone(input, true, true);
 
-      const processData = jsonfn.clone(await cms.getModel('ProcessData').findOne({name: reportName}), true, true);
-      let scope = {...input, ...processData};
+      const processData = jsonfn.clone(await cms.getModel('ProcessData').findOne({ name: reportName }), true, true);
 
       cms.models = cms.models || {}
       cms.models[processData.collections] = cms.getModel(processData.collections)
-      global['cms'] = cms
 
       const ProcessData = require('../dist/ProcessData.vue')
 
       const component = new Vue({
-        components: {ProcessData},
+        components: { ProcessData },
         render(h) {
-          return h('ProcessData', {props: {model: scope}, on: {processFinish: (_scope) => callback(_scope)}})
+          return h('ProcessData', {
+            props: { model: processData, onlyData: true }, attrs: input, on: {
+              processFinish: (_scope) => {
+                if (_.isEmpty(processData.output)) return callback(_scope);
+                const scope = _.pick(_scope, [...processData.output, ...Object.keys(input)])
+                return callback(scope);
+              }
+            }
+          })
         }
       })
 
