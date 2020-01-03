@@ -1,42 +1,39 @@
 <template>
-  <fragment v-if="!onlyData">
-    <g-btn @click="process" small depressed>process</g-btn>
-    <g-field :fields="inputFormFields" :model="scope"/>
-    <template v-for="({type, name, data, options, filter, model}, index) in renderData">
-      <h6 style="margin-bottom: 10px">{{type}} : {{name}}</h6>
+	<fragment v-if="!onlyData">
+		<g-btn @click="process" small depressed>process</g-btn>
+		<g-field :fields="inputFormFields" :model="scope"/>
+		<template v-for="({type, name, data, options, filter, model}, index) in renderData">
+			<h6 style="margin-bottom: 10px">{{type}} : {{name}}</h6>
 
-      <pivot-table2 v-bind="data" v-if="type === 'pivottable'"/>
+			<pivot-table2 v-bind="data" v-if="type === 'pivottable'"/>
 
-      <template v-if="type === 'pivottableWithFilter'">
-        <grid-select :items="options" v-model="renderData[index].model" select-first></grid-select>
-        <v-tag mb-2/>
-        <pivot-table2 :row-fields="data.rowFields"
-                      :col-fields="data.colFields"
-                      :reducers="data.reducers"
-                      :data="filterData(data.data, filter, renderData[index].model)"/>
-      </template>
+			<template v-if="type === 'pivottableWithFilter'">
+				<grid-select :items="options" v-model="renderData[index].model" select-first></grid-select>
+				<v-tag mb-2/>
+				<pivot-table2 :row-fields="data.rowFields"
+											:col-fields="data.colFields"
+											:reducers="data.reducers"
+											:data="filterData(data.data, filter, renderData[index].model)"/>
+			</template>
 
-      <template v-if="type === 'json'">
-        <g-tree-view-json :data="data" :expand-level="1" show-length/>
-      </template>
+			<template v-if="type === 'json'">
+				<g-tree-view-json :data="data" :expand-level="1" show-length/>
+			</template>
 
-      <hr>
-    </template>
+			<hr>
+		</template>
 
-  </fragment>
-  <fragment v-else>
-    <g-tree-view-json :data="scope" :expand-level="0" show-length/>
-    <slot v-bind="scope"></slot>
-  </fragment>
+	</fragment>
+	<fragment v-else>
+		<g-tree-view-json :data="scope" :expand-level="0" show-length/>
+		<slot v-bind="scope"></slot>
+	</fragment>
 </template>
 
 <script>
   import * as jsonFn from 'json-fn';
   const cms = global['cms'];
   import _ from 'lodash';
-
-  //console.log('cms')
-  //console.log(cms.models);
 
   export default {
     name: 'ProcessData',
@@ -199,7 +196,7 @@
           for (const field of fields) {
             arr.push(field.getter(item));
           }
-          return arr.join('.');
+          return arr.join(',');
         }).mapValues(items => {
           const _result = result.reducers.reduce((obj, reducer) => {
             let reduceResult = _.reduce(items, reducer.fn, reducer.initValue ? eval(reducer.initValue) : 0);
@@ -212,7 +209,7 @@
           const res = {};
           for (const k in groups) {
             if (result.reducerType === 'array' && groups[k].length === 0) continue;
-            _.setWith(res, k, groups[k], Object);
+            _.setWith(res, k.split(','), groups[k], Object);
           }
           return res;
         }).value();
@@ -222,13 +219,11 @@
       }
     },
     created() {
-      //console.log(this.model)
       if (!this.onlyData) {
         this.$set(this, 'scope', _.assign(this.scope, this.model.initProps));
       } else {
         let fields = this.model.inputForm.fields.map(f => f.key);
         this.$set(this, 'scope', _.assign(this.scope, _.pick(this.$attrs, fields)));
-
       }
       //this.renderPivotTable();
       this.process();
