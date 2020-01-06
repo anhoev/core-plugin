@@ -17,6 +17,7 @@ dayjs.extend(customParseFormat)
 
 module.exports = async (cms) => {
   global['cms'] = cms
+  cms.api.processData = processDataFn
 
   cms.socket.on('connect', socket => {
     socket.on('processData', processDataFn);
@@ -26,7 +27,7 @@ module.exports = async (cms) => {
     try {
       input = jsonfn.clone(input, true, true);
 
-      const processData = jsonfn.clone(await cms.getModel('ProcessData').findOne({ name: reportName }), true, true);
+      const processData = jsonfn.clone(await cms.getModel('ProcessData').findOne({name: reportName}), true, true);
 
       cms.models = cms.models || {}
       cms.models[processData.collections] = cms.getModel(processData.collections)
@@ -34,10 +35,10 @@ module.exports = async (cms) => {
       const ProcessData = require('../dist/ProcessData.vue')
 
       const component = new Vue({
-        components: { ProcessData },
+        components: {ProcessData},
         render(h) {
           return h('ProcessData', {
-            props: { model: processData, onlyData: true }, attrs: input, on: {
+            props: {model: processData, onlyData: true}, attrs: input, on: {
               processFinish: (_scope) => {
                 if (_.isEmpty(processData.output)) return callback(_scope);
                 const scope = _.pick(_scope, [...processData.output, ...Object.keys(input)])
