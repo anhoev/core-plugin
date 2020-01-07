@@ -1,19 +1,17 @@
+require('./init-env')() // this function mutates vue-runtime-helpers to enable SSR & should be run only once
+
 const jsonfn = require('json-fn')
 const dayjs = require('dayjs')
 const customParseFormat = require('dayjs/plugin/customParseFormat')
 const Vue = require('vue')
-const vueRuntimeHelpers = require('vue-runtime-helpers')
+const _ = require('lodash')
+
+dayjs.extend(customParseFormat)
+global['dayjs'] = dayjs
+
 const renderer = require('vue-server-renderer').createRenderer({
   template: '<!DOCTYPE html><html lang="en"><head><title>template</title></head><body><!--vue-ssr-outlet--></body></html>'
 });
-const _ = require('lodash')
-
-vueRuntimeHelpers.createInjector = vueRuntimeHelpers.createInjectorSSR;
-global['vue'] = Vue
-global['vue-runtime-helpers'] = vueRuntimeHelpers
-global['dayjs'] = dayjs
-
-dayjs.extend(customParseFormat)
 
 module.exports = async (cms) => {
   global['cms'] = cms
