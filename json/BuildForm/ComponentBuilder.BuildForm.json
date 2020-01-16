@@ -1,34 +1,9 @@
 {
   "_id": "5c3c8760bf8bf735a35ff29d",
   "__v": 0,
-  "type": "Collection",
+  "alwaysLoad": true,
   "class": null,
-  "name": "ComponentBuilder",
-  "id": "5c3c8760bf8bf735a35ff29d",
-  "tabs": [
-    {
-      "fields": [
-        "isProduction",
-        "renderToRoute",
-        "name",
-        "renderInAdminPage",
-        "renderInIframe",
-        "registerAsVueComponent",
-        "events",
-        "mockProps",
-        "isolateCss"
-      ],
-      "_id": "5c74b84321f0cd1602fb441a",
-      "name": "Settings"
-    },
-    {
-      "fields": [
-        "props"
-      ],
-      "_id": "5cc6dd3cd901a07afc3258dc",
-      "name": "VueProps"
-    }
-  ],
+  "extensions": [],
   "fields": [
     {
       "_id": "5c3c8805bf8bf735a35ff29f",
@@ -251,17 +226,27 @@
                 {
                   "schemaType": "string",
                   "key": "service",
-                  "type": "input"
+                  "type": "input",
+                  "flex": "md4"
                 },
                 {
                   "schemaType": "string",
                   "key": "local",
-                  "type": "input"
+                  "type": "input",
+                  "flex": "md4"
                 },
                 {
-                  "schemaType": "boolean",
-                  "key": "isVModel",
-                  "type": "input@checkbox"
+                  "schemaType": "string",
+                  "key": "type",
+                  "type": "input@select",
+                  "flex": "md4",
+                  "optionsType": "onlyValue",
+                  "options": [
+                    "default",
+                    "v-model",
+                    "event",
+                    "prop"
+                  ]
                 }
               ],
               "formatItem": {
@@ -365,7 +350,32 @@
       "addable": true
     }
   ],
-  "alwaysLoad": true,
-  "extensions": [],
-  "title": "name"
+  "id": "5c3c8760bf8bf735a35ff29d",
+  "name": "ComponentBuilder",
+  "tabs": [
+    {
+      "fields": [
+        "isProduction",
+        "renderToRoute",
+        "name",
+        "renderInAdminPage",
+        "renderInIframe",
+        "registerAsVueComponent",
+        "events",
+        "mockProps",
+        "isolateCss"
+      ],
+      "_id": "5c74b84321f0cd1602fb441a",
+      "name": "Settings"
+    },
+    {
+      "fields": [
+        "props"
+      ],
+      "_id": "5cc6dd3cd901a07afc3258dc",
+      "name": "VueProps"
+    }
+  ],
+  "title": "name",
+  "type": "Collection"
 }

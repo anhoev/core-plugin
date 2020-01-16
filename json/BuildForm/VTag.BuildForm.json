@@ -1,0 +1,48 @@
+{
+  "_id": "5cb06ec57c9b10937af22b21",
+  "__v": 0,
+  "extensions": [
+    {
+      "_id": "5cad8d77732d4261b6a2cd1a",
+      "extensionType": "ComponentLib",
+      "events": []
+    }
+  ],
+  "fields": [
+    {
+      "_id": "5cb06f5a7c9b10937af22b27",
+      "schemaType": "string",
+      "key": "html",
+      "type": "input",
+      "addable": true
+    },
+    {
+      "_id": "5cb06f5a7c9b10937af22b26",
+      "schemaType": "string",
+      "key": "tag",
+      "type": "input"
+    },
+    {
+      "_id": "5cb412be7c9b10937af22d64",
+      "schemaType": "array",
+      "key": "class",
+      "fields": [
+        {
+          "schemaType": "string"
+        }
+      ],
+      "type": "input@multiSelect"
+    },
+    {
+      "_id": "5cb840f398bc67fd5b20ab26",
+      "schemaType": "mixed",
+      "key": "style",
+      "type": "editor",
+      "addable": true
+    }
+  ],
+  "id": "5cb06ec57c9b10937af22b21",
+  "name": "VTag",
+  "tabs": [],
+  "type": "Component"
+}

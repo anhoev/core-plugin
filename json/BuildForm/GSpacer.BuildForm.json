@@ -1,0 +1,16 @@
+{
+  "_id": "5ddb76b69be9ab0ed0095761",
+  "__v": 0,
+  "extensions": [
+    {
+      "_id": "5ddb77b39be9ab0ed0095799",
+      "extensionType": "ComponentLib"
+    }
+  ],
+  "fields": [],
+  "id": "5ddb76b69be9ab0ed0095761",
+  "name": "GSpacer",
+  "tabs": [],
+  "type": "Component",
+  "alwaysLoad": false
+}

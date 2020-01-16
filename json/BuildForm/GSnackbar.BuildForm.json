@@ -1,0 +1,67 @@
+{
+  "_id": "5e0f2b0ac106bd02fdb354d3",
+  "extensions": [
+    {
+      "_id": "5e0f2bb7c106bd02fdb354dc",
+      "extensionType": "ComponentLib",
+      "slotsType": "array",
+      "slots": [
+        "default"
+      ]
+    }
+  ],
+  "fields": [
+    {
+      "_id": "5e0f2bb7c106bd02fdb354db",
+      "schemaType": "string",
+      "key": "color",
+      "type": "input",
+      "addable": true
+    },
+    {
+      "_id": "5e0f2bb7c106bd02fdb354da",
+      "schemaType": "number",
+      "key": "timeout",
+      "type": "input@number",
+      "addable": true
+    },
+    {
+      "_id": "5e0f2bb7c106bd02fdb354d9",
+      "schemaType": "boolean",
+      "key": "absolute",
+      "type": "input@switch",
+      "addable": true
+    },
+    {
+      "_id": "5e0f2bb7c106bd02fdb354d8",
+      "schemaType": "boolean",
+      "key": "top",
+      "type": "input@switch",
+      "addable": true
+    },
+    {
+      "_id": "5e0f2bb7c106bd02fdb354d7",
+      "schemaType": "boolean",
+      "key": "bottom",
+      "type": "input@switch",
+      "addable": true
+    },
+    {
+      "_id": "5e0f2bb7c106bd02fdb354d6",
+      "schemaType": "boolean",
+      "key": "left",
+      "type": "input@switch",
+      "addable": true
+    },
+    {
+      "_id": "5e0f2bb7c106bd02fdb354d5",
+      "schemaType": "boolean",
+      "key": "right",
+      "type": "input@switch",
+      "addable": true
+    }
+  ],
+  "name": "GSnackbar",
+  "tabs": [],
+  "type": "Component"
+}
