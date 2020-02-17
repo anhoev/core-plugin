@@ -1,9 +1,6 @@
 {
-  "_id": "5dd3c6ce11ab65f1913de06d",
+  "_id": "5de6489bfb08aa27c71da8c6",
   "__v": 0,
-  "type": "Component",
-  "name": "GGridLayout",
-  "tabs": [],
   "extensions": [
     {
       "_id": "5cad8d77732d4261b6a2cd1a",
@@ -30,13 +27,6 @@
       "flex": "md12"
     },
     {
-      "_id": "5dd3c77411ab65f1913de076",
-      "schemaType": "boolean",
-      "key": "editable",
-      "type": "input@checkbox",
-      "flex": "md12"
-    },
-    {
       "_id": "5dd3c77411ab65f1913de075",
       "schemaType": "boolean",
       "key": "passThrough",
@@ -52,5 +42,7 @@
       "addable": true
     }
   ],
-  "id": "5dd3c6ce11ab65f1913de06d"
+  "name": "GGridLayout",
+  "tabs": [],
+  "type": "Component"
 }

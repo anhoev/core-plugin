@@ -1,0 +1,37 @@
+{
+  "_id": "5dd79eb97bcca8354bfd0063",
+  "__v": 0,
+  "extensions": [
+    {
+      "_id": "5cad8d77732d4261b6a2cd1a",
+      "extensionType": "ComponentLib",
+      "events": []
+    }
+  ],
+  "fields": [
+    {
+      "_id": "5caf236b9fe2377748da5497",
+      "schemaType": "string",
+      "key": "html",
+      "type": "input"
+    },
+    {
+      "_id": "5dd79f627bcca8354bfd0086",
+      "schemaType": "boolean",
+      "key": "svg",
+      "type": "input@checkbox",
+      "addable": true
+    },
+    {
+      "_id": "5ddb82069be9ab0ed0095802",
+      "schemaType": "number",
+      "key": "size",
+      "type": "input@number",
+      "addable": true
+    }
+  ],
+  "name": "GIcon",
+  "tabs": [],
+  "type": "Component",
+  "id": "5dd79eb97bcca8354bfd0063"
+}

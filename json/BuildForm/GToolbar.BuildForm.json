@@ -1,0 +1,101 @@
+{
+  "_id": "5ddb5d0c9be9ab0ed009571b",
+  "__v": 0,
+  "extensions": [
+    {
+      "_id": "5ddb5f439be9ab0ed009573d",
+      "extensionType": "ComponentLib",
+      "slotsType": "array",
+      "slots": [
+        "default",
+        "extension"
+      ]
+    }
+  ],
+  "fields": [
+    {
+      "_id": "5ddb5edd9be9ab0ed0095727",
+      "schemaType": "boolean",
+      "key": "absolute",
+      "type": "input@checkbox",
+      "addable": true
+    },
+    {
+      "_id": "5ddb5edd9be9ab0ed0095726",
+      "schemaType": "boolean",
+      "key": "bottom",
+      "type": "input@checkbox",
+      "label": "",
+      "addable": true
+    },
+    {
+      "_id": "5ddb5edd9be9ab0ed0095725",
+      "schemaType": "string",
+      "key": "color",
+      "type": "input",
+      "addable": true
+    },
+    {
+      "_id": "5ddb5edd9be9ab0ed0095724",
+      "schemaType": "string",
+      "key": "gradient",
+      "type": "input",
+      "addable": true
+    },
+    {
+      "_id": "5ddb5edd9be9ab0ed0095723",
+      "schemaType": "boolean",
+      "key": "dense",
+      "type": "input@checkbox",
+      "addable": true
+    },
+    {
+      "_id": "5ddb5edd9be9ab0ed0095722",
+      "schemaType": "number",
+      "key": "elevation",
+      "type": "input@number",
+      "addable": true
+    },
+    {
+      "_id": "5ddb5edd9be9ab0ed0095721",
+      "schemaType": "boolean",
+      "key": "extended",
+      "type": "input@checkbox",
+      "addable": true
+    },
+    {
+      "_id": "5ddb5edd9be9ab0ed0095720",
+      "schemaType": "string",
+      "key": "extensionHeight",
+      "type": "input",
+      "optionsType": "onlyValue",
+      "addable": true
+    },
+    {
+      "_id": "5ddb5edd9be9ab0ed009571f",
+      "schemaType": "string",
+      "key": "src",
+      "type": "input",
+      "label": "Img src",
+      "addable": true
+    },
+    {
+      "_id": "5ddb5edd9be9ab0ed009571e",
+      "schemaType": "boolean",
+      "key": "tile",
+      "type": "input@checkbox",
+      "addable": true
+    },
+    {
+      "_id": "5ddb5edd9be9ab0ed009571d",
+      "schemaType": "boolean",
+      "key": "filled",
+      "type": "input@checkbox",
+      "addable": true
+    }
+  ],
+  "id": "5ddb5d0c9be9ab0ed009571b",
+  "name": "GToolbar",
+  "tabs": [],
+  "type": "Component"
+}

@@ -1,0 +1,79 @@
+{
+  "_id": "5dd7af469418e40d10e1276c",
+  "__v": 0,
+  "extensions": [
+    {
+      "_id": "5dd7afdb9418e40d10e12778",
+      "extensionType": "ComponentLib",
+      "slotsType": "array",
+      "slots": [
+        "default"
+      ]
+    }
+  ],
+  "fields": [
+    {
+      "_id": "5dd7afdb9418e40d10e12777",
+      "schemaType": "boolean",
+      "key": "cover",
+      "default": "",
+      "type": "input@checkbox",
+      "label": "",
+      "addable": true
+    },
+    {
+      "_id": "5dd8b41a3781db3e0a1c7bd7",
+      "schemaType": "string",
+      "key": "width",
+      "type": "input",
+      "label": "width",
+      "addable": false
+    },
+    {
+      "_id": "5dd8b41a3781db3e0a1c7bd6",
+      "schemaType": "string",
+      "key": "height",
+      "type": "input",
+      "label": "height"
+    },
+    {
+      "_id": "5dd8c0353781db3e0a1c7c9e",
+      "schemaType": "object",
+      "key": "src",
+      "type": "choice",
+      "choiceKey": "srcType",
+      "choiceKeyOutside": true,
+      "fields": [
+        {
+          "schemaType": "string",
+          "key": "src",
+          "type": "input",
+          "flex": "md12"
+        },
+        {
+          "schemaType": "string",
+          "key": "src-inline",
+          "type": "inline-image",
+          "flex": "md12",
+          "onChange": {
+            "_code_": "",
+            "_code_type_": "commonJs"
+          }
+        }
+      ],
+      "flex": "md12"
+    },
+    {
+      "_id": "5dd8d79f3781db3e0a1c7ce5",
+      "schemaType": "boolean",
+      "key": "contain",
+      "type": "input@checkbox",
+      "label": "contain",
+      "addable": true
+    }
+  ],
+  "id": "5dd7af469418e40d10e1276c",
+  "name": "GImg",
+  "tabs": [],
+  "type": "Component"
+}

@@ -1,0 +1,619 @@
+{
+  "_id": "5c3d9d2f0e879c3c44e5b0f2",
+  "__v": 0,
+  "alwaysLoad": true,
+  "class": null,
+  "extensions": [],
+  "fields": [
+    {
+      "_id": "5c3da0650e879c3c44e5b0f9",
+      "schemaType": "string",
+      "key": "name",
+      "default": null,
+      "type": "input",
+      "label": null,
+      "flex": "md12"
+    },
+    {
+      "_id": "5c3db3d530f9c33c9c3a3a2d",
+      "schemaType": "mixed",
+      "key": "items",
+      "type": "tree",
+      "default": null,
+      "fields": [
+        {
+          "schemaType": "object",
+          "key": "query",
+          "type": "object",
+          "label": "query",
+          "flex": null,
+          "noPanel": null,
+          "fields": [
+            {
+              "schemaType": "string",
+              "key": "path",
+              "type": "input@select",
+              "optionsType": "code",
+              "default": null,
+              "options": {
+                "_code_": "module.exports = function getOptions(formState) {\n   const collections = formState.rootModel.collections; \n   if (!collections) return []; \n   return cms.Types[collections].paths.map(p => p.path); \n}",
+                "_code_type_": "commonJs"
+              }
+            },
+            {
+              "schemaType": "string",
+              "key": "comparator",
+              "type": "input@select",
+              "label": null,
+              "flex": null,
+              "optionsType": "onlyValue",
+              "options": [
+                "$eq",
+                "$gt",
+                "$gte",
+                "$in",
+                "$lt",
+                "$lte",
+                "$ne",
+                "$nin",
+                "$exists"
+              ]
+            },
+            {
+              "schemaType": "object",
+              "key": "value",
+              "type": "choice",
+              "label": null,
+              "flex": null,
+              "choiceKey": "valueType",
+              "choiceKeyOutside": true,
+              "fields": [
+                {
+                  "schemaType": "string",
+                  "key": "string",
+                  "type": "input",
+                  "label": null,
+                  "flex": null
+                },
+                {
+                  "schemaType": "number",
+                  "key": "number",
+                  "type": "input@number",
+                  "label": null,
+                  "flex": null
+                },
+                {
+                  "schemaType": "boolean",
+                  "key": "boolean",
+                  "type": "input@switch",
+                  "label": null,
+                  "flex": null
+                },
+                {
+                  "schemaType": "mixed",
+                  "key": "code",
+                  "type": "editor",
+                  "label": "value",
+                  "codeType": "commonJs",
+                  "width": "",
+                  "height": "120px"
+                },
+                {
+                  "schemaType": "string",
+                  "key": "variable",
+                  "type": "input",
+                  "optionsType": null
+                }
+              ]
+            }
+          ],
+          "default": null,
+          "mixed": null
+        },
+        {
+          "schemaType": "object",
+          "key": "queryAll",
+          "type": null
+        },
+        {
+          "schemaType": "object",
+          "key": "queryWithCode",
+          "type": "object",
+          "label": "Query With Code",
+          "fields": [
+            {
+              "schemaType": "string",
+              "key": "name",
+              "type": "input"
+            },
+            {
+              "schemaType": "mixed",
+              "key": "fn",
+              "type": "editor",
+              "label": "query",
+              "codeType": "commonJs",
+              "height": "200px"
+            }
+          ]
+        },
+        {
+          "schemaType": "object",
+          "key": "sort",
+          "type": "object",
+          "label": null,
+          "flex": null,
+          "noPanel": null,
+          "fields": [
+            {
+              "schemaType": "string",
+              "key": "path",
+              "type": "input@select",
+              "label": null,
+              "flex": null,
+              "optionsType": "code"
+            },
+            {
+              "schemaType": "string",
+              "key": "order",
+              "type": "input@select",
+              "label": null,
+              "flex": null,
+              "optionsType": "onlyValue",
+              "options": [
+                "asc",
+                "desc",
+                "1",
+                "-1"
+              ]
+            }
+          ]
+        },
+        {
+          "schemaType": "object",
+          "key": "groupBy",
+          "type": "object",
+          "fields": [
+            {
+              "schemaType": "string",
+              "type": "input@select",
+              "key": "path",
+              "optionsType": "code",
+              "options": {
+                "_code_": "module.exports = function getOptions(formState) {\n   console.log(formState); \n   const collections = formState.rootModel.collections; \n   if (!collections) return []; \n   return cms.Types[collections].paths.map(p => p.path); \n}",
+                "_code_type_": "commonJs"
+              }
+            }
+          ]
+        },
+        {
+          "schemaType": "object",
+          "key": "convert",
+          "fields": [
+            {
+              "schemaType": "string",
+              "key": "input",
+              "type": "input"
+            },
+            {
+              "schemaType": "string",
+              "key": "output",
+              "type": "input"
+            },
+            {
+              "schemaType": "string",
+              "key": "name",
+              "type": "input",
+              "addable": true
+            },
+            {
+              "schemaType": "mixed",
+              "key": "fn",
+              "type": "input@select",
+              "returnObject": true,
+              "itemText": {
+                "_code_": "module.exports = function (item) {\n  return item.name;\n}",
+                "_code_type_": "commonJs"
+              },
+              "optionsType": "code",
+              "options": {
+                "_code_": "const cms = require('cms');\nmodule.exports = function ({ rootModel }) {\n  if (!rootModel.collections) return [];\n  const form = cms.getList('BuildForm').find(f => f.name === rootModel.collections);\n  const extensions = form.extensions.filter(e => e.extensionType === \"Convert\");\n  return extensions\n}",
+                "_code_type_": "commonJs"
+              },
+              "chips": false
+            }
+          ],
+          "type": "object"
+        },
+        {
+          "schemaType": "object",
+          "key": "filter",
+          "fields": [
+            {
+              "schemaType": "string",
+              "key": "input",
+              "type": "input"
+            },
+            {
+              "schemaType": "string",
+              "key": "output",
+              "type": "input"
+            },
+            {
+              "schemaType": "string",
+              "key": "name",
+              "type": "input",
+              "addable": true
+            },
+            {
+              "schemaType": "mixed",
+              "key": "fn",
+              "type": "input@select",
+              "returnObject": true,
+              "itemText": {
+                "_code_": "module.exports = function (item) {\n  return item.name;\n}",
+                "_code_type_": "commonJs"
+              },
+              "optionsType": "code",
+              "options": {
+                "_code_": "const cms = require('cms');\nmodule.exports = function ({ rootModel }) {\n  if (!rootModel.collections) return [];\n  const form = cms.getList('BuildForm').find(f => f.name === rootModel.collections);\n  const extensions = form.extensions.filter(e => e.extensionType === \"Filter\");\n  return extensions\n}",
+                "_code_type_": "commonJs"
+              },
+              "chips": false
+            }
+          ],
+          "type": "object"
+        },
+        {
+          "schemaType": "object",
+          "key": "preview",
+          "type": "object",
+          "fields": [
+            {
+              "schemaType": "array",
+              "key": "input",
+              "fields": [
+                {
+                  "schemaType": "string"
+                }
+              ],
+              "type": "input@multiSelect"
+            },
+            {
+              "schemaType": "string",
+              "key": "type",
+              "type": "input@select",
+              "optionsType": "onlyValue",
+              "options": [
+                "table",
+                "jsonviewer",
+                "template"
+              ]
+            }
+          ]
+        },
+        {
+          "schemaType": "object",
+          "key": "step",
+          "type": "object",
+          "fields": [
+            {
+              "schemaType": "string",
+              "key": "name",
+              "type": "input"
+            },
+            {
+              "schemaType": "array",
+              "key": "input",
+              "fields": [
+                {
+                  "schemaType": "string"
+                }
+              ],
+              "type": "input@multiSelect",
+              "flex": "md6"
+            },
+            {
+              "schemaType": "string",
+              "key": "output",
+              "type": "input",
+              "flex": "md6"
+            },
+            {
+              "schemaType": "string",
+              "key": "type",
+              "default": "",
+              "type": "input@select",
+              "addable": false,
+              "optionsType": "onlyValue",
+              "options": [
+                "query",
+                "convert"
+              ]
+            }
+          ]
+        },
+        {
+          "schemaType": "object",
+          "key": "pivottable",
+          "type": "object",
+          "fields": [
+            {
+              "schemaType": "string",
+              "key": "input",
+              "type": "input"
+            },
+            {
+              "schemaType": "string",
+              "key": "output",
+              "type": "input"
+            },
+            {
+              "schemaType": "mixed",
+              "key": "rows",
+              "fields": [
+                {
+                  "schemaType": "string"
+                }
+              ],
+              "type": "input@multiSelect",
+              "flex": "md12",
+              "optionsType": "code",
+              "options": {
+                "_code_": "const cms = require('cms');\nmodule.exports = function ({ rootModel, model }) {\n  if (!rootModel.collections) return [];\n  const form = cms.getList('BuildForm').find(f => f.name === rootModel.collections);\n  const extension = form.extensions.find(e => {\n    if (model.type && model.type !== 'default') {\n      return e.extensionType === \"PivotField\" && e.name === model.type; \n    }\n    return e.extensionType === \"PivotField\";\n  });\n  if (!extension) return [];\n  let fields = extension.pivotFields.find(e => e.choice === 'fields').fields;\n  fields = fields.map(f => ({choice:'field', label: f, field: f}));\n  let computedFields = extension.pivotFields.filter(e => e.choice === 'computedField');\n  return fields.concat(computedFields);\n}",
+                "_code_type_": "commonJs"
+              },
+              "itemText": {
+                "_code_": "module.exports = function (item) {\n  return `${item.choice} : ${item.label}`;\n}",
+                "_code_type_": "commonJs"
+              },
+              "itemValue": {
+                "_code_": "module.exports = function (item) {\n  return `${item.choice} : ${item.label}`;\n}",
+                "_code_type_": "commonJs"
+              },
+              "returnObject": true
+            },
+            {
+              "schemaType": "mixed",
+              "key": "columns",
+              "fields": [
+                {
+                  "schemaType": "string"
+                }
+              ],
+              "type": "input@multiSelect",
+              "flex": "md12",
+              "optionsType": "code",
+              "options": {
+                "_code_": "const cms = require('cms');\nmodule.exports = function ({ rootModel, model }) {\n  if (!rootModel.collections) return [];\n  const form = cms.getList('BuildForm').find(f => f.name === rootModel.collections);\n  const extension = form.extensions.find(e => {\n    if (model.type && model.type !== 'default') {\n      return e.extensionType === \"PivotField\" && e.name === model.type; \n    }\n    return e.extensionType === \"PivotField\";\n  });\n  if (!extension) return [];\n  let fields = extension.pivotFields.find(e => e.choice === 'fields').fields;\n  fields = fields.map(f => ({choice:'field', label: f, field: f}));\n  let computedFields = extension.pivotFields.filter(e => e.choice === 'computedField');\n  return fields.concat(computedFields);\n}",
+                "_code_type_": "commonJs"
+              },
+              "itemText": {
+                "_code_": "module.exports = function (item) {\n  return `${item.choice} : ${item.label}`;\n}",
+                "_code_type_": "commonJs"
+              },
+              "itemValue": {
+                "_code_": "module.exports = function (item) {\n  return `${item.choice} : ${item.label}`;\n}",
+                "_code_type_": "commonJs"
+              },
+              "returnObject": true
+            },
+            {
+              "schemaType": "mixed",
+              "key": "reducers",
+              "fields": [
+                {
+                  "schemaType": "string"
+                }
+              ],
+              "type": "input@multiSelect",
+              "optionsType": "code",
+              "options": {
+                "_code_": "const cms = require('cms');\nmodule.exports = function ({ rootModel, model }) {\n  if (!rootModel.collections) return [];\n  const form = cms.getList('BuildForm').find(f => f.name === rootModel.collections);\n  const extension = form.extensions.find(e => {\n    if (model.type && model.type !== 'default') {\n      return e.extensionType === \"PivotField\" && e.name === model.type; \n    }\n    return e.extensionType === \"PivotField\";\n  });\n  if (!extension) return [];\n  return extension.pivotFields.filter(e => e.choice === 'sum' || e.choice === 'reducer')\n}",
+                "_code_type_": "commonJs"
+              },
+              "returnObject": true,
+              "itemText": {
+                "_code_": "module.exports = function (item) {\n  return `${item.choice} : ${item.path || item.label}`;\n}",
+                "_code_type_": "commonJs"
+              },
+              "itemValue": {
+                "_code_": "module.exports = function (item) {\n  return `${item.choice} : ${item.path || item.label}`;\n}",
+                "_code_type_": "commonJs"
+              },
+              "flex": "md12"
+            },
+            {
+              "schemaType": "mixed",
+              "key": "filter",
+              "fields": [
+                {
+                  "schemaType": "string"
+                }
+              ],
+              "type": "input@multiSelect",
+              "flex": "md12",
+              "optionsType": "code",
+              "options": {
+                "_code_": "const cms = require('cms');\nmodule.exports = function ({ rootModel, model }) {\n  if (!rootModel.collections) return [];\n  const form = cms.getList('BuildForm').find(f => f.name === rootModel.collections);\n  const extension = form.extensions.find(e => {\n    if (model.type && model.type !== 'default') {\n      return e.extensionType === \"PivotField\" && e.name === model.type; \n    }\n    return e.extensionType === \"PivotField\";\n  });\n  if (!extension) return [];\n  let fields = extension.pivotFields.find(e => e.choice === 'fields').fields;\n  fields = fields.map(f => ({choice:'field', label: f, field: f}));\n  let computedFields = extension.pivotFields.filter(e => e.choice === 'computedField');\n  return fields.concat(computedFields);\n}",
+                "_code_type_": "commonJs"
+              },
+              "itemText": {
+                "_code_": "module.exports = function (item) {\n  return `${item.choice} : ${item.label}`;\n}",
+                "_code_type_": "commonJs"
+              },
+              "itemValue": {
+                "_code_": "module.exports = function (item) {\n  return `${item.choice} : ${item.label}`;\n}",
+                "_code_type_": "commonJs"
+              },
+              "returnObject": true,
+              "addable": true
+            },
+            {
+              "schemaType": "string",
+              "key": "name",
+              "type": "input",
+              "addable": true
+            },
+            {
+              "schemaType": "string",
+              "key": "view",
+              "default": "table",
+              "type": "input@select",
+              "flex": null,
+              "addable": true,
+              "optionsType": "onlyValue",
+              "options": [
+                "json",
+                "table"
+              ],
+              "clipboardType": "cut",
+              "chips": true
+            },
+            {
+              "schemaType": "string",
+              "key": "type",
+              "type": "input@select",
+              "addable": true,
+              "optionsType": "code",
+              "options": {
+                "_code_": "const cms = require('cms');\nmodule.exports = function ({ rootModel }) {\n  if (!rootModel.collections) return [];\n  const form = cms.getList('BuildForm').find(f => f.name === rootModel.collections);\n  const extensions = form.extensions.filter(e => e.extensionType === \"PivotField\");\n  return extensions.map(e => (e.name ? e.name : 'default') );\n}",
+                "_code_type_": "commonJs"
+              }
+            }
+          ]
+        },
+        {
+          "schemaType": "object",
+          "key": "dataTable",
+          "type": "object",
+          "fields": [
+            {
+              "schemaType": "string",
+              "key": "input",
+              "type": "input"
+            },
+            {
+              "_id": "5c4e9da9dad8fc0b6b8347b5",
+              "schemaType": "array",
+              "key": "showFields",
+              "fields": [
+                {
+                  "schemaType": "string"
+                }
+              ],
+              "type": "input@multiSelect",
+              "flex": "md6",
+              "optionsType": "code",
+              "options": {
+                "_code_": "module.exports = function getOptions({rootModel}) {\n   const _type = rootModel.collections; \n   if (!_type) return []; \n   return cms.getColumns(_type).map(c => ({text: c.label, value: c.key})) \n}",
+                "_code_type_": "commonJs"
+              }
+            }
+          ]
+        },
+        {
+          "schemaType": "object",
+          "key": "mergePivot",
+          "type": "object",
+          "fields": [
+            {
+              "schemaType": "array",
+              "key": "input",
+              "type": "tableArray",
+              "fields": [
+                {
+                  "schemaType": "string",
+                  "key": "name",
+                  "type": "input"
+                },
+                {
+                  "schemaType": "string",
+                  "key": "prop",
+                  "type": "input"
+                }
+              ]
+            },
+            {
+              "schemaType": "string",
+              "key": "output",
+              "type": "input"
+            }
+          ]
+        }
+      ],
+      "mixed": null,
+      "children": "items",
+      "getText": {
+        "_code_": "module.exports = function getText(item) {\n  if (item.choice === 'query') {\n    let value;\n    if (item.value) value = _.take(item.value.toString(), 10).join('')\n    if (typeof item.value === 'string') value = '\"' + value + '\"';\n    return `${item.path || ''} : {${item.comparator || ''}: ${value || ''}}`;\n  }\n  if (item.choice === 'queryAll') {\n    return `query all`;\n  }\n  if (item.choice === 'queryWithCode') {\n    return `${item.name}`;\n  }\n  if (item.choice === 'groupBy') {\n    return `groupBy: ${item.path}`;\n  }\n  if (item.choice === 'convert') {\n    return `convert : ${item.name || ''} (${item.input ? item.input : ''}) -> ${item.output || ''}`;\n  }\n  if (item.choice === 'filter') {\n    return `filter : ${item.name || ''} (${item.input ? item.input : ''}) -> ${item.output || ''}`;\n  }\n  if (item.choice === 'preview') {\n    return `preview: (${item.input ? item.input.join(', ') : ''}) -> ${item.type}`;\n  }\n  if (item.choice === 'step') {\n    return `${item.name || ''} : (${item.input ? item.input.join(', ') : ''}) -> ${item.output || ''}`;\n  }\n  if (item.choice === 'pivottable') {\n    return `pivot : ${item.name || ''} (${item.input ? item.input : ''}) -> ${item.output || ''}`;\n  }\n\n  if (item.choice === 'mergePivot') {\n    return `mergePivot -> ${item.output || ''}`;\n  }\n  return `${item.choice}`;\n}",
+        "_code_type_": "commonJs"
+      },
+      "selectNodeAfterClick": true
+    },
+    {
+      "_id": "5c3e146aa621d7fdab84409b",
+      "schemaType": "string",
+      "key": "collections",
+      "type": "input@select",
+      "optionsType": "code",
+      "default": null,
+      "options": {
+        "_code_": "module.exports = function getOptions() { \n  return Object.keys(cms.Types); \n}",
+        "_code_type_": "commonJs"
+      }
+    },
+    {
+      "_id": "5c693ad868e2ab696c0ddfd3",
+      "schemaType": "objectId",
+      "key": "inputForm",
+      "ref": "BuildForm",
+      "type": "ref-select",
+      "labelProp": "name",
+      "addable": false,
+      "editable": true,
+      "autopopulate": true
+    },
+    {
+      "_id": "5d0374e5d04e70a12d0d27b3",
+      "schemaType": "mixed",
+      "key": "initProps",
+      "mixed": false,
+      "type": "editor",
+      "addable": true,
+      "chipDelegate": false
+    },
+    {
+      "_id": "5d11ff3ae0d1c77366586bd3",
+      "schemaType": "boolean",
+      "key": "registerAsVueComponent",
+      "type": "input@checkbox"
+    },
+    {
+      "_id": "5e05813c225841db9a17ffe3",
+      "schemaType": "array",
+      "key": "output",
+      "type": "input@multiSelect",
+      "fields": [
+        {
+          "schemaType": "string"
+        }
+      ]
+    }
+  ],
+  "id": "5c3d9d2f0e879c3c44e5b0f2",
+  "name": "ProcessData",
+  "tabs": [
+    {
+      "fields": [
+        "name",
+        "collections",
+        "inputForm",
+        "initProps",
+        "registerAsVueComponent",
+        "output"
+      ],
+      "_id": "5c3e146aa621d7fdab84409a",
+      "name": "advance"
+    }
+  ],
+  "type": "Collection"
+}

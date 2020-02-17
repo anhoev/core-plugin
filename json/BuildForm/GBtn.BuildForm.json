@@ -1,0 +1,112 @@
+{
+  "_id": "5dd788c6e6a71d53262a7c78",
+  "__v": 0,
+  "extensions": [
+    {
+      "_id": "5cad8d77732d4261b6a2cd1a",
+      "extensionType": "ComponentLib",
+      "events": [
+        "click"
+      ],
+      "slotsType": "array",
+      "slots": [
+        "default"
+      ]
+    }
+  ],
+  "fields": [
+    {
+      "_id": "5cad8f67732d4261b6a2cd1d",
+      "schemaType": "string",
+      "key": "html",
+      "type": "input",
+      "label": "",
+      "flex": "md6",
+      "addable": true
+    },
+    {
+      "_id": "5cad8f67732d4261b6a2cd1c",
+      "schemaType": "boolean",
+      "key": "flat",
+      "type": "input@checkbox",
+      "flex": "md6",
+      "addable": true
+    },
+    {
+      "_id": "5caf86169fe2377748da551d",
+      "schemaType": "string",
+      "key": "color",
+      "type": "input",
+      "flex": "md6",
+      "addable": true
+    },
+    {
+      "_id": "5cb027629fe2377748da5528",
+      "schemaType": "boolean",
+      "key": "depressed",
+      "type": "input@checkbox",
+      "addable": true
+    },
+    {
+      "_id": "5cb41b417c9b10937af22d79",
+      "schemaType": "boolean",
+      "key": "icon",
+      "type": "input@checkbox",
+      "addable": true
+    },
+    {
+      "_id": "5cb41bce7c9b10937af22d7f",
+      "schemaType": "mixed",
+      "key": "style",
+      "type": "editor",
+      "addable": true
+    },
+    {
+      "_id": "5ddb7ca69be9ab0ed00957cc",
+      "schemaType": "string",
+      "key": "background-color",
+      "type": "input",
+      "addable": true
+    },
+    {
+      "_id": "5ddb7ca69be9ab0ed00957cb",
+      "schemaType": "string",
+      "key": "text-color",
+      "type": "input",
+      "addable": true
+    },
+    {
+      "_id": "5ddb7ca69be9ab0ed00957ca",
+      "schemaType": "number",
+      "key": "elevation",
+      "type": "input@number",
+      "addable": true
+    },
+    {
+      "_id": "5ddb7ca69be9ab0ed00957c9",
+      "schemaType": "string",
+      "key": "width",
+      "type": "input",
+      "addable": true
+    },
+    {
+      "_id": "5ddb7ca69be9ab0ed00957c8",
+      "schemaType": "string",
+      "key": "height",
+      "type": "input",
+      "addable": true
+    },
+    {
+      "_id": "5de880c5cdff2284f2ce4809",
+      "schemaType": "boolean",
+      "key": "uppercase",
+      "default": "",
+      "type": "input@switch",
+      "addable": true
+    }
+  ],
+  "name": "GBtn",
+  "tabs": [],
+  "type": "Component",
+  "id": "5dd788c6e6a71d53262a7c78"
+}
