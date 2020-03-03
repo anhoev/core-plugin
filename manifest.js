@@ -8,7 +8,7 @@ module.exports = {
     },
     {
       loader: {
-        type: 'backend-ssr'
+        type: 'ssr'
       },
       path: 'ProcessData.vue',
     },
