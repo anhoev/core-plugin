@@ -7,6 +7,12 @@ module.exports = {
       path: 'backend/process-data.js',
     },
     {
+      loader: {
+        type: 'backend-ssr'
+      },
+      path: 'ProcessData.vue',
+    },
+    {
       path: 'RatingSelect.vue',
       props: {
         field: {
