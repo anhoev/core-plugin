@@ -1,0 +1,128 @@
+{
+  "_id": "5cf5e49028a5fa282b4f3957",
+  "__v": 0,
+  "class": "system-config",
+  "extensions": [],
+  "fields": [
+    {
+      "_id": "5de0d4aed8923beab2e9e87b",
+      "schemaType": "boolean",
+      "key": "showOtherCollections",
+      "type": "input@checkbox",
+      "addable": true,
+      "clickable": true
+    },
+    {
+      "_id": "5cf5e71128a5fa282b4f3959",
+      "schemaType": "mixed",
+      "key": "items",
+      "type": "tree",
+      "children": "items",
+      "getText": {
+        "_code_": "module.exports = function(item) {\n  return `${item.choice} : ${item.name ? item.name : ''}`;\n}",
+        "_code_type_": "commonJs"
+      },
+      "fields": [
+        {
+          "schemaType": "object",
+          "key": "section",
+          "type": "object",
+          "fields": [
+            {
+              "schemaType": "string",
+              "key": "name",
+              "type": "input",
+              "clickable": true
+            }
+          ],
+          "clickable": true
+        },
+        {
+          "schemaType": "object",
+          "key": "collection",
+          "type": "object",
+          "fields": [
+            {
+              "schemaType": "string",
+              "key": "name",
+              "type": "input@select",
+              "optionsType": "code",
+              "options": {
+                "_code_": "module.exports = function () { \n  return Object.keys(cms.Types);\n}",
+                "_code_type_": "commonJs"
+              },
+              "clickable": true
+            },
+            {
+              "schemaType": "string",
+              "key": "icon",
+              "type": "input",
+              "addable": true,
+              "clickable": true
+            }
+          ],
+          "clickable": true
+        },
+        {
+          "schemaType": "object",
+          "key": "view",
+          "type": "object",
+          "fields": [
+            {
+              "schemaType": "string",
+              "key": "name",
+              "type": "ref-select-static",
+              "ref": "ComponentBuilder",
+              "labelProp": "name",
+              "clickable": true
+            },
+            {
+              "schemaType": "string",
+              "key": "icon",
+              "type": "input",
+              "clipboardType": "cut",
+              "addable": true,
+              "clickable": true
+            }
+          ],
+          "clickable": true
+        },
+        {
+          "schemaType": "object",
+          "key": "group",
+          "type": "object",
+          "fields": [
+            {
+              "schemaType": "string",
+              "key": "name",
+              "type": "input",
+              "clickable": true
+            },
+            {
+              "schemaType": "string",
+              "key": "icon",
+              "type": "input",
+              "clipboardType": "cut",
+              "addable": true,
+              "clickable": true
+            },
+            {
+              "schemaType": "boolean",
+              "key": "clickable",
+              "default": "",
+              "type": "input@switch",
+              "label": "clickable",
+              "flex": null,
+              "clickable": true
+            }
+          ],
+          "clickable": true
+        }
+      ],
+      "clickable": true
+    }
+  ],
+  "id": "5cf5e49028a5fa282b4f3957",
+  "name": "Sidebar",
+  "tabs": []
+}
