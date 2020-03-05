@@ -1,0 +1,38 @@
+{
+  "_id": "5cf5e10628a5fa282b4f38e2",
+  "__v": 0,
+  "alwaysLoad": true,
+  "extensions": [],
+  "fields": [
+    {
+      "_id": "5cf5e1c628a5fa282b4f38f4",
+      "schemaType": "string",
+      "key": "type",
+      "unique": false,
+      "type": "input@select",
+      "optionsType": "code",
+      "options": {
+        "_code_": "module.exports = function () { \n  return cms.getList('BuildForm').filter(f => f.class === 'system-config').map(f => f.name);\n}",
+        "_code_type_": "commonJs"
+      },
+      "clickable": true
+    },
+    {
+      "_id": "5cf5e48d28a5fa282b4f3953",
+      "schemaType": "mixed",
+      "key": "content",
+      "type": "object@dynamic",
+      "dynamicFieldsType": "code",
+      "dynamicFields": {
+        "_code_": "module.exports = function({model}) {\n  if (!model) return [];\n  const form = cms.getList('BuildForm').find(f => f.name === model.type);\n  if (form) return form.fields;\n  return [];\n}",
+        "_code_type_": "commonJs"
+      },
+      "noPanel": true,
+      "clickable": true
+    }
+  ],
+  "id": "5cf5e10628a5fa282b4f38e2",
+  "name": "SystemConfig",
+  "tabs": [],
+  "type": "Collection"
+}
