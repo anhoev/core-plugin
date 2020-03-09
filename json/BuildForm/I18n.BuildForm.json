@@ -1,0 +1,21 @@
+{
+  "_id": "5e65e88cdc20bc95abb6b558",
+  "class": "system-config",
+  "extensions": [],
+  "fields": [
+    {
+      "_id": "5e65e8e8dc20bc95abb6b55a",
+      "schemaType": "string",
+      "clickable": true,
+      "key": "locale",
+      "type": "input@select",
+      "optionsType": "onlyValue",
+      "options": [
+        "de",
+        "en"
+      ]
+    }
+  ],
+  "name": "I18n",
+  "tabs": []
+}
