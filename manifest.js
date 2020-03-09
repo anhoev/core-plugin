@@ -8,6 +8,12 @@ module.exports = {
     },
     {
       loader: {
+        type: 'backend-api'
+      },
+      path: 'backend/getLocaleConfig.js',
+    },
+    {
+      loader: {
         type: 'ssr'
       },
       path: 'ProcessData.vue',
