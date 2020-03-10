@@ -1,0 +1,41 @@
+{
+  "_id": "5e6622a68d41634d656e895d",
+  "__v": 0,
+  "alwaysLoad": null,
+  "class": "mixed",
+  "extensions": [],
+  "fields": [
+    {
+      "_id": "5c3eff7eff94f201059ae5f3",
+      "schemaType": "string",
+      "key": "label",
+      "default": null,
+      "type": "input",
+      "label": null,
+      "flex": "md6",
+      "clickable": true
+    },
+    {
+      "_id": "5c3f0c3dff94f201059ae609",
+      "schemaType": "string",
+      "key": "flex",
+      "default": null,
+      "type": "input@select",
+      "label": null,
+      "flex": "md6",
+      "optionsType": "onlyValue",
+      "options": [
+        "md2",
+        "md3",
+        "md4",
+        "md5",
+        "md6",
+        "md12"
+      ],
+      "clickable": true
+    }
+  ],
+  "name": "I18nInput",
+  "tabs": [],
+  "type": null
+}

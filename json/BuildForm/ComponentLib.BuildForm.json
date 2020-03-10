@@ -1,11 +1,7 @@
 {
   "_id": "5cad8a37732d4261b6a2cd0e",
   "__v": 0,
-  "type": "Extension",
   "class": "form-extension",
-  "name": "ComponentLib",
-  "id": "5cad8a37732d4261b6a2cd0e",
-  "tabs": [],
   "extensions": [],
   "fields": [
     {
@@ -14,10 +10,12 @@
       "key": "events",
       "fields": [
         {
-          "schemaType": "string"
+          "schemaType": "string",
+          "clickable": true
         }
       ],
-      "type": "input@multiSelect"
+      "type": "input@multiSelect",
+      "clickable": true
     },
     {
       "_id": "5cd8e78766ef8076cd1b3dca",
@@ -30,19 +28,37 @@
         {
           "schemaType": "mixed",
           "key": "code",
-          "type": "editor"
+          "type": "editor",
+          "clickable": true
         },
         {
           "schemaType": "array",
           "key": "array",
           "fields": [
             {
-              "schemaType": "string"
+              "schemaType": "string",
+              "clickable": true
             }
           ],
-          "type": "input@multiSelect"
+          "type": "input@multiSelect",
+          "clickable": true
         }
-      ]
+      ],
+      "clickable": true
+    },
+    {
+      "_id": "5e66218d8d41634d656e8907",
+      "schemaType": "array",
+      "clickable": true,
+      "key": "preprocess",
+      "type": "input@multiSelect",
+      "addable": true,
+      "chips": true,
+      "notOnlyValueInOptions": true
     }
-  ]
+  ],
+  "id": "5cad8a37732d4261b6a2cd0e",
+  "name": "ComponentLib",
+  "tabs": [],
+  "type": "Extension"
 }
