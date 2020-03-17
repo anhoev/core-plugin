@@ -1,0 +1,92 @@
+{
+  "_id": "5e6b610ed63c06158b5a62cd",
+  "class": "form-extension",
+  "extensions": [],
+  "fields": [
+    {
+      "_id": "5e67628179a86f9e5b7de855",
+      "schemaType": "mixed",
+      "key": "items",
+      "type": "tree",
+      "children": "items",
+      "getText": {
+        "_code_": "module.exports = function(item) {\n  if (!item.id && !item.component) return 'item';\n  return `${item.id || ''}${item.component || ''}`;\n}",
+        "_code_type_": "commonJs"
+      },
+      "selectNodeAfterClick": null,
+      "fields": [
+        {
+          "schemaType": "object",
+          "key": "item",
+          "type": "object",
+          "fields": [
+            {
+              "schemaType": "string",
+              "key": "slot",
+              "type": "input",
+              "addable": true
+            },
+            {
+              "schemaType": "string",
+              "key": "component",
+              "type": "component-select",
+              "optionsType": "code",
+              "clickable": true
+            },
+            {
+              "schemaType": "object",
+              "key": "content",
+              "type": "object@dynamic",
+              "flex": "md12",
+              "addable": false,
+              "dynamicFieldsType": "code",
+              "dynamicFields": {
+                "_code_": "//const cms = require('cms');\nmodule.exports = function getDynamicFields({ model }) {\n  const component = cms.pluginComponents.find(c => c.name === model.component);\n  const props = component.props;\n  const events = (component.events || []).map(key => ({key, type: 'editor', addable: true}));\n  model.content.preprocess = component.preprocess;\n  return [{\n    key: 'props',\n    noPanel: true,\n    type: 'object',\n    fields: props\n  },{\n    key: 'events',\n    noPanel: true,\n    type: 'object',\n    fields: events\n  }]\n}",
+                "_code_type_": "commonJs"
+              },
+              "noPanel": true,
+              "clickable": true
+            },
+            {
+              "schemaType": "array",
+              "key": "fields",
+              "type": "GArrayDelegate",
+              "addable": true,
+              "fields": [
+                {
+                  "schemaType": "array",
+                  "key": "fields",
+                  "fields": [
+                    {
+                      "schemaType": "string"
+                    }
+                  ],
+                  "type": "input@multiSelect",
+                  "notOnlyValueInOptions": true,
+                  "chips": true
+                },
+                {
+                  "schemaType": "string",
+                  "key": "slot",
+                  "type": "input",
+                  "addable": true
+                }
+              ],
+              "flex": "md12",
+              "formatItem": {
+                "_code_": "module.exports = function (item) {\n  return {\n    text: `${item.slot ? item.slot + ':' : ''}${(item.fields || []).join(',')}`\n  }\n}",
+                "_code_type_": "commonJs"
+              },
+              "editOnFocus": true,
+              "label": "fields"
+            }
+          ],
+          "clickable": true
+        }
+      ],
+      "clickable": true
+    }
+  ],
+  "name": "ViewGroup",
+  "tabs": []
+}
