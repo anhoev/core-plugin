@@ -36,13 +36,15 @@
                     "_code_": "module.exports = function({model, rootModel, path}) {\n  try {\n    const _path = _.take(path.split('.'), path.split('.').length - 3).join('.');\n    if (!_.isEmpty(_path)) {\n      const parentNode = _.get(rootModel, _path);\n      if (parentNode) { \n        const component = cms.pluginComponents.find(c => c.name === parentNode.component);\n        const slots = component.slots;\n        if (typeof slots === 'function') { \n          return slots(parentNode.content.props);\n        }\n      }\n    }\n  } catch (e) {\n    console.log(e);\n  }\n  \n  return [];\n}",
                     "_code_type_": "commonJs"
                   },
-                  "addable": false
+                  "addable": false,
+                  "clipboardType": "cut"
                 },
                 {
                   "schemaType": "boolean",
                   "key": "isScopedSlot",
                   "type": "input@checkbox",
-                  "addable": true
+                  "addable": true,
+                  "clipboardType": "cut"
                 }
               ],
               "label": "slot",
@@ -66,7 +68,8 @@
                 "_code_": "//const cms = require('cms');\nmodule.exports = function getDynamicFields({ model }) {\n  const component = cms.pluginComponents.find(c => c.name === model.component);\n  const props = component.props;\n  const events = (component.events || []).map(key => ({key, type: 'editor', addable: true}));\n  model.content.preprocess = component.preprocess;\n  return [{\n    key: 'props',\n    noPanel: true,\n    type: 'object',\n    fields: props\n  },{\n    key: 'events',\n    noPanel: true,\n    type: 'object',\n    fields: events\n  }]\n}",
                 "_code_type_": "commonJs"
               },
-              "noPanel": true
+              "noPanel": true,
+              "clickable": true
             },
             {
               "schemaType": "array",
@@ -81,7 +84,9 @@
                   "options": [
                     "prop",
                     "emit",
-                    "slot"
+                    "slot",
+                    "v-model",
+                    ".sync"
                   ]
                 },
                 {
@@ -345,6 +350,13 @@
       "key": "isolateCss",
       "type": "input@checkbox",
       "addable": true
+    },
+    {
+      "_id": "5e7052c2bad4e5eef648969b",
+      "schemaType": "mixed",
+      "key": "data",
+      "type": "editor",
+      "addable": true
     }
   ],
   "id": "5c3c8760bf8bf735a35ff29d",
@@ -360,6 +372,7 @@
         "registerAsVueComponent",
         "events",
         "mockProps",
+        "data",
         "isolateCss"
       ],
       "_id": "5c74b84321f0cd1602fb441a",
