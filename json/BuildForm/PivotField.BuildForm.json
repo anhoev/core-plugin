@@ -1,0 +1,127 @@
+{
+  "_id": "5c727772fc705ca701cd6cf7",
+  "__v": 0,
+  "alwaysLoad": false,
+  "class": "form-extension",
+  "extensions": [],
+  "fields": [
+    {
+      "_id": "5d09d6914fbc7211fc7b29a3",
+      "schemaType": "string",
+      "key": "name",
+      "type": "input",
+      "addable": true,
+      "flex": "md12"
+    },
+    {
+      "_id": "5c727b1bfc705ca701cd6cf9",
+      "schemaType": "mixed",
+      "key": "pivotFields",
+      "type": "tree",
+      "children": "pivotFields",
+      "getText": {
+        "_code_": "module.exports = function (item) {\n  if (item.choice === 'sum') return `sum: ${item.path}`;\n  if (['computedField', 'reducer'].includes(item.choice)) return `${item.choice}: ${item.label}`;\n  return item.choice;\n} ",
+        "_code_type_": "commonJs"
+      },
+      "fields": [
+        {
+          "schemaType": "object",
+          "key": "fields",
+          "fields": [
+            {
+              "schemaType": "array",
+              "key": "fields",
+              "fields": [
+                {
+                  "schemaType": "string"
+                }
+              ],
+              "type": "input@multiSelect"
+            }
+          ],
+          "type": "object"
+        },
+        {
+          "schemaType": "object",
+          "key": "computedField",
+          "type": "object",
+          "fields": [
+            {
+              "schemaType": "string",
+              "key": "label",
+              "type": "input"
+            },
+            {
+              "schemaType": "mixed",
+              "key": "fn",
+              "type": "editor",
+              "height": "200px"
+            }
+          ]
+        },
+        {
+          "schemaType": "object",
+          "key": "reducer",
+          "fields": [
+            {
+              "schemaType": "string",
+              "key": "label",
+              "type": "input"
+            },
+            {
+              "schemaType": "mixed",
+              "key": "fn",
+              "type": "editor",
+              "codeType": "commonJs",
+              "height": "200px"
+            },
+            {
+              "schemaType": "mixed",
+              "key": "initValue",
+              "type": "input@select",
+              "optionsType": "code",
+              "options": {
+                "_code_": "module.exports = function() {\n  return ['0', '[]', 'undefined']\n}",
+                "_code_type_": "commonJs"
+              }
+            },
+            {
+              "schemaType": "mixed",
+              "key": "format",
+              "type": "editor",
+              "codeType": "commonJs",
+              "height": "100px",
+              "addable": true
+            }
+          ],
+          "type": "object"
+        },
+        {
+          "schemaType": "object",
+          "key": "sum",
+          "type": "object",
+          "fields": [
+            {
+              "schemaType": "string",
+              "key": "path",
+              "type": "input"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "id": "5c727772fc705ca701cd6cf7",
+  "name": "PivotField",
+  "tabs": [
+    {
+      "fields": [
+        "collections"
+      ],
+      "_id": "5c727b1bfc705ca701cd6cfb",
+      "name": "Advance"
+    }
+  ],
+  "title": "type",
+  "type": ""
+}
