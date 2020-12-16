@@ -177,7 +177,7 @@
           return this.model[this.field.key];
         },
         set(value) {
-          this.$set(this.model, this.field.key, value);
+          this.model[this.field.key] = value
         }
       }
     },

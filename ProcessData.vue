@@ -86,13 +86,13 @@
               queryConditions.push({ [query.path]: { [query.comparator]: val } });
             }
             const result = await this.Model.find({ $and: queryConditions });
-            this.$set(this.scope, step.output, result);
+            this.scope[step.output] = result
             //this.scope[step.output] = result;
           } else if (step.choice === 'pivottable') {
             //todo: pivottable code
             let items = this.scope[step.input];
             const { renderData, jsonData } = await this.renderPivotTable(step, items);
-            this.$set(this.scope, step.output, jsonData);
+            this.scope[step.output] = jsonData
             //this.scope[renderData] = jsonData;
             //console.log(step.output, jsonFn.clone(jsonData));
             if (step.view === 'json') {
@@ -114,7 +114,7 @@
             let items = this.scope[step.input];
             const convertFn = step.fn.fn;
             if (convertFn) {
-              this.$set(this.scope, step.output, convertFn(items));
+              this.scope[step.output] = convertFn(items)
               //this.scope[step.output] = convertFn(items);
             }
             //console.log(step.output, jsonFn.clone(this.scope[step.output]));
@@ -122,7 +122,7 @@
             let items = this.scope[step.input];
             const convertFn = step.fn.fn;
             if (convertFn) {
-              this.$set(this.scope, step.output, items.filter(convertFn));
+              this.scope[step.output] = items.filter(convertFn)
               //this.scope[step.output] = items.filter(convertFn);
             }
             //console.log(step.output, jsonFn.clone(this.scope[step.output]));
@@ -144,7 +144,7 @@
               result[prop] = val;
             }
             this.renderData.push({ type: 'json', data: result, name: step.output });
-            this.$set(this.scope, step.output, result);
+            this.scope[step.output] = result
             //console.log(step.output, jsonFn.clone(this.scope[step.output]));
           }
         }
@@ -220,10 +220,10 @@
     },
     created() {
       if (!this.onlyData) {
-        this.$set(this, 'scope', _.assign(this.scope, this.model.initProps));
+        this.scope = _.assign(this.scope, this.model.initProps)
       } else {
         let fields = this.model.inputForm.fields.map(f => f.key);
-        this.$set(this, 'scope', _.assign(this.scope, _.pick(this.$attrs, fields)));
+        this.scope = _.assign(this.scope, _.pick(this.$attrs, fields))
       }
       //this.renderPivotTable();
       this.process();

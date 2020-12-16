@@ -12,8 +12,6 @@
   export default {
     name: 'I18nInput',
     props: ['model', 'field', 'inArray', 'noLayout', 'rootModel', 'path'],
-    created() {
-    },
     computed: {
       flex() {
         return this.noLayout ? 'xs-12' : this.field.flex;
