@@ -4,7 +4,9 @@
             Add Item
         </v-btn>
         <app-form-dialog
-                :dialog.sync="addDialog" :toggle-dialog="toggleDialog" :config-model="createModel"
+                v-model:dialog="addDialog"
+                :toggle-dialog="toggleDialog"
+                :config-model="createModel"
                 :fields="getFields" :type="type"
         ></app-form-dialog>
     </div>

@@ -4,8 +4,11 @@
             Settings
         </v-btn>
         <app-form-dialog
-                :dialog.sync="configDialog" :toggle-dialog="toggleDialog"
-                :config-model="dialogConfigModel" :tabs="configTabs" :fields="configField"
+                v-model:dialog="configDialog"
+                :toggle-dialog="toggleDialog"
+                :config-model="dialogConfigModel"
+                :tabs="configTabs"
+                :fields="configField"
                 :type="type"
         ></app-form-dialog>
     </div>

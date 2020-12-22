@@ -10,7 +10,9 @@
     <g-dialog v-model="showEditorDialog" width="80%" lazy>
       <g-card class="flex-grow-1" style="height: 80vh">
         <g-card-text style="height: calc(100% - 55px)">
-          <monaco-editor :value.sync="code" :language="currentLanguage" :label="model ? model.component : ''"/>
+          <monaco-editor v-model:value="code"
+                         :language="currentLanguage"
+                         :label="model ? model.component : ''"/>
         </g-card-text>
         <g-card-actions>
           <g-spacer/>
