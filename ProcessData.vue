@@ -41,7 +41,8 @@
         type: Object,
         default: () => ({})
       },
-      onlyData: Boolean
+      onlyData: Boolean,
+			processFinishFn: Function
     },
     data() {
       return {
@@ -74,80 +75,81 @@
         return items.filter(i => filter.fn(i) === val);
       },
       async process() {
-        this.renderData = [];
-        const steps = this.model.items;
-        for (const step of steps) {
-          if (step.choice === 'step' && step.type === 'query') {
-            const queries = step.items;
-            const queryConditions = [];
-            for (const query of queries) {
-              let val = query.valueType === 'variable' ? this.scope[query.value] : query.value;
-              queryConditions.push({ [query.path]: { [query.comparator]: val } });
-            }
-            const result = await this.Model.find({ $and: queryConditions });
-            this.scope[step.output] = result
-            //this.scope[step.output] = result;
-          } else if (step.choice === 'pivottable') {
-            //todo: pivottable code
-            let items = this.scope[step.input];
-            const { renderData, jsonData } = await this.renderPivotTable(step, items);
-            this.scope[step.output] = jsonData
-            //this.scope[renderData] = jsonData;
-            //console.log(step.output, jsonFn.clone(jsonData));
-            if (step.view === 'json') {
-              this.renderData.push({ type: 'json', data: jsonData, name: step.name || step.output });
-            } else if (_.isEmpty(step.filter)) {
-              this.renderData.push({ type: 'pivottable', data: renderData, name: step.name || step.output });
-            } else {
-              const filter = step.filter[0];
-              this.renderData.push({
-                type: 'pivottableWithFilter',
-                data: renderData,
-                filter,
-                options: Object.keys(jsonData),
-                name: step.name || step.output,
-                model: null
-              });
-            }
-          } else if (step.choice === 'convert') {
-            let items = this.scope[step.input];
-            const convertFn = step.fn.fn;
-            if (convertFn) {
-              this.scope[step.output] = convertFn(items)
-              //this.scope[step.output] = convertFn(items);
-            }
-            //console.log(step.output, jsonFn.clone(this.scope[step.output]));
-          } else if (step.choice === 'filter') {
-            let items = this.scope[step.input];
-            const convertFn = step.fn.fn;
-            if (convertFn) {
-              this.scope[step.output] = items.filter(convertFn)
-              //this.scope[step.output] = items.filter(convertFn);
-            }
-            //console.log(step.output, jsonFn.clone(this.scope[step.output]));
-          } else if (step.choice === 'mergePivot') {
-            //todo: getAllProps
-            const props = _.union(..._(step.input).map(i => this.scope[i.name]).map(obj => Object.keys(obj)).value());
-            const inputArr = _(step.input).map(i => ({ key: i.prop, value: this.scope[i.name] })).cloneDeep();
-            const result = {}
-            for (const prop of props) {
-              const val = {};
-              for (const { key, value: inputObj } of inputArr) {
-                if (!inputObj[prop]) continue;
-                if (key) {
-                  val[key] = inputObj[prop];
-                } else {
-                  _.assign(val, inputObj[prop]);
-                }
-              }
-              result[prop] = val;
-            }
-            this.renderData.push({ type: 'json', data: result, name: step.output });
-            this.scope[step.output] = result
-            //console.log(step.output, jsonFn.clone(this.scope[step.output]));
-          }
-        }
-        this.$emit('processFinish', this.scope);
+        try {
+					this.renderData = [];
+					const steps = this.model.items;
+					for (const step of steps) {
+						if (step.choice === 'step' && step.type === 'query') {
+							const queries = step.items;
+							const queryConditions = [];
+							for (const query of queries) {
+								let val = query.valueType === 'variable' ? this.scope[query.value] : query.value;
+								queryConditions.push({ [query.path]: { [query.comparator]: val } });
+							}
+							const result = await this.Model.find({ $and: queryConditions });
+							this.scope[step.output] = result
+						} else if (step.choice === 'pivottable') {
+							//todo: pivottable code
+							let items = this.scope[step.input];
+							const { renderData, jsonData } = await this.renderPivotTable(step, items);
+							this.scope[step.output] = jsonData
+							if (step.view === 'json') {
+								this.renderData.push({ type: 'json', data: jsonData, name: step.name || step.output });
+							} else if (_.isEmpty(step.filter)) {
+								this.renderData.push({ type: 'pivottable', data: renderData, name: step.name || step.output });
+							} else {
+								const filter = step.filter[0];
+								this.renderData.push({
+									type: 'pivottableWithFilter',
+									data: renderData,
+									filter,
+									options: Object.keys(jsonData),
+									name: step.name || step.output,
+									model: null
+								});
+							}
+						} else if (step.choice === 'convert') {
+							let items = this.scope[step.input];
+							const convertFn = step.fn.fn;
+							if (convertFn) {
+								this.scope[step.output] = convertFn(items)
+							}
+							//console.log(step.output, jsonFn.clone(this.scope[step.output]));
+						} else if (step.choice === 'filter') {
+							let items = this.scope[step.input];
+							const convertFn = step.fn.fn;
+							if (convertFn) {
+								this.scope[step.output] = items.filter(convertFn)
+							}
+							//console.log(step.output, jsonFn.clone(this.scope[step.output]));
+						} else if (step.choice === 'mergePivot') {
+							//todo: getAllProps
+							const props = _.union(..._(step.input).map(i => this.scope[i.name]).map(obj => Object.keys(obj)).value());
+							const inputArr = _(step.input).map(i => ({ key: i.prop, value: this.scope[i.name] })).cloneDeep();
+							const result = {}
+							for (const prop of props) {
+								const val = {};
+								for (const { key, value: inputObj } of inputArr) {
+									if (!inputObj[prop]) continue;
+									if (key) {
+										val[key] = inputObj[prop];
+									} else {
+										_.assign(val, inputObj[prop]);
+									}
+								}
+								result[prop] = val;
+							}
+							this.renderData.push({ type: 'json', data: result, name: step.output });
+							this.scope[step.output] = result
+							//console.log(step.output, jsonFn.clone(this.scope[step.output]));
+						}
+					}
+					console.log('emit process finish')
+					this.processFinishFn(this.scope);
+					this.$emit('processFinish', this.scope);
+				} catch (e) {
+					this.processFinishFn(e);
+				}
       },
       async renderPivotTable(pivot, items) {
         const result = { data: items };
@@ -229,7 +231,3 @@
     }
   }
 </script>
-
-<style scoped>
-
-</style>

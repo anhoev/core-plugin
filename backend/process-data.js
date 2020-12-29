@@ -1,19 +1,14 @@
-require('./init-env')() // this function mutates vue-runtime-helpers to enable SSR & should be run only once
+// require('./init-env')() // this function mutates vue-runtime-helpers to enable SSR & should be run only once
 
 const jsonfn = require('json-fn')
 const dayjs = require('dayjs')
 const customParseFormat = require('dayjs/plugin/customParseFormat')
-const Vue = require('vue')
+const { createApp, h } = require('vue')
+const { renderToString } = require('@vue/server-renderer')
 const _ = require('lodash')
 
 dayjs.extend(customParseFormat)
 global['dayjs'] = dayjs
-
-const renderer = require('vue-server-renderer').createRenderer({
-  template: '<!DOCTYPE html><html lang="en"><head><title>template</title></head><body><!--vue-ssr-outlet--></body></html>'
-});
-
-console.log('renderer', renderer)
 
 module.exports = async (cms) => {
   global['cms'] = cms
@@ -25,7 +20,6 @@ module.exports = async (cms) => {
 
   async function processDataFn(reportName, input, callback) {
     try {
-      console.log('process data fn', reportName, input, callback)
       input = jsonfn.clone(input, true, true);
 
       const processData = jsonfn.clone(await cms.getModel('ProcessData').findOne({name: reportName}), true, true);
@@ -33,27 +27,37 @@ module.exports = async (cms) => {
       cms.models = cms.models || {}
       cms.models[processData.collections] = cms.getModel(processData.collections)
 
-      // for debug purpose // convert back to ../dist/ProcessData.vue when release or add env flag to select appropriate path
-      const ProcessData = require('../ProcessData.vue') // require('../dist/ProcessData.vue')
+      const ProcessData = require('../dist/ProcessData.vue.js')
 
-      const component = new Vue({
+      // TODO: Seem like it doesn't work....
+      // Expected: processFinish and onProcessFinish will be called, log should be display in console.
+      const component = createApp({
         components: {ProcessData},
-        render(h) {
-          return h('ProcessData', {
-            props: {model: processData, onlyData: true}, attrs: input, on: {
+        render() {
+          return h('div', [
+            h('ProcessData', {
+              model: processData,
+              onlyData: true,
+              ...input,
               processFinish: (_scope) => {
+                console.log('on process finished')
                 if (_.isEmpty(processData.output)) return callback(_scope);
                 const scope = _.pick(_scope, [...processData.output, ...Object.keys(input)])
                 return callback(scope);
-              }
-            }
-          })
+              },
+              onProcessFinish: (_scope) => {
+                console.log('on process finished')
+
+                if (_.isEmpty(processData.output)) return callback(_scope);
+                const scope = _.pick(_scope, [...processData.output, ...Object.keys(input)])
+                return callback(scope);
+              },
+            })
+          ])
         }
       })
-
-      renderer.renderToString(component, {}, async (err, html) => {
-        if (err) callback(err)
-      })
+      await renderToString(component)
+      console.log('process data completed')
     } catch (e) {
       console.log(e)
       callback(e)
