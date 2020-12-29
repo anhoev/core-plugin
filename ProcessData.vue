@@ -1,5 +1,5 @@
 <template>
-	<fragment v-if="!onlyData">
+	<template v-if="!onlyData">
 		<g-btn @click="process" small depressed>process</g-btn>
 		<g-field :fields="inputFormFields" :model="scope"/>
 		<template v-for="({type, name, data, options, filter, model}, index) in renderData">
@@ -22,12 +22,11 @@
 
 			<hr>
 		</template>
-
-	</fragment>
-	<fragment v-else>
+	</template>
+	<template v-else>
 		<g-tree-view-json :data="scope" :expand-level="0" show-length/>
 		<slot v-bind="scope"></slot>
-	</fragment>
+	</template>
 </template>
 
 <script>
