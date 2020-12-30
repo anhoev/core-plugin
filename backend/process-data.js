@@ -29,7 +29,7 @@ module.exports = async (cms) => {
 
       const ProcessData = require('../dist/ProcessData.vue.js')
 
-      // TODO:
+      // TODO: Do we need to care about it?
       //  [Vue warn]: Failed to resolve component: g-btn
       //  [Vue warn]: Failed to resolve component: g-field
       //  [Vue warn]: Failed to resolve component: pivot-table2
@@ -41,7 +41,6 @@ module.exports = async (cms) => {
         onlyData: true,
         ...input,
         onProcessFinish: (_scope) => {
-          console.log('on process finished')
           if (_.isEmpty(processData.output)) return callback(_scope);
           const scope = _.pick(_scope, [...processData.output, ...Object.keys(input)])
           return callback(scope);
@@ -50,7 +49,6 @@ module.exports = async (cms) => {
 
       await renderToString(component)
     } catch (e) {
-      console.log(e)
       callback(e)
     }
   }
