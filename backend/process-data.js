@@ -29,35 +29,26 @@ module.exports = async (cms) => {
 
       const ProcessData = require('../dist/ProcessData.vue.js')
 
-      // TODO: Seem like it doesn't work....
-      // Expected: processFinish and onProcessFinish will be called, log should be display in console.
-      const component = createApp({
-        components: {ProcessData},
-        render() {
-          return h('div', [
-            h('ProcessData', {
-              model: processData,
-              onlyData: true,
-              ...input,
-              processFinish: (_scope) => {
-                console.log('on process finished')
-                if (_.isEmpty(processData.output)) return callback(_scope);
-                const scope = _.pick(_scope, [...processData.output, ...Object.keys(input)])
-                return callback(scope);
-              },
-              onProcessFinish: (_scope) => {
-                console.log('on process finished')
-
-                if (_.isEmpty(processData.output)) return callback(_scope);
-                const scope = _.pick(_scope, [...processData.output, ...Object.keys(input)])
-                return callback(scope);
-              },
-            })
-          ])
-        }
+      // TODO:
+      //  [Vue warn]: Failed to resolve component: g-btn
+      //  [Vue warn]: Failed to resolve component: g-field
+      //  [Vue warn]: Failed to resolve component: pivot-table2
+      //  [Vue warn]: Failed to resolve component: grid-select
+      //  [Vue warn]: Failed to resolve component: v-tag
+      //  [Vue warn]: Failed to resolve component: g-tree-view-json
+      const component = createApp(ProcessData, {
+        model: processData,
+        onlyData: true,
+        ...input,
+        onProcessFinish: (_scope) => {
+          console.log('on process finished')
+          if (_.isEmpty(processData.output)) return callback(_scope);
+          const scope = _.pick(_scope, [...processData.output, ...Object.keys(input)])
+          return callback(scope);
+        },
       })
+
       await renderToString(component)
-      console.log('process data completed')
     } catch (e) {
       console.log(e)
       callback(e)
