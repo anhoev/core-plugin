@@ -43,6 +43,7 @@
       },
       onlyData: Boolean,
     },
+		emits: ['processFinish'],
     data() {
       return {
         items: [],
